@@ -1,0 +1,11 @@
+{
+    "private":[
+        "destroy",
+        "searh",
+        "chagephrase"
+    ],
+    "public":[
+        "validate-gclient",
+        "validate-gapp"
+    ]
+}

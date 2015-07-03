@@ -1,0 +1,13 @@
+https://developers.google.com/drive/web/quickstart/quickstart-php
+
+https://developers.google.com/api-client-library/php/guide/aaa_overview
+
+https://developers.google.com/api-client-library/php/guide/aaa_oauth2_service
+
+https://console.developers.google.com/project/15826266280/apiui/credential#
+
+./propel model:build
+./propel config:convert
+./propel sql:build --overwrite
+
+./propel sql:insert

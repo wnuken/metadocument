@@ -1,0 +1,15 @@
+{
+    "name" : "Metadocument",
+    "version" : "0.1",
+    "description" : "description_text",
+    "container" : "GOOGLE_DRIVE",
+    "api_console_project_id" : "CqFS-4gtdlppZ402nt1BWZGL",
+    "icons": {
+      "128": "icon_128.png"
+    },
+    "app" : {
+      "launch" : {
+      "web_url" : "http://local.metadocument.com/"
+      }
+    }
+  }
