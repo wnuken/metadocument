@@ -26,7 +26,7 @@ class Views {
 			$filesList = json_decode($homeContent, true);
 			$folderContent = file_get_contents($foldersPath, FILE_USE_INCLUDE_PATH);
 			$folderList = json_decode($folderContent, true);
-			include './views/home.php';
+			include './views/home/index.php';
 
 		}else if(isset($_SESSION['user_path']) && !empty($_SESSION['user_path'])){
 			$Querys = new Querys();
@@ -64,7 +64,7 @@ class Views {
 				fclose($handleF);
 
 			}
-			include './views/home.php';
+			include './views/home/index.php';
 		}else{
 			include './views/info-error.php';
 		}

@@ -8,7 +8,7 @@
 /* ---- API CLIENT DATA ----*/
 define('GOOGLE_CLIENT_ID', '15826266280.apps.googleusercontent.com');
 define('GOOGLE_CLIENT_SECRECT', 'CqFS-4gtdlppZ402nt1BWZGL');
-define('GOOGLE_REDIRECT_URI', 'http://www.metadocument.com/');
+define('GOOGLE_REDIRECT_URI', 'http://local.metadocument.com/');
 define('GOOGLE_CLIENT_MAIL', '15826266280@developer.gserviceaccount.com');
 
 /* ---- API APP DATA ----*/
@@ -18,4 +18,6 @@ define('GOOGLE_LOCATION_KEY_APP', './llave-app/Metadocument-pre-eed2b1f1f81f.p12
 
 /* ---- SERVER DATA ---- */
 define('SERVER_KEY', 'LLAVE_DEL_SERVIDOR');
+
+define('CACHE_TIME_APP', '- 1800 seconds');
 

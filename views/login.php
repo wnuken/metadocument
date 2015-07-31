@@ -13,32 +13,45 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <!--div class="panel-heading">
                             <div class="text-center"><h3 class="panel-title">Iniciar sesión</h3></div>
-						</div>
-                        <div class="panel-body">
+						</div-->
+                        <div class="panel-body borderContent">
                             <div class="text-center">
+                                <div class="row">
                                 <div><img src="./img/logo.png" style="width: 100%;"></div>
                                 <p>Escoja como iniciar sesión: </p>
+                                <div class="visible-lg-block visible-md-block visible-sm-block">
                                 <div id="chagelogin" class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-danger  active">
+                                    <label class="btn btn-danger active">
                                         <input name="type" id="type1a" autocomplete="off" checked value="metadocument" class="product_change" type="radio"> Metadocument
 									</label>
                                     <label class="btn btn-danger">
                                         <input name="type" id="type1b" autocomplete="off" value="google" class="product_change" type="radio"> Google login
 									</label>
 								</div>
-								
+                                </div>
+                                <div class="visible-xs-block">
+                                <div id="chagelogin" class="btn-group" data-toggle="buttons">
+                                    <label class="btn btn-danger btn-sm active">
+                                        <input name="type" id="type1a" autocomplete="off" checked value="metadocument" class="product_change" type="radio"> Metadocument
+                                    </label>
+                                    <label class="btn btn-danger btn-sm">
+                                        <input name="type" id="type1b" autocomplete="off" value="google" class="product_change" type="radio"> Google login
+                                    </label>
+                                </div>
+                                </div>
+								</div>
 							</div>
                             <form id="loginform" role="form" class="form-signin" method="POST">
                                 <fieldset>
                                     <div id="changeform">
                                         <div class="form-group">
-                                            <labe for="username">RUT</labe>
-                                            <input name="username" id="username" type="text" autofocus="" placeholder="RUT" class="form-control" >
+                                            <label for="username">RUT </label>
+                                            <input name="username" id="username" type="text" autofocus="" placeholder="RUT" class="form-control" > 
 										</div>
                                         <div class="form-group">
-                                            <labe for="password">Password</labe>
+                                            <label for="password">Password</label>
                                             <input name="password" id="password" type="password" placeholder="Password" class="form-control">
 										</div>
                                         <input name="logintype" id="logintype" type="hidden" value="metadocument">
