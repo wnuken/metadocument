@@ -5,7 +5,7 @@ $serviceContainer->setAdapterClass('metadocument', 'mysql');
 $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
 $manager->setConfiguration(array (
   'classname' => 'Propel\\Runtime\\Connection\\ConnectionWrapper',
-  'dsn' => 'mysql:host=localhost;dbname=metadocument',
+  'dsn' => 'mysql:host=localhost;dbname=metadocu_dbdocument',
   'user' => 'developer',
   'password' => 'developer',
   'attributes' =>

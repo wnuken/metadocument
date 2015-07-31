@@ -1,95 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database name="metadocument" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
-
-    <table name="nationality" idMethod="native" phpName="Nationality">
-        <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-        <column name="nationality" phpName="Nationality" type="VARCHAR" size="50"/>
-        <column name="description" phpName="Description" type="VARCHAR" size="256"/>
-        <vendor type="mysql">
-            <parameter name="Engine" value="InnoDB"/>
-        </vendor>
-    </table>
-
-    <table name="countries" idMethod="native" phpName="Conuntries">
-        <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-        <column name="country_name" phpName="CountryName" type="VARCHAR" size="50"/>
-        <column name="description" phpName="Description" type="VARCHAR" size="256"/>}
-        <column name="iso_code" phpName="IsoCode" type="VARCHAR" size="10"/>
-        <vendor type="mysql">
-            <parameter name="Engine" value="InnoDB"/>
-        </vendor>
-    </table>
-
-    <table name="locations" idMethod="native" phpName="Locations">
-        <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-        <column name="location_name" phpName="LocationName" type="VARCHAR" size="50"/>
-        <column name="description" phpName="Description" type="VARCHAR" size="256"/>}
-        <column name="iso_code" phpName="IsoCode" type="VARCHAR" size="10"/>
-        <column name="id_country" phpName="IdCountry" type="VARCHAR" size="10"/>
-        <vendor type="mysql">
-            <parameter name="Engine" value="InnoDB"/>
-        </vendor>
-    </table>
-
-    <table name="cities" idMethod="native" phpName="Cities">
-        <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-        <column name="city_name" phpName="CityName" type="VARCHAR" size="50"/>
-        <column name="description" phpName="Description" type="VARCHAR" size="256"/>
-        <column name="iso_code" phpName="IsoCode" type="VARCHAR" size="10"/>
-        <column name="id_location" phpName="IdLocation" type="INTEGER"/>
-        <column name="id_country" phpName="IdCountry" type="INTEGER"/>
-        <vendor type="mysql">
-            <parameter name="Engine" value="InnoDB"/>
-        </vendor>
-    </table>
-
-    <table name="user_type" idMethod="native" phpName="UserType">
-        <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-        <column name="type" phpName="Type" type="VARCHAR" size="50"/>
-        <column name="description" phpName="Description" type="VARCHAR" size="256"/>
-        <vendor type="mysql">
-            <parameter name="Engine" value="InnoDB"/>
-        </vendor>
-    </table>
-
-    <table name="roles" idMethod="native" phpName="Roles">
-        <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-        <column name="rol_name" phpName="RolName" type="VARCHAR" size="50"/>
-        <column name="description" phpName="Description" type="VARCHAR" size="256"/>
-        <vendor type="mysql">
-            <parameter name="Engine" value="InnoDB"/>
-        </vendor>
-    </table>
-
-
-    <table name="admin_user" idMethod="native" phpName="AdminUser">
-        <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-        <column name="user" phpName="User" type="VARCHAR" size="50"/>
-        <column name="password" phpName="Password" type="VARCHAR" size="256"/>
-        <column name="g_folder" phpName="Gfolder" type="VARCHAR" size="256"/>
-        <column name="id_rol" phpName="Rol" type="INTEGER"/>
-        <vendor type="mysql">
-            <parameter name="Engine" value="InnoDB"/>
-        </vendor>
-    </table>
-
-    <table name="user" idMethod="native" phpName="User">
-        <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
-        <column name="name" phpName="Name" type="VARCHAR" size="50"/>
-        <column name="rut" phpName="Rut" type="VARCHAR" size="50"/>
-        <column name="code" phpName="Code" type="VARCHAR" size="50"/>
-        <column name="e_mail" phpName="EMail" type="VARCHAR" size="256"/>
-        <column name="address" phpName="Address" type="VARCHAR" size="256"/>
-        <column name="gender" phpName="Gender" type="VARCHAR" size="5"/>
-        <column name="phone" phpName="Phone" type="VARCHAR" size="30"/>
-        <column name="id_city" phpName="IdCity" type="INTEGER"/>
-        <column name="id_location" phpName="IdLocation" type="INTEGER"/>
-        <column name="id_country" phpName="IdCountry" type="INTEGER"/>
-        <column name="id_nationality" phpName="IdNationality" type="INTEGER"/>
-        <column name="id_type" phpName="IdType" type="INTEGER"/>
-        <column name="id_admin" phpName="IdUser" type="INTEGER"/>
-        <vendor type="mysql">
-            <parameter name="Engine" value="InnoDB"/>
-        </vendor>
-    </table>
+  <table name="admin_user" idMethod="native" phpName="AdminUser">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="user" phpName="User" type="VARCHAR" size="50"/>
+    <column name="password" phpName="Password" type="VARCHAR" size="256"/>
+    <column name="rol" phpName="Rol" type="INTEGER"/>
+    <column name="g_document" phpName="GDocument" type="INTEGER"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
 </database>

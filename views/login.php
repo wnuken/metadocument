@@ -10,15 +10,15 @@
                 <div class="col-md-4"></div>
 			</div>
             <div class="row">
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <div class="text-center"><h3 class="panel-title">Metadocument</h3></div>
+                            <div class="text-center"><h3 class="panel-title">Iniciar sesión</h3></div>
 						</div>
                         <div class="panel-body">
                             <div class="text-center">
-                                <div><img src="./img/logo.jpg"></div>
+                                <div><img src="./img/logo.png" style="width: 100%;"></div>
                                 <p>Escoja como iniciar sesión: </p>
                                 <div id="chagelogin" class="btn-group" data-toggle="buttons">
                                     <label class="btn btn-danger  active">
@@ -55,7 +55,7 @@
 						</div>
 					</div>
 				</div>
-                <div class="col-md-4"></div>
+                <div class="col-md-3"></div>
 			</div>
 		</div>
 	</body>

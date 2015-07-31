@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="#" class="navbar-brand hidden-sm">MetaDocument</a>
+            <a href="#" class="navbar-brand hidden-sm" style="position: relative; top: -17px; "><img src="./img/lg-md.png" style="width: 80%;"></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav" id="menunav">

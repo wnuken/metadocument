@@ -7,7 +7,7 @@ return [
                 'metadocument' => [
                     'adapter'    => 'mysql',
                     'classname'  => 'Propel\Runtime\Connection\ConnectionWrapper',
-                    'dsn'        => 'mysql:host=localhost;dbname=metadocument',
+                    'dsn'        => 'mysql:host=localhost;dbname=metadocu_dbdocument',
                     'user'       => 'developer',
                     'password'   => 'developer',
                     'attributes' => []
