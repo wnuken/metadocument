@@ -5,10 +5,12 @@
 *
 */
 
+$serverRedirect = 'http://' . $_SERVER['HTTP_HOST'];
+
 /* ---- API CLIENT DATA ----*/
 define('GOOGLE_CLIENT_ID', '15826266280.apps.googleusercontent.com');
 define('GOOGLE_CLIENT_SECRECT', 'CqFS-4gtdlppZ402nt1BWZGL');
-define('GOOGLE_REDIRECT_URI', 'http://local.metadocument.com/');
+define('GOOGLE_REDIRECT_URI', $serverRedirect);
 define('GOOGLE_CLIENT_MAIL', '15826266280@developer.gserviceaccount.com');
 
 /* ---- API APP DATA ----*/
