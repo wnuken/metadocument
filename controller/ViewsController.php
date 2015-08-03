@@ -55,7 +55,7 @@ class Views {
 				$folderList = $General->getFilesArray($paramsFolder, $linkToken);
 				$filesList = $General->getFilesArray($params, $linkToken);
 
-				$filesList = array_merge($folderList, $filesList);
+				// $filesList = array_merge($folderList, $filesList);
 
 
 				$handle = fopen($filePath, 'w+');

@@ -30,9 +30,9 @@
 								endif; ?>
 							</ul>
 						</div>
-						<div class="input-group col-md-4">
+						<!--div class="input-group col-md-4">
 							<input type="text" class="form-control" id="datepicker" name="datepicker" placeholder="Fecha inicial">
-						</div>
+						</div-->
 					</div>
 				</div>
 				<div id="collapseNews" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
