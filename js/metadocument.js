@@ -10,7 +10,7 @@ var $chagephrase = $('form#chagephrase');
 var $changeform = $('div#changeform');
 var $chagelogin = $('div#chagelogin');
 var $seahfrom = $('form#drivesearh');
-var $generalFolder = $('ul#generalfolder')
+var $generalFolder = $('div#generalfolder')
 var $propertiesForm = $('form#propertiesForm');
 var documentId = '';
 

@@ -39,6 +39,7 @@ div.borderContent {
 .navbar-inverse {
     background-image: linear-gradient(to bottom, #eee 0px, #fff 100%);
     background-repeat: repeat-x;
+    border-color: #C12F2B;
 }
 
 .navbar-inverse .navbar-nav > .active > a {
@@ -65,7 +66,34 @@ div.borderContent {
 .navbar-inverse .navbar-nav > li > a {
     color: #000F81;
 }
-    
+
+.navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a {
+    text-shadow: 0 -1px 0 rgba(0, 15, 129, 0.25);
+}
+
+.loading-ms {
+    background: #fff none repeat scroll 0 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.7;
+    outline: 0 none;
+    overflow: hidden;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 5;
+}
+
+.loading-ms img {
+    position: relative;
+    top: 177px;
+    z-index: 10;
+}
+
+
+
+
+
 
     </style>
 </head>

@@ -3,10 +3,30 @@
 		<?php 
 		if(is_array($filesList)):
 			foreach($filesList as $key => $file):
+				if($file['mimeType'] == 'application/vnd.google-apps.folder'){
 				?>
-			<div class="col-xs-6 col-sm-3 col-md-3 col-lg-2">
 
-				<img class="img-thumbnail" 
+				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-2" id="generalfolder" style="height: 190px;">
+				<a href="javascript:void(0);" target="_blank" class="text-center" data-g-id="<?php print $file['id']; ?>">
+				<img style="max-height: 100%" class="img-thumbnail" 
+				src="./img/carpetas.png" 
+				data-mime="<?php print $file['mimeType']; ?>" 
+				alt="<?php print $file['title']; ?>" 
+				title="<?php print $file['title']; ?>">
+				<h5 class="hidden-xs" class="text-center">
+						<img src="<?php print $file['icon']; ?>" 
+						alt="<?php print $file['mimeType']; ?>" 
+						title="<?php print $file['mimeType']; ?>">
+						<?php print substr($file['title'], 0, 20); ?>
+				</h5>
+				</a>
+			</div>
+
+
+		<?php }else{ ?>
+			<div class="col-xs-6 col-sm-3 col-md-3 col-lg-2" style="height: 190px;">
+
+				<img style="max-height: 81%" class="img-thumbnail" 
 				src="<?php print $file['image']; ?>" 
 				data-mime="<?php print $file['mimeType']; ?>" 
 				alt="<?php print $file['title']; ?>" 
@@ -21,14 +41,14 @@
 				</h5>
 
 				<?php 
-				if(isset($file['exportLinks'])){
+				/*if(isset($file['exportLinks'])){
 					foreach($file['exportLinks'] as $keyb => $exportlink){ 
 						print "<div id='exportlink'><a href='" . $exportlink . "'><img width='16' src='./img/icon/" . $keyb . "'></a> </div>";
 					} 
-				}
+				}*/
 				?>
 
-				<div class="hidden-xs">
+				<!--div class="hidden-xs">
 					<?php 
 					print "<small>Emisión: " . date('Y-m-d h:i:s a',strtotime($file['createdDate'])) . "</small><br />"; 
 					print "<small>Actualización: " . date('Y-m-d h:i:s a',strtotime($file['modifiedDate'])) . "</small> <br />";
@@ -41,12 +61,13 @@
 					<button type="button" class="btn btn-danger btn-xs buttonProperies" data-toggle="modal" data-target="#myModal" data-document-id="<?php print $file['id']; ?>">
 						<i class="glyphicon glyphicon-list-alt"></i> Edición
 					</button>
-				</div>
+				</div-->
 
 
 			</div>
 
 			<?php 
+			}
 			endforeach;
 			endif;
 			?>

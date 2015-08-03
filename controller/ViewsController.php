@@ -38,10 +38,12 @@ class Views {
 
 				if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])) {
 					$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
+					//$params['q'] = "'$path' in parents";
 					$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 					$linkToken = '';
 				}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])) {
 					$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
+					//$params['q'] = "'$path' in parents";
 					$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 					$arrayServiceToken = json_decode($_SESSION['service_token'], true);
 					$linkToken = '&access_token=' . $arrayServiceToken['access_token'];
@@ -49,8 +51,11 @@ class Views {
 
 				$General = new General();
 
-				$folderList = $General->getFolderArray($paramsFolder);
+				//$folderList = $General->getFolderArray($paramsFolder);
+				$folderList = $General->getFilesArray($paramsFolder, $linkToken);
 				$filesList = $General->getFilesArray($params, $linkToken);
+
+				$filesList = array_merge($folderList, $filesList);
 
 
 				$handle = fopen($filePath, 'w+');

@@ -1,4 +1,9 @@
 <div class="">
+<div id="progress" class="col-md-12" style="display:none;">
+		<div class="loading-ms text-center">
+			<img src="./img/loading-ms.gif">
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="panel panel-default">
@@ -34,13 +39,8 @@
 					<div class="panel-body">
 						
 						<div class="row">
-							<div id="progress" class="col-md-12" style="display: none;">
-								<div class="progress">
-									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-										<span class="sr-only">100% Complete</span>
-									</div>
-								</div>
-							</div>
+						
+							
 							<!--div class="col-md-12">
 								<ol class="breadcrumb">
 									<li><a href="#">Home</a></li>
