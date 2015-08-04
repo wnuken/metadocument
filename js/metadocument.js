@@ -12,6 +12,7 @@ var $chagelogin = $('div#chagelogin');
 var $seahfrom = $('form#drivesearh');
 var $generalFolder = $('div#generalfolder')
 var $propertiesForm = $('form#propertiesForm');
+var $multielemt = $('div.multielemt');
 var documentId = '';
 
 $.fn.postUrl = function(params){
@@ -194,6 +195,27 @@ $('#myModal').on('shown.bs.modal', function () {
     $('input#fileId', $propertiesForm).val(documentId);
    //$('input#fileId', $propertiesForm).attr('value':documentId);
 });
+
+$('div.toelement', $multielemt).on('click', function(){
+	console.log('hola');
+	var $that = $(this);
+	$that.fadeOut('slow', function(){
+		$thatSib = $that.siblings('div');
+		$thatSib.fadeIn('slow');
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
