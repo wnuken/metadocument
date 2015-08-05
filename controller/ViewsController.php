@@ -20,6 +20,8 @@ class Views {
 		$filePath = './files/' . $_SESSION['user_path'] . '-home.json';
 		$foldersPath = './files/' . $_SESSION['user_path'] . '-folders.json';
 
+		// var_dump($_SESSION);
+
 		/* --- Cache Home --- */
 		if (file_exists($filePath) && (filemtime($filePath) > strtotime(CACHE_TIME_APP))) {
 			$homeContent = file_get_contents($filePath, FILE_USE_INCLUDE_PATH);
@@ -71,7 +73,7 @@ class Views {
 			}
 			include './views/home/index.php';
 		}else{
-			include './views/info-error.php';
+			include './views/home/index.php';
 		}
 	}
 

@@ -64,9 +64,11 @@
 
 				<?php 
 				if(isset($file['exportLinks'])){
+					print "<div class='row'>";
 					foreach($file['exportLinks'] as $keyb => $exportlink){ 
-						print "<div id='exportlink'><a href='" . $exportlink . "'><img width='16' src='./img/icon/" . $keyb . "'></a> </div>";
+						print "<div id='exportlink' class='col-xs-6 col-sm-3 col-md-2 col-lg-2'><a href='" . $exportlink . "'><img width='32' src='./img/icon/" . $keyb . "'></a> </div>";
 					} 
+					print "</div>";
 				}
 				?>
 

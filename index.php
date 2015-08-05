@@ -21,6 +21,10 @@ if((isset($urlpost[1]) && in_array($urlpost[1] , $classarray['class'])) && !isse
         $GoogleClient = $Settings->GoogleClient();
         $GoogleClient->authenticate($_GET['code']);
         $_SESSION['access_token'] = $GoogleClient->getAccessToken();
+        $tokenArray = json_decode($_SESSION['access_token'], true);
+        $_SESSION['userinfo'] = file_get_contents('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' . $tokenArray['access_token']);
+        $userArray = json_decode($_SESSION['userinfo'], true);
+        $_SESSION['user_path'] = $userArray['id'];
         $redirect = 'http://' . $_SERVER['HTTP_HOST'];
         header('Location: ' . filter_var($redirect, FILTER_SANITIZE_URL));
     }
