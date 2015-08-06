@@ -20,15 +20,19 @@ class Views {
 		$filePath = './files/' . $_SESSION['user_path'] . '-home.json';
 		$foldersPath = './files/' . $_SESSION['user_path'] . '-folders.json';
 
-		// var_dump($_SESSION);
-
 		/* --- Cache Home --- */
 		if (file_exists($filePath) && (filemtime($filePath) > strtotime(CACHE_TIME_APP))) {
 			$homeContent = file_get_contents($filePath, FILE_USE_INCLUDE_PATH);
+			if($homeContent == 'null'){
+				unlink($filePath);
+				unlink($foldersPath);
+				include './views/destroy.php';
+			}else{
 			$filesList = json_decode($homeContent, true);
 			$folderContent = file_get_contents($foldersPath, FILE_USE_INCLUDE_PATH);
 			$folderList = json_decode($folderContent, true);
 			include './views/home/index.php';
+		}
 
 		}else if(isset($_SESSION['user_path']) && !empty($_SESSION['user_path'])){
 			$Querys = new Querys();
@@ -55,7 +59,13 @@ class Views {
 
 				//$folderList = $General->getFolderArray($paramsFolder);
 				$folderList = $General->getFilesArray($paramsFolder, $linkToken);
+
 				$filesList = $General->getFilesArray($params, $linkToken);
+
+				if(isset($filesList['error'])){
+					include './views/destroy.php';
+					die();
+				}
 
 				// $filesList = array_merge($folderList, $filesList);
 
@@ -73,7 +83,7 @@ class Views {
 			}
 			include './views/home/index.php';
 		}else{
-			include './views/home/index.php';
+			include './views/info-error.php';
 		}
 	}
 
@@ -122,7 +132,7 @@ class Views {
 
 
 			static public function uploaddoc(){
-				include './views/uploaddoc.php';
+				include './views/files/upload.php';
 			}
 
 			static public function ValidateGClient(){
@@ -144,6 +154,23 @@ class Views {
 				print_r($result);
 
 			//include './views/configuration.php';
+			}
+
+			static public function SetPropieties(){
+				$General = new General();
+				$result = $General->insertProperty($_POST);
+
+				print_r($result);
+
+			}
+
+			static public function UploadFile(){
+				/*$General = new General();
+				$result = $General->insertFile($_POST);*/
+				$result = json_encode($_FILES);
+
+				print_r($result);
+
 			}
 
 			

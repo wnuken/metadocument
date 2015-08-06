@@ -45,16 +45,20 @@
 					if (isset($params['pageToken'])) {
 						$params['pageToken'] = $pageToken;
 					}
-					$params['maxResults'] = 100;
+					// $params['maxResults'] = 100;
 				// $params['projection'] = 'FULL';	-> deprecated
 					$files = $this->service->files->listFiles($params);
 
 					$result = array_merge($result, $files->getItems());
 					$pageToken = $files->getNextPageToken();
 				} catch (Exception $e) {
-					print "An error occurred: " . $e->getMessage();
+					$result = array(
+						'error' => true,
+						'message' => "An error occurred: " . $e->getMessage()
+						);
 					$pageToken = NULL;
-				// unset($_SESSION["access_token"]);
+					return $result;
+				 	//unset($_SESSION["access_token"]);
 				}
 			} while ($pageToken);
 			return $result;
@@ -87,7 +91,7 @@
 			return $result;
 		}
 
-		function & insertFile(&$params) {
+		/*function & insertFile(&$params) {
 
 		// $service, $title, $description, $parentId, $mimeType, ($filename o $filePath)
 			$file = new Google_Service_Drive_DriveFile();
@@ -116,6 +120,36 @@
 				$result = "An error occurred: " . $e->getMessage();
 			}
 			return $result;
+		}*/
+
+		public function insertFile($title, $description, $parentId, $mimeType, $filename) {
+			$file = new Google_Service_Drive_DriveFile();
+			$file->setTitle($title);
+			$file->setDescription($description);
+			$file->setMimeType($mimeType);
+
+  // Set the parent folder.
+			if ($parentId != null) {
+				$parent = new Google_Service_Drive_ParentReference();
+				$parent->setId($parentId);
+				$file->setParents(array($parent));
+			}
+
+			try {
+				$data = file_get_contents($filename);
+
+				$createdFile = $this->service->files->insert($file, array(
+					'data' => $data,
+					'mimeType' => $mimeType,
+					));
+
+    // Uncomment the following line to print the File ID
+    // print 'File ID: %s' % $createdFile->getId();
+
+				return $createdFile;
+			} catch (Exception $e) {
+				print "An error occurred: " . $e->getMessage();
+			}
 		}
 
 
@@ -257,10 +291,13 @@
 		$newProperty->setValue($params['value']);
 		$newProperty->setVisibility($params['visibility']);
 		try {
-			$result = $this->service->properties->insert($params['fileId'], $newProperty);
+			$result['message'] = $this->service->properties->insert($params['fileId'], $newProperty);
+			$result['result'] = 'true';
 		} catch (Exception $e) {
-			$result = "An error occurred: " . $e->getMessage();
+			$result['result'] = 'false';
+			$result['message'] = "An error occurred: " . $e->getMessage();
 		}
+		$result = json_encode($result);
 		return $result;
 	}
 
@@ -329,6 +366,10 @@
 	public function getFilesArray($params, $linkToken){
 
 		$getAllFiles = $this->retrieveAllFiles($params);
+
+		if(isset($getAllFiles['error'])){
+			return $filesList;
+		}
 
 		foreach ($getAllFiles as $key => $file) {
 			if(in_array($file['modelData']['parents'][0]['id'], $_SESSION['arrayFolder'])){

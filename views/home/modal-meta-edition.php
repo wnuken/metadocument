@@ -8,17 +8,17 @@
 			<div class="modal-body">
 				<form id="propertiesForm">
 					<div class="form-group">
-						<label for="exampleInputEmail1">Tipo</label>
+						<label for="key">Tipo</label>
 						<select class="form-control" name="key" id="key">
 							<option value="author">Autor</option>
 							<option value="type">Tipo</option>
-							<option value="gen1">Gen1</option>
+							<option value="description">Descripción</option>
 							<option value="gen2">Gen2</option>
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="exampleInputEmail1">Valor</label>
-						<input type="text" class="form-control" id="value" name="value" placeholder="Enter email">
+						<label for="value">Valor</label>
+						<input type="text" class="form-control" id="value" name="value" placeholder="Valor">
 					</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1">Visibilidad</label>
@@ -29,12 +29,12 @@
 						</select>
 					</div>
 					<input type="hidden"  id="fileId" name="fileId" value="">
-					<button type="submit" class="btn btn-default">Submit</button>
+					<button type="submit" class="btn btn-default" id="save">Guardar</button>
 				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
+				<!--button type="button" class="btn btn-primary" id="save">Guardar</button-->
 			</div>
 		</div>
 	</div>

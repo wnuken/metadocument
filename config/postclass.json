@@ -3,6 +3,8 @@
         "destroy",
         "validate-gclient",
         "validate-gapp",
-        "searh"
+        "searh",
+        "setpropeties",
+        "uploadfile"
     ]
 }

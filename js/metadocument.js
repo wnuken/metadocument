@@ -13,6 +13,7 @@ var $seahfrom = $('form#drivesearh');
 var $generalFolder = $('div#generalfolder')
 var $propertiesForm = $('form#propertiesForm');
 var $multielemt = $('div.multielemt');
+var $uploadFileForm = $('form#uploadFileForm');
 var documentId = '';
 
 $.fn.postUrl = function(params){
@@ -33,7 +34,8 @@ $.fn.GValidate = function(params){
         data: data,
         async: true,
         success: function(response) {
-            console.log(response);
+        	// $('#progress').css({'display':'none'});
+            // console.log(response);
             window.location=response.url;
 		},
         error: function() {
@@ -90,6 +92,50 @@ $.fn.ChangePhrase = function(params){
 	});
 }
 
+$.fn.setPropeties = function(params){
+    var $that = $(this);
+    var data = $that.serialize();
+    $.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'json',
+        data: data,
+        async: true,
+        success: function(response) {
+            console.log(response);
+		},
+        error: function() {
+            var message = "Rayos parece que no puedo validar los datos";
+            console.log(message);
+		}
+	});
+};
+
+
+$.fn.uploadFile = function(params){
+    var $that = $(this);
+
+    var data = new FormData($that[0]);
+    
+    $.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'json',
+        data: data,
+        cache: false,
+            contentType: false,
+            processData: false,
+        success: function(response) {
+            console.log(response);
+		},
+        error: function() {
+            var message = "Rayos parece que no puedo validar los datos";
+            console.log(message);
+		}
+	});
+};
+
+
 $('input.product_change', $chagelogin).on('change', function(){
     var $that = $(this);
     var value = $that.val();
@@ -100,6 +146,7 @@ $('input.product_change', $chagelogin).on('change', function(){
 
 $loginform.submit(function(e){
     e.preventDefault();
+    $('#progress').css({'display':'block'});
     var params = {
         'url' : $('input#redirecturi',$loginform).val()
         /*   'user' : $('input#username',$loginform).val(),
@@ -205,6 +252,24 @@ $('div.toelement', $multielemt).on('click', function(){
 	});
 });
 
+$('button#save', $propertiesForm).on('click', function(e){
+	e.preventDefault();
+	var params = {
+		"url" : "setpropeties"
+	}
+	console.log(params);
+	$propertiesForm.setPropeties(params);
+});
+
+
+$('button#save', $uploadFileForm).on('click', function(e){
+	e.preventDefault();
+	var params = {
+		"url" : "uploadfile"
+	}
+	console.log(params);
+	$uploadFileForm.uploadFile(params);
+});
 
 
 

@@ -71,6 +71,11 @@
                 <div class="col-md-3"></div>
 			</div>
 		</div>
+        <div id="progress" class="col-md-12" style="display:none;">
+        <div class="loading-ms text-center">
+            <img src="./img/loading-ms.gif">
+        </div>
+    </div>
 	</body>
 <?php require_once('./views/foot.php'); ?>
 </html>
