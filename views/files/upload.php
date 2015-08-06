@@ -11,8 +11,10 @@
 
 <form id="uploadFileForm" enctype="multipart/form-data">
 	<div class="form-group">
-		<label for="filename">Archivo</label>
-		<input type="file" class="form-control" id="filename" name="filename" placeholder="Archivo">
+		<label for="filename">Archivo</label> <!-- multiple="true" -->
+		<span class="btn btn-danger btn-file">Buscar archivo ...
+		<input type="file"  class="file" id="filename" name="filename" placeholder="Archivo">
+		</span>
 	</div>
 	<div class="form-group">
 		<label for="title">Nombre</label>

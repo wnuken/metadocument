@@ -271,7 +271,14 @@ $('button#save', $uploadFileForm).on('click', function(e){
 	$uploadFileForm.uploadFile(params);
 });
 
-
+    $('.btn-file').on('change', function() {
+        var input = $(this),
+            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        // input.trigger('fileselect', [numFiles, label]);
+        console.log(numFiles);
+        console.log(label);
+    });
 
 
 
