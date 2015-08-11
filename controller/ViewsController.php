@@ -38,7 +38,7 @@ class Views {
 			$Querys = new Querys();
 			$paramsUser['user'] = $_SESSION['user_path'];
 			$userValues = $Querys->AdminUserByUser($paramsUser);
-			if(!empty($userValues)){
+			if(!is_array($userValues)){
 				$path = $userValues->getGFolder();
 				$_SESSION['arrayFolder'][] = $path;
 
@@ -80,6 +80,9 @@ class Views {
 				fwrite($handleF, $contentFolder);
 				fclose($handleF);
 
+			}else{
+				include './views/register.php';
+				// die();
 			}
 			include './views/home/index.php';
 		}else{
@@ -89,15 +92,17 @@ class Views {
 
 	static public function searh(){
 		$query = '';
-		$stringQuery = '';
+		$stringQuery = '';		
 		if(isset($_REQUEST['query']))
 			$query = explode(' ', trim($_REQUEST['query']));
 
+
 		if(is_array($query)){
 			foreach ($query as $key => $value) {
-				$stringQuery .= $stringQuery . " and title contains '" . $value . "'";
+				$stringQuery .= " and title contains '" . $value . "'";
 			}
 		}
+		// var_dump($stringQuery);
 
 		// $paramsUser['user'] = $_SESSION['user_path'];
 
@@ -119,6 +124,7 @@ class Views {
 			$params['q'] = "'$path' in parents" . $stringQuery; 
 			*/
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' " . $stringQuery;
+			
 		}
 
 		$General = new General();

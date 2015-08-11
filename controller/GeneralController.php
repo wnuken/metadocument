@@ -45,7 +45,7 @@
 					if (isset($params['pageToken'])) {
 						$params['pageToken'] = $pageToken;
 					}
-					// $params['maxResults'] = 100;
+				 // $params['maxResults'] = 10;
 				// $params['projection'] = 'FULL';	-> deprecated
 					$files = $this->service->files->listFiles($params);
 

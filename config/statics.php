@@ -8,10 +8,17 @@
 $serverRedirect = 'http://' . $_SERVER['HTTP_HOST'];
 
 /* ---- API CLIENT DATA ----*/
+/*
 define('GOOGLE_CLIENT_ID', '15826266280.apps.googleusercontent.com');
 define('GOOGLE_CLIENT_SECRECT', 'CqFS-4gtdlppZ402nt1BWZGL');
 define('GOOGLE_REDIRECT_URI', $serverRedirect);
 define('GOOGLE_CLIENT_MAIL', '15826266280@developer.gserviceaccount.com');
+*/
+
+define('GOOGLE_CLIENT_ID', '322974934904-s2jkdhpko7np0cvp2ein9fmk8608q316.apps.googleusercontent.com');
+define('GOOGLE_CLIENT_SECRECT', 'tz0JNZWQfO9PhPVgOn_XMnw8');
+define('GOOGLE_REDIRECT_URI', $serverRedirect);
+// define('GOOGLE_CLIENT_MAIL', '322974934904@developer.gserviceaccount.com');
 
 /* Procution Data*/
 
@@ -33,9 +40,14 @@ http://local.metadocument.com
  */
 
 /* ---- API APP DATA ----*/
+/*
 define('GOOGLE_CLIENT_ID_APP', '15826266280-nm2d3nfer39k95ob7sk6t0olv8t8ea9e.apps.googleusercontent.com');
 define('GOOGLE_SERVICE_ACCOUNT_APP', '15826266280-nm2d3nfer39k95ob7sk6t0olv8t8ea9e@developer.gserviceaccount.com');
 define('GOOGLE_LOCATION_KEY_APP', './llave-app/Metadocument-pre-eed2b1f1f81f.p12');
+*/
+define('GOOGLE_CLIENT_ID_APP', '322974934904-m2g4rf3eucvft23p7jl2sbt3tvtekh1l.apps.googleusercontent.com');
+define('GOOGLE_SERVICE_ACCOUNT_APP', '322974934904-m2g4rf3eucvft23p7jl2sbt3tvtekh1l@developer.gserviceaccount.com');
+define('GOOGLE_LOCATION_KEY_APP', './llave-app/Metadocument-9481caa3d5da.p12');
 
 /* Procution Data*/
 
