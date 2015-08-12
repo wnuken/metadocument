@@ -8,4 +8,4 @@ if(isset($_REQUEST['username'])){
 $Settings = new Settings();
 $GoogleClient = $Settings->GoogleClient();
 $authUrl = $GoogleClient->createAuthUrl();
-print '{"url" : "' . $authUrl . '&user='.$user.'"}';
+print '{"url" : "' . $authUrl . '"}';

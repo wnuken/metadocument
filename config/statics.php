@@ -66,5 +66,5 @@ Huellas digitales de certificados
 /* ---- SERVER DATA ---- */
 define('SERVER_KEY', 'LLAVE_DEL_SERVIDOR');
 
-define('CACHE_TIME_APP', '- 1800 seconds');
+define('CACHE_TIME_APP', '-30 seconds');
 
