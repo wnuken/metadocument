@@ -1,5 +1,5 @@
 <div class="">
-<div id="progress" class="col-md-12" style="display:none;">
+	<div id="progress" class="col-md-12" style="display:none;">
 		<div class="loading-ms text-center">
 			<img src="./img/loading-ms.gif">
 		</div>
@@ -14,7 +14,6 @@
 								<i class="glyphicon glyphicon-folder-close"></i> Explorar <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" role="menu" id="generalfolder">
-								<!--li><a data-g-id="<?php print $path; ?>" href="javascript:void(0);"><i class="glyphicon glyphicon-folder-open"></i> Principal</a></li-->
 								<?php 
 								if(is_array($folderList)):
 									foreach($folderList as $key => $folder): ?>
@@ -30,16 +29,14 @@
 								endif; ?>
 							</ul>
 						</div>
-						<!--div class="input-group col-md-4">
-							<input type="text" class="form-control" id="datepicker" name="datepicker" placeholder="Fecha inicial">
-						</div-->
+						
 					</div>
 				</div>
 				<div id="collapseNews" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 					<div class="panel-body">
 						
 						<div class="row">
-						
+
 							
 							<!--div class="col-md-12">
 								<ol class="breadcrumb">

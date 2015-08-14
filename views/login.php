@@ -48,11 +48,11 @@
                                     <div id="changeform">
                                         <div class="form-group">
                                             <label for="username">RUT </label>
-                                            <input name="username" id="username" type="text" autofocus="" placeholder="RUT" class="form-control" > 
+                                            <input name="username" id="username" type="text" autofocus="" placeholder="RUT" class="form-control inputborder" > 
 										</div>
                                         <div class="form-group">
                                             <label for="password">Password</label>
-                                            <input name="password" id="password" type="password" placeholder="Password" class="form-control">
+                                            <input name="password" id="password" type="password" placeholder="Password" class="form-control inputborder">
 										</div>
                                         <input name="logintype" id="logintype" type="hidden" value="metadocument">
                                         <input name="redirecturi" id="redirecturi" type="hidden" value="validate-gapp" class="form-control" >
@@ -60,7 +60,7 @@
                                     <div class="text-center">
                                         <div class="btn-group">
 											
-                                            <button class="btn btn-danger btn-block" id="submit" type="submit">Ingresar</button>
+                                            <button class="btn btn-primary btn-block" id="submit" type="submit">Ingresar</button>
 										</div>
 									</div>
 								</fieldset>

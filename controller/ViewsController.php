@@ -16,7 +16,7 @@ class Views {
 
 	static public function Home(){
 
-		print('<pre>'); print_r($_SESSION); print('</pre>');
+		// print('<pre>'); print_r($_SESSION); print('</pre>');
 
 		$path = '';
 		$filePath = './files/' . $_SESSION['user_path'] . '-home.json';
@@ -40,45 +40,41 @@ class Views {
 
 			if(!is_array($userValues)){
 				$path = $userValues->getGFolder();
-				// print('<pre>'); var_dump($path); print('</pre>');
-				$_SESSION['arrayFolder'][] = $path;
-
-				if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])) {
+				$_SESSION['arrayFolder']['0'] = $path;
+				$params['maxResults'] = 2;
+				$params['pageToken'] = NULL;
+				//$params['nextPageToken'] = '';
+				if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])){
+					$arrayAccessToken = json_decode($_SESSION['access_token'], true);
+					//$params['access_token'] = $arrayAccessToken['access_token'];
+					// $params['q'] = "mimeType!=" . rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
 					$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
-					//$params['q'] = "'$path' in parents";
+					//$paramsFolder['q'] = "mimeType=". rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
 					$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 					$linkToken = '';
-				}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])) {
-					$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
-					//$params['q'] = "'$path' in parents";
-					$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
+				}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])){
 					$arrayServiceToken = json_decode($_SESSION['service_token'], true);
+					//$params['access_token'] = $arrayServiceToken['access_token'];
 					$linkToken = '&access_token=' . $arrayServiceToken['access_token'];
+					// $params['q'] = "mimeType!=". rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
+					$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
+					//$paramsFolder['q'] = "mimeType=". rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
+					$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 				}
 
 				$General = new General();
-				// https://www.googleapis.com/drive/v2/files?q=%27root%27%20in%20parents&access_token=ya29.zQFM8j9MrTZjHEVtV-b9UgZvjOOjriSH3__XxtfEOQv2y-TDwTZ33XQg7_op589sP9exQA
-				/*
-				{
- "error": {
-  "errors": [
-   {
-    "domain": "global",
-    "reason": "authError",
-    "message": "Invalid Credentials",
-    "locationType": "header",
-    "location": "Authorization"
-   }
-  ],
-  "code": 401,
-  "message": "Invalid Credentials"
- }
-}
+				/*$params1['access_token'] = $arrayAccessToken['access_token'];
+				$params1['q'] = "mimeType!=" . rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
+				
+				$jsonList = $General->getFilesListJson($params1);
+				$arrayList = json_decode($jsonList, true);
+				print('<pre>'); print_r($arrayList); print('</pre>');*/
+				
 
 
-				*/
-				//$folderList = $General->getFolderArray($paramsFolder);
-				$folderList = $General->getFilesArray($paramsFolder, $linkToken);
+				
+				$folderList = $General->getFolderArray($paramsFolder);
+				//$folderList = $General->getFilesArray($paramsFolder, $linkToken);
 
 				$filesList = $General->getFilesArray($params, $linkToken);
 
@@ -95,91 +91,11 @@ class Views {
 
 				include './views/home/index.php';
 			}else{
-				include './views/register.php';
-			}
-
-
-			
+				include './views/register/index.php';
+			}	
 		}else{
-			include './views/register.php';
+			include './views/destroy.php';
 		}
-
-
-		// if (file_exists($homeContent) && (filemtime($filePath) > strtotime(CACHE_TIME_APP))) {
-
-
-
-
-
-
-		/* --- Cache Home --- *//*
-		if (file_exists($filePath) && (filemtime($filePath) > strtotime(CACHE_TIME_APP))) {
-			$homeContent = file_get_contents($filePath, FILE_USE_INCLUDE_PATH);
-			if($homeContent == 'null'){
-				unlink($filePath);
-				unlink($foldersPath);
-				include './views/destroy.php';
-			}else{
-			$filesList = json_decode($homeContent, true);
-			$folderContent = file_get_contents($foldersPath, FILE_USE_INCLUDE_PATH);
-			$folderList = json_decode($folderContent, true);
-			include './views/home/index.php';
-		}
-
-		}else if(isset($_SESSION['user_path']) && !empty($_SESSION['user_path'])){
-			$Querys = new Querys();
-			$paramsUser['user'] = $_SESSION['user_path'];
-			$userValues = $Querys->AdminUserByUser($paramsUser);
-			if(!is_array($userValues)){
-				$path = $userValues->getGFolder();
-				$_SESSION['arrayFolder'][] = $path;
-
-				if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])) {
-					$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
-					//$params['q'] = "'$path' in parents";
-					$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
-					$linkToken = '';
-				}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])) {
-					$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
-					//$params['q'] = "'$path' in parents";
-					$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
-					$arrayServiceToken = json_decode($_SESSION['service_token'], true);
-					$linkToken = '&access_token=' . $arrayServiceToken['access_token'];
-				}
-
-				$General = new General();
-
-				//$folderList = $General->getFolderArray($paramsFolder);
-				$folderList = $General->getFilesArray($paramsFolder, $linkToken);
-
-				$filesList = $General->getFilesArray($params, $linkToken);
-
-				if(isset($filesList['error'])){
-					include './views/destroy.php';
-					die();
-				}
-
-				// $filesList = array_merge($folderList, $filesList);
-
-
-				$handle = fopen($filePath, 'w+');
-				$content = json_encode($filesList);
-				fwrite($handle, $content);
-				fclose($handle);
-
-				$handleF = fopen($foldersPath, 'w+');
-				$contentFolder = json_encode($folderList);
-				fwrite($handleF, $contentFolder);
-				fclose($handleF);
-
-			}else{
-				include './views/register.php';
-				// die();
-			}
-			include './views/home/index.php';
-		}else{
-			include './views/info-error.php';
-		}*/
 	}
 
 	static public function searh(){
@@ -223,6 +139,47 @@ class Views {
 		$filesList = $General->getFilesArray($params, $linkToken);
 		include './views/home/general-searh.php';
 	}
+
+
+	static public function searhPage(){
+
+		$query = '';
+		$params['maxResults'] = 2;
+		$params['pageToken'] = NULL;
+		if(isset($_REQUEST['pageToken']))
+			$params['pageToken'] = $_REQUEST['pageToken'];
+
+
+		if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])) {
+			$linkToken = '';
+		}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])) {
+			$arrayServiceToken = json_decode($_SESSION['service_token'], true);
+			$linkToken = '&access_token=' . $arrayServiceToken['access_token'];
+		}
+
+		if(isset($_REQUEST['parents'])){
+			$path = $_REQUEST['parents'];
+			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
+		}else{
+			$params['q'] = "mimeType!='application/vnd.google-apps.folder'";
+		}
+
+		$General = new General();
+		$filesList = $General->getFilesArray($params, $linkToken);
+		
+		include './views/home/general-searh.php';
+
+
+
+	}
+
+	static public function registerUser(){
+		$General = new General();
+		$register = $General->registerUser($_POST);
+		include './views/register/finish.php';
+	}
+
+
 
 			static public function destroy(){
 				include './views/destroy.php';

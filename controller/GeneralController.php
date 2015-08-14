@@ -37,6 +37,38 @@
 			return $result;
 		}
 
+
+		public function getFilesListJson($params){
+			$query = URL_GOOGLE_API . '?q=' . $params['q'] .
+			'&access_token=' . $params['access_token'] .
+			'&maxResults=' . $params['maxResults'] .
+			'&pageToken=' . $params['nextPageToken'];
+			$result = file_get_contents($query);
+			return $result;
+		}
+
+		public function & getFilesList(&$params) {
+			$result = array();
+			$pageToken = NULL;
+				try {
+					if (!isset($params['pageToken'])) {
+						$params['pageToken'] = $pageToken;
+					}
+					$files = $this->service->files->listFiles($params);
+
+					$result['items'] = $files->getItems();
+					$result['pageToken'] = $files->getNextPageToken();
+				} catch (Exception $e) {
+					$result = array(
+						'error' => true,
+						'message' => "An error occurred: " . $e->getMessage()
+						);
+					$pageToken = NULL;
+				 	//unset($_SESSION["access_token"]);
+				}
+			return $result;
+		}
+
 		public function & retrieveAllFiles(&$params) {
 			$result = array();
 			$pageToken = NULL;
@@ -45,8 +77,6 @@
 					if (isset($params['pageToken'])) {
 						$params['pageToken'] = $pageToken;
 					}
-				 // $params['maxResults'] = 10;
-				// $params['projection'] = 'FULL';	-> deprecated
 					$files = $this->service->files->listFiles($params);
 
 					$result = array_merge($result, $files->getItems());
@@ -121,6 +151,35 @@
 			}
 			return $result;
 		}*/
+
+		public function insertFolder($params){
+			
+			$folder = new Google_Service_Drive_DriveFile();
+			$folder->setTitle($params['title']);
+			$folder->setMimeType('application/vnd.google-apps.folder');
+
+			if (!isset($params['parentId']) || empty($params['parentId']))
+				$params['parentId'] = 'root';
+
+			$parent = new Google_Service_Drive_ParentReference();
+			$parent->setId($params['parentId']);
+			$folder->setParents(array($parent));
+
+			try {
+				$result = $this->service->files->insert($folder, array(
+					'mimeType' => 'application/vnd.google-apps.folder'
+					));
+				// $result->id;
+				
+			} catch (Exception $e) {
+				$result = array(
+					'error' => true,
+					'message' => "An error occurred: " . $e->getMessage()
+					);
+			}
+
+			return $result;
+		}
 
 		public function insertFile($title, $description, $parentId, $mimeType, $filename) {
 			$file = new Google_Service_Drive_DriveFile();
@@ -231,10 +290,6 @@
 			}
 			return NULL;
 		}
-
-
-
-
 
 		function updateComment($service, $fileId, $commentId, $newContent) {
 			try {
@@ -365,13 +420,16 @@
 	
 	public function getFilesArray($params, $linkToken){
 
-		$getAllFiles = $this->retrieveAllFiles($params);
+		$getFilesList = $this->getFilesList($params);
 
-		if(isset($getAllFiles['error'])){
-			return $filesList;
+		if(isset($getFilesList['error'])){
+			return $getFilesList;
 		}
 
-		foreach ($getAllFiles as $key => $file) {
+		foreach ($getFilesList['items'] as $key => $file) {
+			if($key == 0)
+				$filesList['parents'] = $file->parents[0]->id;
+
 			if(in_array($file['modelData']['parents'][0]['id'], $_SESSION['arrayFolder'])){
 
 
@@ -393,6 +451,11 @@
 					'description' => $file->getDescription()
 					);
 
+				if(isset($files->properties)){
+					$filesList[$key]['properties']['key'] = $files->properties['key'];
+					$filesList[$key]['properties']['value'] = $files->properties['value'];
+				}
+
 				if(isset($file->exportLinks)){
 					foreach($file->exportLinks as $keyb => $exportlink){
 						$iconlink = $this->setNameIcon($keyb);
@@ -404,25 +467,30 @@
 				}
 
 			}
-
 		}
+		$filesList['pageToken'] = $getFilesList['pageToken'];
+		
+
 		return $filesList;
 	}
 
 	public function getFolderArray($params){
 		$result = array();
 		$getAllFolder = $this->retrieveAllFiles($params);
-		$result[] = array(
+		/*$result[] = array(
 				'id' => $params,
 				'title' => 'Principal'
-				);
-
-		foreach ($getAllFolder as $key => $folder) {
+				);*/
+		
+		if(!is_array($getAllFolder)){
+			foreach ($getAllFolder as $key => $folder) {
 			$result[] = array(
 				'id' => $folder->getId(),
 				'title' => $folder->getTitle()
 				);
 		}
+		}
+		
 
 		return $result;
 
@@ -433,6 +501,21 @@
 			}
 		}*/
 
+	}
+
+	public function registerUser($params){
+		
+		$paramsFolder['title'] = $params['folder'];
+		$newFolder = $this->insertFolder($paramsFolder);
+
+		$AdminUser = new AdminUser();
+		$AdminUser->setUser($params['id']);
+		$AdminUser->setPassword($params['email']);
+		$AdminUser->setGFolder($newFolder->id);
+
+		$result = $AdminUser->save();
+
+		return $result;
 	}
 
 	private function & setNameIcon(&$params){

@@ -5,6 +5,8 @@
         "validate-gapp",
         "searh",
         "setpropeties",
-        "uploadfile"
+        "uploadfile",
+        "searhpage",
+        "register-user"
     ]
 }

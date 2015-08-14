@@ -14,6 +14,7 @@ var $generalFolder = $('div#generalfolder')
 var $propertiesForm = $('form#propertiesForm');
 var $multielemt = $('div.multielemt');
 var $uploadFileForm = $('form#uploadFileForm');
+var $registerform = $('form#register');
 var documentId = '';
 
 $.fn.postUrl = function(params){
@@ -199,6 +200,54 @@ $seahfrom.submit(function(e){
 	
 });
 
+function pagesearh(that){
+//$('a#nextpage').on('click', function(e){
+	$('#progress').css({'display':'block'});
+	var $that = $(that);
+	var data = {
+		"pageToken" : $that.attr('data-g-id'),
+		"parents" : $that.attr('data-g-parents')
+	}
+	console.log(data);
+	var params = {
+		url : 'searhpage'
+	};
+	/* e.preventDefault();
+	var $that = $(that);
+	var valueSearh = $('input#query', $that).val();
+	var params = {
+		url : 'searhpage'
+	};
+	var data = {
+		"pageToken" : $that.attr('data-g-id')
+	}
+	*/
+	$.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'html',
+        data: data,
+        async: true,
+        success: function(response) {
+            $('#progress').css({'display':'none'});
+            $('div#generalsearhresult').fadeOut("slow", function(){
+                $thet = $(this);
+                $thet.html('');
+                $thet.html(response).fadeIn();
+			});
+            // window.location=response.url;
+		},
+        error: function() {
+            var message = "Rayos parece que no puedo validar los datos";
+            console.log(message);
+		}
+	});
+
+
+
+};
+
+
 $('a', $generalFolder).on('click', function(e){
 	e.preventDefault();
 	var $that = $(this);
@@ -229,9 +278,44 @@ $('a', $generalFolder).on('click', function(e){
 		}
 	});
 	}
-	
+});
+
+
+$registerform.submit(function(e){
+	e.preventDefault();
+	var $that = $(this);
+	var params = {
+		url : 'register-user'
+	};
+	var data = $that.serialize();
+
+	$('#progress').css({'display':'block'});
+
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'html',
+		data: data,
+		async: true,
+		success: function(response) {
+			$('#progress').css({'display':'none'});
+			$('div#registerResult').fadeOut("slow", function(){
+				$thet = $(this);
+				$thet.html('');
+				$thet.html(response).fadeIn();
+			});
+		},
+		error: function() {
+			var message = "Rayos parece que no puedo validar los datos";
+			console.log(message);
+		}
+	});
+
+
+
 	
 });
+
 
 $('button.buttonProperies').on('click', function(){
 	var $that = $(this);
