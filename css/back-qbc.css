@@ -5,7 +5,7 @@ div#content{
 body {
 	padding-top: 40px;
 	padding-bottom: 40px;
-	background-color: #c8e5e3;
+	background-color: #e8e8e7;
 }
 .form-signin {
 	max-width: 330px;
@@ -43,16 +43,16 @@ body {
 }
 
 div.borderContent {
-	outline: 5px solid #1792a4;
+	outline: 5px solid #0E2969;
 }
 
 input[type="text"].inputborder, input[type="password"].inputborder {
-	outline: 5px solid #c8e5e3;
+	outline: 5px solid #f6f5f5;
 }
 
-.inputborder:focus {
-	border-color: #66afe9;
-	outline: 5px solid #c8e5e3;
+input[type="text"].inputborder:focus, input[type="password"].inputborder:focus {
+	border-color: #1792a4;
+	outline: 5px solid #e8e8e7;
 }
 
 .navbar-inverse {

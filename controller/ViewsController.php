@@ -24,8 +24,14 @@ class Views {
 
 		if (file_exists($filePath) && filemtime($filePath) > strtotime(CACHE_TIME_APP)) {
 			$homeContent = file_get_contents($filePath, FILE_USE_INCLUDE_PATH);
+
+			if(file_exists($foldersPath)){
+				$homeFolder = file_get_contents($foldersPath, FILE_USE_INCLUDE_PATH);
+				$folderList = json_decode($homeFolder, true);
+			}
+
 			$filesList = json_decode($homeContent, true);
-			if(is_array($filesList)){
+			if(is_array($filesList) && !isset($filesList['error'])){
 				include './views/home/index.php';
 			}else {
 				unlink($filePath);
@@ -41,7 +47,7 @@ class Views {
 			if(!is_array($userValues)){
 				$path = $userValues->getGFolder();
 				$_SESSION['arrayFolder']['0'] = $path;
-				$params['maxResults'] = 2;
+				$params['maxResults'] = MAX_FILES_PAGE;
 				$params['pageToken'] = NULL;
 				//$params['nextPageToken'] = '';
 				if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])){
@@ -73,9 +79,8 @@ class Views {
 
 
 				
-				$folderList = $General->getFolderArray($paramsFolder);
+				$folderList = $General->getFilesArray($paramsFolder, $linkToken);
 				//$folderList = $General->getFilesArray($paramsFolder, $linkToken);
-
 				$filesList = $General->getFilesArray($params, $linkToken);
 
 				$handle = fopen($filePath, 'w+');
@@ -144,7 +149,7 @@ class Views {
 	static public function searhPage(){
 
 		$query = '';
-		$params['maxResults'] = 2;
+		$params['maxResults'] = MAX_FILES_PAGE;
 		$params['pageToken'] = NULL;
 		if(isset($_REQUEST['pageToken']))
 			$params['pageToken'] = $_REQUEST['pageToken'];

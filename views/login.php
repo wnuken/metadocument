@@ -60,7 +60,7 @@
                                     <div class="text-center">
                                         <div class="btn-group">
 											
-                                            <button class="btn btn-primary btn-block" id="submit" type="submit">Ingresar</button>
+                                            <button class="btn btn-danger btn-block" id="submit" type="submit">Ingresar</button>
 										</div>
 									</div>
 								</fieldset>
@@ -73,7 +73,7 @@
 		</div>
         <div id="progress" class="col-md-12" style="display:none;">
         <div class="loading-ms text-center">
-            <img src="./img/loading-ms.gif">
+            <img src="./img/loading-text.gif">
         </div>
     </div>
 	</body>

@@ -26,7 +26,8 @@ define('GOOGLE_LOCATION_KEY_APP', './llave-app/Metadocument-9481caa3d5da.p12');
 /* ---- SERVER DATA ---- */
 define('SERVER_KEY', 'LLAVE_DEL_SERVIDOR');
 
-define('CACHE_TIME_APP', '-30 seconds');
+define('CACHE_TIME_APP', '-300 seconds');
+define('MAX_FILES_PAGE', '20');
 
 define('URL_GOOGLE_API', 'https://www.googleapis.com/drive/v2/files');
 
