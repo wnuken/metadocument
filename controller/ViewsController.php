@@ -128,6 +128,7 @@ class Views {
 
 		if(isset($_REQUEST['path'])){
 			$path = $_REQUEST['path'];
+			$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
 		}else{
 			/*
@@ -136,11 +137,13 @@ class Views {
 			$path = $userValues->getGFolder();
 			$params['q'] = "'$path' in parents" . $stringQuery; 
 			*/
+			$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' " . $stringQuery;
 			
 		}
 
 		$General = new General();
+		$folderList = $General->getFilesArray($paramsFolder, $linkToken);
 		$filesList = $General->getFilesArray($params, $linkToken);
 		include './views/home/general-searh.php';
 	}
@@ -165,11 +168,14 @@ class Views {
 		if(isset($_REQUEST['parents'])){
 			$path = $_REQUEST['parents'];
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
+			$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 		}else{
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder'";
+			$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 		}
 
 		$General = new General();
+		$folderList = $General->getFilesArray($paramsFolder, $linkToken);
 		$filesList = $General->getFilesArray($params, $linkToken);
 		
 		include './views/home/general-searh.php';

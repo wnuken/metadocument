@@ -1,16 +1,16 @@
 <div class="row">
 	<?php
 	if(is_array($folderList)): ?>
-
-	<div class="col-md-2 hidden-xs">
-		<div class="col-md-12 img-thumbnail">
+<div class="row">
+	<div class="col-md-12 hidden-xs">
+		
 			<?php foreach($folderList as $key => $file):
 			if(is_numeric($key)):
 				?>
-
-			<div class="row" id="generalfolder">
-				<a href="javascript:void(0);" target="_blank" class="text-center" data-g-id="<?php print $file['id']; ?>">
-					<div class="col-md-3">
+			<div class="col-sm-2 col-md-3 col-lg-2 img-thumbnail">
+			<div id="generalfolder">
+				<a href="javascript:void(0);" class="text-center" onclick="datasearhGD('<?php print $file['id']; ?>', this);">
+					<div style="width:40px;float:left;">
 						<img class="img-thumbnail" 
 						src="./img/carpetas.png" 
 						data-mime="<?php print $file['mimeType']; ?>" 
@@ -18,7 +18,7 @@
 						title="<?php print $file['title']; ?>">
 					</div>
 					<div class="col-md-9">
-						<h5 >
+						<h5 class="hidden-sm" >
 						<!--img src="<?php print $file['icon']; ?>" 
 						alt="<?php print $file['mimeType']; ?>" 
 						title="<?php print $file['mimeType']; ?>"-->
@@ -27,13 +27,14 @@
 				</div>
 			</a>
 		</div>
-
+</div>
 		<?php 
 		endif;
 		endforeach;
 		?>
 
-	</div>
+	
+</div>
 </div>
 <?php 
 endif;
@@ -47,13 +48,15 @@ endif;
 			foreach($filesList as $key => $file):
 				if(is_numeric($key)):
 					?>
-				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-2 multielemt">
-					<div class="toelement">
-						<img style="max-height: 81%" class="img-thumbnail" 
+				<div class="col-xs-6 col-sm-3 col-md-3 col-lg-2 multielemt" height="400">
+					<div class="toelement" >
+						<div style="height:200px; overflow: hidden;" class="img-thumbnail text-center">
+						<img style="width:95%"  
 						src="<?php print $file['image']; ?>" 
 						data-mime="<?php print $file['mimeType']; ?>" 
 						alt="<?php print $file['title']; ?>" 
 						title="<?php print $file['title']; ?>">
+						</div>
 						<h5 class="hidden-xs">
 							<a href="<?php print $file['url']; ?>" target="_blank" class="text-center">
 								<img src="<?php print $file['icon']; ?>" 
@@ -63,6 +66,7 @@ endif;
 							</a>
 						</h5>
 					</div>
+					
 					<div class="fromelement" style="display:none;">
 
 

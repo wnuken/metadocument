@@ -430,7 +430,7 @@
 			if($key == 0)
 				$filesList['parents'] = $file->parents[0]->id;
 
-			if(in_array($file['modelData']['parents'][0]['id'], $_SESSION['arrayFolder'])){
+			//if(in_array($file['modelData']['parents'][0]['id'], $_SESSION['arrayFolder'])){
 
 
 				if($file->mimeType == 'application/vnd.google-apps.document'){
@@ -466,7 +466,7 @@
 					$filesList[$key]['exportLinks'][$iconlink] = $file->downloadUrl . $linkToken;
 				}
 
-			}
+			//}
 		}
 		$filesList['pageToken'] = $getFilesList['pageToken'];
 		

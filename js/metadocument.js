@@ -247,12 +247,12 @@ function pagesearh(that){
 
 };
 
-
-$('a', $generalFolder).on('click', function(e){
-	e.preventDefault();
-	var $that = $(this);
+function datasearhGD(idPath, element){
+//$('a', $generalFolder).on('click', function(e){
+	element.preventDefault;
+	var $that = $(element);
 	var data = {
-		"path" : $that.attr('data-g-id'),
+		"path" : idPath,
 		"url" : "searh"
 	};
 	
@@ -278,7 +278,7 @@ $('a', $generalFolder).on('click', function(e){
 		}
 	});
 	}
-});
+};
 
 
 $registerform.submit(function(e){

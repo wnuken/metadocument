@@ -16,7 +16,9 @@
 							<ul class="dropdown-menu" role="menu" id="generalfolder">
 								<?php 
 								if(is_array($folderList)):
-									foreach($folderList as $key => $folder): ?>
+									foreach($folderList as $key => $folder):
+										if(is_numeric($key)):
+									 ?>
 								<li>
 									<a data-g-id="<?php print $folder['id']; ?>" href="javascript:void(0);">
 										<i class="glyphicon glyphicon-folder-open"></i> 
@@ -25,6 +27,7 @@
 								</li>
 								<?php
 								$_SESSION['arrayFolder'][] = $folder['id'];
+								endif;
 								endforeach;
 								endif; ?>
 							</ul>
