@@ -18,156 +18,156 @@ var $registerform = $('form#register');
 var documentId = '';
 
 $.fn.postUrl = function(params){
-    var $that = $(this);
-    var url = "/";
-    $.post(params, { url: url }, function(data) {
-        $that.html(data);
+	var $that = $(this);
+	var url = "/";
+	$.post(params, { url: url }, function(data) {
+		$that.html(data);
 	});
 };
 
 $.fn.GValidate = function(params){
-    var $that = $(this);
-    var data = $that.serialize();
-    $.ajax({
-        type: "POST",
-        url: params.url,
-        dataType: 'json',
-        data: data,
-        async: true,
-        success: function(response) {
+	var $that = $(this);
+	var data = $that.serialize();
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'json',
+		data: data,
+		async: true,
+		success: function(response) {
         	// $('#progress').css({'display':'none'});
             // console.log(response);
             window.location=response.url;
-		},
+        },
         error: function() {
-            var message = "Rayos parece que no puedo validar los datos";
-            console.log(message);
-		}
-	});
+        	var message = "Rayos parece que no puedo validar los datos";
+        	console.log(message);
+        }
+    });
 };
 
 $.fn.GSearh = function(params){
-    var $that = $(this);
-    var data = $that.serialize();
-    $.ajax({
-        type: "POST",
-        url: params.url,
-        dataType: 'html',
-        data: data,
-        async: true,
-        success: function(response) {
-            $('#progress').css({'display':'none'});
-            $('div#generalsearhresult').fadeOut("slow", function(){
-                $thet = $(this);
-                $thet.html('');
-                $thet.html(response).fadeIn();
+	var $that = $(this);
+	var data = $that.serialize();
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'html',
+		data: data,
+		async: true,
+		success: function(response) {
+			$('#progress').css({'display':'none'});
+			$('div#generalsearhresult').fadeOut("slow", function(){
+				$thet = $(this);
+				$thet.html('');
+				$thet.html(response).fadeIn();
 			});
             // window.location=response.url;
-		},
+        },
         error: function() {
-            var message = "Rayos parece que no puedo validar los datos";
-            console.log(message);
-		}
-	});
+        	var message = "Rayos parece que no puedo validar los datos";
+        	console.log(message);
+        }
+    });
 };
 
 $.fn.ChangePhrase = function(params){
 	var $that = $(this);
 	var data = $that.serialize();
 	$.ajax({
-        type: "POST",
-        url: params.url,
-        dataType: 'json',
-        data: data,
-        async: true,
-        success: function(response) {
-            console.log(response);
+		type: "POST",
+		url: params.url,
+		dataType: 'json',
+		data: data,
+		async: true,
+		success: function(response) {
+			console.log(response);
 			if(response.validate == false){
 				$('p#messageError').css({"display":"block"}).html(messageError[1]);
 			}
 		},
-        error: function() {
-            var message = "Rayos parece que no puedo validar los datos";
-            console.log(message);
+		error: function() {
+			var message = "Rayos parece que no puedo validar los datos";
+			console.log(message);
 		}
 	});
 }
 
 $.fn.setPropeties = function(params){
-    var $that = $(this);
-    var data = $that.serialize();
-    $.ajax({
-        type: "POST",
-        url: params.url,
-        dataType: 'json',
-        data: data,
-        async: true,
-        success: function(response) {
-            console.log(response);
+	var $that = $(this);
+	var data = $that.serialize();
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'json',
+		data: data,
+		async: true,
+		success: function(response) {
+			console.log(response);
 		},
-        error: function() {
-            var message = "Rayos parece que no puedo validar los datos";
-            console.log(message);
+		error: function() {
+			var message = "Rayos parece que no puedo validar los datos";
+			console.log(message);
 		}
 	});
 };
 
 
 $.fn.uploadFile = function(params){
-    var $that = $(this);
+	var $that = $(this);
 
-    var data = new FormData($that[0]);
-    
-    $.ajax({
-        type: "POST",
-        url: params.url,
-        dataType: 'json',
-        data: data,
-        cache: false,
-            contentType: false,
-            processData: false,
-        success: function(response) {
-            console.log(response);
+	var data = new FormData($that[0]);
+
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'json',
+		data: data,
+		cache: false,
+		contentType: false,
+		processData: false,
+		success: function(response) {
+			console.log(response);
 		},
-        error: function() {
-            var message = "Rayos parece que no puedo validar los datos";
-            console.log(message);
+		error: function() {
+			var message = "Rayos parece que no puedo validar los datos";
+			console.log(message);
 		}
 	});
 };
 
 
 $('input.product_change', $chagelogin).on('change', function(){
-    var $that = $(this);
-    var value = $that.val();
-    var url = './views/form-login-' + value + '.php';
-    $changeform.postUrl(url);
+	var $that = $(this);
+	var value = $that.val();
+	var url = './views/form-login-' + value + '.php';
+	$changeform.postUrl(url);
 	
 });
 
 $loginform.submit(function(e){
-    e.preventDefault();
-    $('#progress').css({'display':'block'});
-    var params = {
-        'url' : $('input#redirecturi',$loginform).val()
+	e.preventDefault();
+	$('#progress').css({'display':'block'});
+	var params = {
+		'url' : $('input#redirecturi',$loginform).val()
         /*   'user' : $('input#username',$loginform).val(),
 			'type' : $('input#logintype',$loginform).val(),
 			'pass' : $('input#password',$loginform).val() */
 		};
 		
 		// if(params.type == 'google'){
-		
-		$loginform.GValidate(params);
-		
+
+			$loginform.GValidate(params);
+
 		// }else{    }
 		
-});
+	});
 
 $chagephrase.submit(function(e){
 	e.preventDefault();
 	var $that = $(this);
-    var params = {
-        'url' : $that.attr('id')
+	var params = {
+		'url' : $that.attr('id')
 	}
 	
 	var newPhrase = $('input#newphrse', $that).val();
@@ -176,7 +176,7 @@ $chagephrase.submit(function(e){
 		$that.ChangePhrase(params);	
 		$('input#newphrse1', $that).closest('div').removeClass('has-error');
 		$('p#messageError').css({"display":"none"}).html();
-		}else{
+	}else{
 		$('input#newphrse1', $that).closest('div').addClass('has-error');
 		$('p#messageError').css({"display":"block"}).html(messageError[0]);
 	}
@@ -223,25 +223,25 @@ function pagesearh(that){
 	}
 	*/
 	$.ajax({
-        type: "POST",
-        url: params.url,
-        dataType: 'html',
-        data: data,
-        async: true,
-        success: function(response) {
-            $('#progress').css({'display':'none'});
-            $('div#generalsearhresult').fadeOut("slow", function(){
-                $thet = $(this);
-                $thet.html('');
-                $thet.html(response).fadeIn();
+		type: "POST",
+		url: params.url,
+		dataType: 'html',
+		data: data,
+		async: true,
+		success: function(response) {
+			$('#progress').css({'display':'none'});
+			$('div#generalsearhresult').fadeOut("slow", function(){
+				$thet = $(this);
+				$thet.html('');
+				$thet.html(response).fadeIn();
 			});
             // window.location=response.url;
-		},
+        },
         error: function() {
-            var message = "Rayos parece que no puedo validar los datos";
-            console.log(message);
-		}
-	});
+        	var message = "Rayos parece que no puedo validar los datos";
+        	console.log(message);
+        }
+    });
 
 
 
@@ -259,24 +259,24 @@ function datasearhGD(idPath, element){
 	if(data.path != ''){
 		$('#progress').css({'display':'block'});
 		$.ajax({
-		type: "POST",
-		url: data.url,
-		dataType: 'html',
-		data: data,
-		async: true,
-		success: function(response) {
-			$('#progress').css({'display':'none'});
-			$('div#generalsearhresult').fadeOut("slow", function(){
-				$thet = $(this);
-				$thet.html('');
-				$thet.html(response).fadeIn();
-			});
-		},
-		error: function() {
-			var message = "Rayos parece que no puedo validar los datos";
-			console.log(message);
-		}
-	});
+			type: "POST",
+			url: data.url,
+			dataType: 'html',
+			data: data,
+			async: true,
+			success: function(response) {
+				$('#progress').css({'display':'none'});
+				$('div#generalsearhresult').fadeOut("slow", function(){
+					$thet = $(this);
+					$thet.html('');
+					$thet.html(response).fadeIn();
+				});
+			},
+			error: function() {
+				var message = "Rayos parece que no puedo validar los datos";
+				console.log(message);
+			}
+		});
 	}
 };
 
@@ -323,7 +323,7 @@ $('button.buttonProperies').on('click', function(){
 });
 
 $('#myModal').on('shown.bs.modal', function () {
-    $('input#fileId', $propertiesForm).val(documentId);
+	$('input#fileId', $propertiesForm).val(documentId);
    //$('input#fileId', $propertiesForm).attr('value':documentId);
 });
 
@@ -355,17 +355,69 @@ $('button#save', $uploadFileForm).on('click', function(e){
 	$uploadFileForm.uploadFile(params);
 });
 
-    $('.btn-file').on('change', function() {
-        var input = $(this),
-            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+$('.btn-file').on('change', function() {
+	var input = $(this),
+	numFiles = input.get(0).files ? input.get(0).files.length : 1,
+	label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
         // input.trigger('fileselect', [numFiles, label]);
         console.log(numFiles);
         console.log(label);
     });
 
 
+var altura = $(document).height();
+var numberNextPage = 0;
+var $nextpage = $('div#nextpage' + numberNextPage);
+var data = {
+		"pageToken" : $nextpage.attr('data-g-id'),
+		"parents" : $nextpage.attr('data-g-parents'),
+		"nextPage" : numberNextPage
+		}
 
+
+$(window).scroll(function(){
+	
+	if($(window).scrollTop() + $(window).height() == altura && data.pageToken != '') {
+
+		var $nextpage = $('div#nextpage' + numberNextPage);
+
+		data = {
+		"pageToken" : $nextpage.attr('data-g-id'),
+		"parents" : $nextpage.attr('data-g-parents'),
+		"nextPage" : numberNextPage + 1
+		}
+
+		$('#progress').css({'display':'block'});
+		var $listDocument = $('div#list-document');
+		
+		var params = {
+			url : 'searhpage'
+		};
+
+		//if(numberNextPage == 0){
+		$.ajax({
+			type: "POST",
+			url: params.url,
+			dataType: 'html',
+			data: data,
+			async: true,
+			success: function(response) {
+				$('#progress').css({'display':'none'});
+				numberNextPage = numberNextPage + 1;
+				$(response).appendTo($listDocument);
+				altura = $(document).height();
+        },
+        error: function() {
+        	var message = "Rayos parece que no puedo validar los datos";
+        	console.log(message);
+        }
+    });
+	//}
+
+
+	}
+
+});
 
 
 

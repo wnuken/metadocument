@@ -32,6 +32,9 @@
 								endif; ?>
 							</ul>
 						</div>
+						<div>
+							<img src="./img/icon/folder-add.png" style="height: 40px;float: right;">
+						</div>
 						
 					</div>
 				</div>

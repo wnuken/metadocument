@@ -531,21 +531,23 @@
 			'text/csv',
 			'image/png',
 			'image/jpeg',
-			'image/bmp'
+			'image/bmp',
+			'image/tiff'
 			);
 
 		$replace = array(
-			'docx.png',
-			'xlsx.png',
-			'odt.png',
+			'application-msword.png',
+			'application-vnd.ms-excel.png',
+			'application-vnd.oasis.opendocument.text.png',
 			'rtf.png',
-			'html.png',
-			'txt.png',
-			'pdf.png',
-			'csv.png',
-			'png.png',
-			'jpg.png',
-			'jpg.png'
+			'text-html.png',
+			'text.png',
+			'application-pdf.png',
+			'application-vnd.ms-excel.png',
+			'application-image.png',
+			'application-image.png',
+			'application-image.png',
+			'application-image.png'
 			);
 
 		$result = str_replace($searh, $replace, $params);

@@ -154,8 +154,11 @@ class Views {
 		$query = '';
 		$params['maxResults'] = MAX_FILES_PAGE;
 		$params['pageToken'] = NULL;
-		if(isset($_REQUEST['pageToken']))
+		if(isset($_REQUEST['pageToken'])){
 			$params['pageToken'] = $_REQUEST['pageToken'];
+		}
+
+		
 
 
 		if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])) {
@@ -175,10 +178,15 @@ class Views {
 		}
 
 		$General = new General();
-		$folderList = $General->getFilesArray($paramsFolder, $linkToken);
+		// $folderList = $General->getFilesArray($paramsFolder, $linkToken);
 		$filesList = $General->getFilesArray($params, $linkToken);
+
+		if(isset($_REQUEST['nextPage'])){
+			$filesList['nextPage'] =  $_REQUEST['nextPage'];
+		}
+
 		
-		include './views/home/general-searh.php';
+		include './views/home/general-searh-page.php';
 
 
 
