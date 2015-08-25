@@ -1,9 +1,12 @@
 <div class="row">
-	<?php
+<?php  if(!isset($filesList['parents']) || empty($filesList['parents'])){
+	$filesList['parents'] = $_SESSION['arrayFolder']['0'];
+}
+
 	if(is_array($folderList)): ?>
 	<div class="row">
+	<div id="thisForder" data-parent="<?php print $filesList['parents']; ?>"></div>
 		<div class="col-md-12 hidden-xs">
-
 			<?php foreach($folderList as $key => $file):
 			if(is_numeric($key)):
 				?>
@@ -41,12 +44,11 @@
 	?>
 	<br />
 	<div class="row">
-	<div class="col-md-12" id="list-document">
-		
+		<div class="col-md-12" id="list-document">
 			<?php 
-				require_once('./views/home/general-searh-page.php');
+			require_once('./views/home/general-searh-page.php');
 			?>
-				</div>
-				
 		</div>
+
 	</div>
+</div>

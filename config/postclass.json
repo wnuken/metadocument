@@ -7,6 +7,7 @@
         "setpropeties",
         "uploadfile",
         "searhpage",
-        "register-user"
+        "register-user",
+        "new-folder"
     ]
 }

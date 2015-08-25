@@ -200,45 +200,52 @@ class Views {
 
 
 
-			static public function destroy(){
-				include './views/destroy.php';
-			}
+	static public function destroy(){
+		include './views/destroy.php';
+	}
 
 
-			static public function uploaddoc(){
-				include './views/files/upload.php';
-			}
+	static public function uploaddoc(){
+		include './views/files/upload.php';
+	}
 
-			static public function ValidateGClient(){
-				include './views/validate-g-client.php';
-			}
+	static public function ValidateGClient(){
+		include './views/validate-g-client.php';
+	}
 
-			static public function ValidateGApp(){
-				include './views/validate-g-app.php';
-			}
+	static public function ValidateGApp(){
+		include './views/validate-g-app.php';
+	}
 
-			static public function Configuration(){
-				include './views/configuration.php';
-			}
+	static public function Configuration(){
+		include './views/configuration.php';
+	}
 
-			static public function ChagePhrase(){
-				$Settings = new Settings();
-				$result = $Settings->changePassword($_POST);
+	static public function ChagePhrase(){
+		$Settings = new Settings();
+		$result = $Settings->changePassword($_POST);
 
-				print_r($result);
+		print_r($result);
 
 			//include './views/configuration.php';
-			}
+	}
 
-			static public function SetPropieties(){
-				$General = new General();
-				$result = $General->insertProperty($_POST);
+	static public function SetPropieties(){
+		$General = new General();
+		$result = $General->insertProperty($_POST);
 
-				print_r($result);
+		print_r($result);
 
-			}
+	}
 
-			static public function UploadFile(){
+	static public function newFolder(){
+		$General = new General();
+		$result = $General->insertFolder($_POST);
+
+		print_r($result);
+	}
+
+	static public function UploadFile(){
 				/*$General = new General();
 				$result = $General->insertFile($_POST);*/
 				$result = json_encode($_FILES);

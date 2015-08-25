@@ -419,6 +419,11 @@ $(window).scroll(function(){
 
 });
 
+$("img#addFolder").on("click", function(){
+	var currentFolder = $("div#thisForder").attr("data-parent");
+	console.log(currentFolder);
+});
+
 
 
 
