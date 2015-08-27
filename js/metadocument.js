@@ -15,6 +15,7 @@ var $propertiesForm = $('form#propertiesForm');
 var $multielemt = $('div.multielemt');
 var $uploadFileForm = $('form#uploadFileForm');
 var $registerform = $('form#register');
+var $modalAddFolder = $('#modalAddFolder');
 var documentId = '';
 
 $.fn.postUrl = function(params){
@@ -369,10 +370,10 @@ var altura = $(document).height();
 var numberNextPage = 0;
 var $nextpage = $('div#nextpage' + numberNextPage);
 var data = {
-		"pageToken" : $nextpage.attr('data-g-id'),
-		"parents" : $nextpage.attr('data-g-parents'),
-		"nextPage" : numberNextPage
-		}
+	"pageToken" : $nextpage.attr('data-g-id'),
+	"parents" : $nextpage.attr('data-g-parents'),
+	"nextPage" : numberNextPage
+}
 
 
 $(window).scroll(function(){
@@ -382,9 +383,9 @@ $(window).scroll(function(){
 		var $nextpage = $('div#nextpage' + numberNextPage);
 
 		data = {
-		"pageToken" : $nextpage.attr('data-g-id'),
-		"parents" : $nextpage.attr('data-g-parents'),
-		"nextPage" : numberNextPage + 1
+			"pageToken" : $nextpage.attr('data-g-id'),
+			"parents" : $nextpage.attr('data-g-parents'),
+			"nextPage" : numberNextPage + 1
 		}
 
 		$('#progress').css({'display':'block'});
@@ -395,34 +396,91 @@ $(window).scroll(function(){
 		};
 
 		//if(numberNextPage == 0){
-		$.ajax({
-			type: "POST",
-			url: params.url,
-			dataType: 'html',
-			data: data,
-			async: true,
-			success: function(response) {
-				$('#progress').css({'display':'none'});
-				numberNextPage = numberNextPage + 1;
-				$(response).appendTo($listDocument);
-				altura = $(document).height();
-        },
-        error: function() {
-        	var message = "Rayos parece que no puedo validar los datos";
-        	console.log(message);
-        }
-    });
+			$.ajax({
+				type: "POST",
+				url: params.url,
+				dataType: 'html',
+				data: data,
+				async: true,
+				success: function(response) {
+					$('#progress').css({'display':'none'});
+					numberNextPage = numberNextPage + 1;
+					$(response).appendTo($listDocument);
+					altura = $(document).height();
+				},
+				error: function() {
+					var message = "Rayos parece que no puedo validar los datos";
+					console.log(message);
+				}
+			});
 	//}
 
 
-	}
+}
 
 });
 
+/*
 $("img#addFolder").on("click", function(){
+	$('#myModal').modal('show');
+});
+*/
+
+$modalAddFolder.on('shown.bs.modal', function () {
+	var $that = $(this);
 	var currentFolder = $("div#thisForder").attr("data-parent");
 	console.log(currentFolder);
+	$('#parentId', $that).val(currentFolder);
+	var currentFId = $('#parentId', $that).val();
+
 });
+
+$('#addFolderBt', $modalAddFolder).on('click', function(){
+	var $thisForm = $('form#addfolderForm', $modalAddFolder);
+	var params = {
+		'url': 'new-folder'
+	};
+	var data = $thisForm.serialize();
+	var folderName = $('input#title', $thisForm).val();
+	
+
+	
+
+	/*if(folderName != ''){
+		$.ajax({
+			type: "POST",
+			url: params.url,
+			dataType: 'json',
+			data: data,
+			async: true,
+			success: function(response) {
+				// console.log(response);
+
+				var AddFoldermessageSuccess = '<div class="alert alert-success alert-dismissible" role="alert">' +
+		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+		'<span aria-hidden="true">&times;</span></button><strong>Se creó la carpeta:</strong> '+ response.title + '</div>';
+		$(AddFoldermessageSuccess).appendTo($('div#addFolderError'));
+
+				// $modalAddFolder.modal('hide');
+			},
+			error: function() {
+				var AddFoldermessageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
+			'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+			'<span aria-hidden="true">&times;</span></button><strong>Alerta!</strong> Parece que no se pudo crear la carpeta</div>';
+			$(AddFoldermessageError).appendTo($('div#addFolderError'));
+			}
+		});
+	}else{
+		var AddFoldermessageError = '<div class="alert alert-danger alert-dismissible" role="alert">' +
+		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+		'<span aria-hidden="true">&times;</span></button><strong>Error!</strong> La carpeta debe tener un nombre</div>';
+		$(AddFoldermessageError).appendTo($('div#addFolderError'));
+	}*/
+
+
+
+});
+
 
 
 

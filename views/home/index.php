@@ -33,7 +33,7 @@
 							</ul>
 						</div>
 						<div>
-							<img src="./img/icon/folder-add.png" style="height: 40px;float: right;" id="addFolder">
+							<img src="./img/icon/folder-add.png" style="height: 40px;float: right;" id="addFolder" data-toggle="modal" data-target="#modalAddFolder">
 						</div>
 						
 					</div>
@@ -67,4 +67,9 @@
 	<div class="row">
 		<?php require_once('./views/home/modal-meta-edition.php'); ?>		
 	</div>
+	<div class="row">
+		<?php require_once('./views/home/modal-add-folder.php'); ?>		
+	</div>
+
+
 </div>

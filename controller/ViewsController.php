@@ -240,7 +240,8 @@ class Views {
 
 	static public function newFolder(){
 		$General = new General();
-		$result = $General->insertFolder($_POST);
+		$resultFolder = $General->insertFolder($_POST);
+		$result = json_encode($resultFolder);
 
 		print_r($result);
 	}
