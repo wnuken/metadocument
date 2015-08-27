@@ -9,7 +9,7 @@
     },
     "app" : {
       "launch" : {
-      "web_url" : "http://local.metadocument.com/"
+      "web_url" : "http://www.metadocument.com/"
       }
     }
   }

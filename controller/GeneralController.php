@@ -427,12 +427,7 @@
 		}
 
 		foreach ($getFilesList['items'] as $key => $file) {
-			if($key == 0)
-				$filesList['parents'] = $file->parents[0]->id;
-
 			//if(in_array($file['modelData']['parents'][0]['id'], $_SESSION['arrayFolder'])){
-
-
 				if($file->mimeType == 'application/vnd.google-apps.document'){
 					$image = $file->thumbnailLink . $linkToken;
 				}else{

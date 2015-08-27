@@ -15,7 +15,6 @@
             <label for="title">Nombre de carpeta</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="Nombre de carpeta">
           </div>
-          <input type="hidden"  id="parentId" name="parentId" value="">
           <!--button type="submit" class="btn btn-default" id="save">Guardar</button-->
         </form>
       </div>

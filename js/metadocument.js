@@ -1,10 +1,3 @@
-var messageError = [
-'Los valores no coinciden, intente de nuevo',
-'Error al validar',
-'Se debe ingresar un valor'
-];
-
-
 var $loginform = $('form#loginform');
 var $chagephrase = $('form#chagephrase');
 var $changeform = $('div#changeform');
@@ -248,7 +241,7 @@ function pagesearh(that){
 
 };
 
-function datasearhGD(idPath, element){
+/*function datasearhGD(idPath, element){
 //$('a', $generalFolder).on('click', function(e){
 	element.preventDefault;
 	var $that = $(element);
@@ -279,6 +272,10 @@ function datasearhGD(idPath, element){
 			}
 		});
 	}
+};*/
+
+function loadigPage(){
+	$('#progress').css({'display':'block'});
 };
 
 
@@ -365,88 +362,75 @@ $('.btn-file').on('change', function() {
         console.log(label);
     });
 
+/* Begin Again */
 
-var altura = $(document).height();
-var numberNextPage = 0;
-var $nextpage = $('div#nextpage' + numberNextPage);
-var data = {
-	"pageToken" : $nextpage.attr('data-g-id'),
-	"parents" : $nextpage.attr('data-g-parents'),
-	"nextPage" : numberNextPage
+/* Errors*/
+
+VALIDATE_ERROR_MG = 'Rayos parece que no puedo validar los datos';
+SAVE_FOLDER_MG = 'Parece que no se pudo crear la carpeta';
+var errorMessages = {
+	'validate_error': VALIDATE_ERROR_MG,
+	'save_folder_error':SAVE_FOLDER_MG
 }
 
+/* PageSearh */
+var documentHeight = $(document).height();
 
 $(window).scroll(function(){
-	
-	if($(window).scrollTop() + $(window).height() == altura && data.pageToken != '') {
+	if($(window).scrollTop() + $(window).height() == documentHeight) {
 
-		var $nextpage = $('div#nextpage' + numberNextPage);
-
-		data = {
-			"pageToken" : $nextpage.attr('data-g-id'),
-			"parents" : $nextpage.attr('data-g-parents'),
-			"nextPage" : numberNextPage + 1
+		var data = {
+			"pageToken" : $('img#addFolder').attr('data-token'),
+			"parents" : $('img#addFolder').attr('data-parent')
 		}
 
-		$('#progress').css({'display':'block'});
-		var $listDocument = $('div#list-document');
-		
-		var params = {
-			url : 'searhpage'
-		};
+		if(data.pageToken !== undefined && data.pageToken != ''){
+			$('#progress-mini').css({'display':'block'});
+			var $listDocument = $('div#list-document');
+			var params = {
+				url : 'searhpage'
+			};
 
-		//if(numberNextPage == 0){
 			$.ajax({
 				type: "POST",
 				url: params.url,
-				dataType: 'html',
+				dataType: 'json',
 				data: data,
 				async: true,
 				success: function(response) {
-					$('#progress').css({'display':'none'});
-					numberNextPage = numberNextPage + 1;
-					$(response).appendTo($listDocument);
-					altura = $(document).height();
+					$('#progress-mini').css({'display':'none'});
+					console.log(response);
+					$('img#addFolder').attr('data-token', response.pageToken);
+					$(response.html).appendTo($listDocument);
+					documentHeight = $(document).height();
 				},
 				error: function() {
-					var message = "Rayos parece que no puedo validar los datos";
+					$('#progress-mini').css({'display':'none'});
+					var message = errorMessages.validate_error;
 					console.log(message);
 				}
 			});
-	//}
-
-
-}
-
+		}
+	}
 });
 
-/*
-$("img#addFolder").on("click", function(){
-	$('#myModal').modal('show');
-});
-*/
-
-$modalAddFolder.on('shown.bs.modal', function () {
-	var $that = $(this);
-	var currentFolder = $("div#thisForder").attr("data-parent");
-	console.log(currentFolder);
-	$('#parentId', $that).val(currentFolder);
-	var currentFId = $('#parentId', $that).val();
-
-});
-
+/* AddFolder */
 $('#addFolderBt', $modalAddFolder).on('click', function(){
 	var $thisForm = $('form#addfolderForm', $modalAddFolder);
+	
 	var params = {
 		'url': 'new-folder'
 	};
-	var data = $thisForm.serialize();
+
 	var folderName = $('input#title', $thisForm).val();
+	var currentFolder = $("img#addFolder").attr("data-parent");
 	
+	var data = {
+		'title': $('input#title', $thisForm).val(),
+		'parentId': $("img#addFolder").attr("data-parent")
+	}
 
-	
-
-	/*if(folderName != ''){
+	if(data.title != ''){
 		$.ajax({
 			type: "POST",
 			url: params.url,
@@ -454,20 +438,16 @@ $('#addFolderBt', $modalAddFolder).on('click', function(){
 			data: data,
 			async: true,
 			success: function(response) {
-				// console.log(response);
-
 				var AddFoldermessageSuccess = '<div class="alert alert-success alert-dismissible" role="alert">' +
-		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-		'<span aria-hidden="true">&times;</span></button><strong>Se creó la carpeta:</strong> '+ response.title + '</div>';
-		$(AddFoldermessageSuccess).appendTo($('div#addFolderError'));
-
-				// $modalAddFolder.modal('hide');
+				'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+				'<span aria-hidden="true">&times;</span></button><strong>Se creó la carpeta:</strong> '+ response.title + '</div>';
+				$(AddFoldermessageSuccess).appendTo($('div#addFolderError'));
 			},
 			error: function() {
 				var AddFoldermessageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
-			'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-			'<span aria-hidden="true">&times;</span></button><strong>Alerta!</strong> Parece que no se pudo crear la carpeta</div>';
-			$(AddFoldermessageError).appendTo($('div#addFolderError'));
+				'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+				'<span aria-hidden="true">&times;</span></button><strong>Alerta!</strong> '+ errorMessages.save_folder_error + ' </div>';
+				$(AddFoldermessageError).appendTo($('div#addFolderError'));
 			}
 		});
 	}else{
@@ -475,7 +455,7 @@ $('#addFolderBt', $modalAddFolder).on('click', function(){
 		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
 		'<span aria-hidden="true">&times;</span></button><strong>Error!</strong> La carpeta debe tener un nombre</div>';
 		$(AddFoldermessageError).appendTo($('div#addFolderError'));
-	}*/
+	}
 
 
 

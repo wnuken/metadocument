@@ -5,14 +5,14 @@
 
 	if(is_array($folderList)): ?>
 	<div class="row">
-	<div id="thisForder" data-parent="<?php print $filesList['parents']; ?>"></div>
+	<!--div id="thisForder" data-parent="<?php print $filesList['parents']; ?>"></div-->
 		<div class="col-md-12 hidden-xs">
 			<?php foreach($folderList as $key => $file):
 			if(is_numeric($key)):
 				?>
 			<div class="col-sm-2 col-md-3 col-lg-2">
 				<div id="generalfolder" style="width:100%">
-					<a href="javascript:void(0);" class="text-center" onclick="datasearhGD('<?php print $file['id']; ?>', this);">
+					<a href="/<?php print $file['id']; ?>" class="text-center" onclick="loadigPage();">
 						<div class="img-thumbnail" style="width:100%">
 							<div style="float:left;">
 								<img style="width:40px;"
@@ -50,5 +50,12 @@
 			?>
 		</div>
 
+	</div>
+	<div class="row">
+		<div id="progress-mini" class="col-md-12" style="display:none;">
+		<div class="text-center">
+			<img src="./img/loading-ms.gif">
+		</div>
+	</div>
 	</div>
 </div>

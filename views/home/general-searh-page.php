@@ -1,5 +1,17 @@
 <?php 
 if(is_array($filesList)):
+
+if(isset($filesList['pageToken']) && !empty($filesList['pageToken'])):
+	$page = 0;
+if(isset($filesList['nextPage'])){
+	$page = $filesList['nextPage'];
+}
+?>
+<div  id="nextpage" data-g-id="<?php print $filesList['pageToken']; ?>" data-g-parents="<?php print $filesList['parents']; ?>"></div>
+<?php 
+endif; 
+endif;
+
 foreach($filesList as $key => $file):
 if(is_numeric($key)):
 	?>
@@ -54,14 +66,4 @@ if(is_numeric($key)):
 <?php 
 endif;
 endforeach;
-if(isset($filesList['pageToken']) && !empty($filesList['pageToken'])):
-	$page = 0;
-if(isset($filesList['nextPage'])){
-	$page = $filesList['nextPage'];
-}
-?>
-<div  id="nextpage<?php print $page ?>" data-g-id="<?php print $filesList['pageToken']; ?>"data-g-parents="<?php print $filesList['parents']; ?>"></div>
-<?php 
-endif; 
-endif;
 ?>

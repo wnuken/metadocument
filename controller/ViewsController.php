@@ -14,13 +14,13 @@ class Views {
 
 
 
-	static public function Home(){
+	static public function Home($RestParams = ''){
 
-		// print('<pre>'); print_r($_SESSION); print('</pre>');
+		// print('<pre>'); print_r($RestParams); print('</pre>');
 
 		$path = '';
-		$filePath = './files/' . $_SESSION['user_path'] . '-home.json';
-		$foldersPath = './files/' . $_SESSION['user_path'] . '-folders.json'; // <-- Revisar para que sea solo un archivo
+		$filePath = './files/' . $_SESSION['user_path'] .'-home-' . $RestParams . '.json';
+		$foldersPath = './files/' . $_SESSION['user_path'] . '-folders-' . $RestParams . '.json'; // <-- Revisar para que sea solo un archivo
 
 		if (file_exists($filePath) && filemtime($filePath) > strtotime(CACHE_TIME_APP)) {
 			$homeContent = file_get_contents($filePath, FILE_USE_INCLUDE_PATH);
@@ -47,6 +47,11 @@ class Views {
 			if(!is_array($userValues)){
 				$path = $userValues->getGFolder();
 				$_SESSION['arrayFolder']['0'] = $path;
+
+				if($RestParams != ''){
+					$path = $RestParams;
+				}
+
 				$params['maxResults'] = MAX_FILES_PAGE;
 				$params['pageToken'] = NULL;
 				//$params['nextPageToken'] = '';
@@ -82,6 +87,7 @@ class Views {
 				$folderList = $General->getFilesArray($paramsFolder, $linkToken);
 				//$folderList = $General->getFilesArray($paramsFolder, $linkToken);
 				$filesList = $General->getFilesArray($params, $linkToken);
+				$filesList['parents'] = $path;
 
 				$handle = fopen($filePath, 'w+');
 				$content = json_encode($filesList);
@@ -150,16 +156,11 @@ class Views {
 
 
 	static public function searhPage(){
-
-		$query = '';
 		$params['maxResults'] = MAX_FILES_PAGE;
 		$params['pageToken'] = NULL;
 		if(isset($_REQUEST['pageToken'])){
 			$params['pageToken'] = $_REQUEST['pageToken'];
 		}
-
-		
-
 
 		if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])) {
 			$linkToken = '';
@@ -171,24 +172,21 @@ class Views {
 		if(isset($_REQUEST['parents'])){
 			$path = $_REQUEST['parents'];
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
-			$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 		}else{
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder'";
-			$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 		}
 
 		$General = new General();
-		// $folderList = $General->getFilesArray($paramsFolder, $linkToken);
 		$filesList = $General->getFilesArray($params, $linkToken);
-
-		if(isset($_REQUEST['nextPage'])){
-			$filesList['nextPage'] =  $_REQUEST['nextPage'];
-		}
-
 		
-		include './views/home/general-searh-page.php';
+		include './views/home/general-searh-page-var.php';
 
+		$resultArray['html'] = $htmlData;
+		$resultArray['pageToken'] = $filesList['pageToken'];
 
+		$resultJson = json_encode($resultArray);
+
+		print $resultJson;
 
 	}
 

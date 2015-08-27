@@ -20,7 +20,7 @@
 										if(is_numeric($key)):
 									 ?>
 								<li>
-									<a data-g-id="<?php print $folder['id']; ?>" href="javascript:void(0);">
+									<a href="/<?php print $folder['id']; ?>" onclick="loadigPage();">
 										<i class="glyphicon glyphicon-folder-open"></i> 
 										<?php print $folder['title']; ?>
 									</a>
@@ -32,10 +32,19 @@
 								endif; ?>
 							</ul>
 						</div>
-						<div>
-							<img src="./img/icon/folder-add.png" style="height: 40px;float: right;" id="addFolder" data-toggle="modal" data-target="#modalAddFolder">
-						</div>
 						
+						<div>
+							<img src="./img/icon/folder-add.png" style="height: 40px;float: right;" 
+							id="addFolder" data-toggle="modal" data-target="#modalAddFolder"
+							data-parent="<?php print $filesList['parents']; ?>"
+							data-token="<?php print $filesList['pageToken']; ?>"
+							>
+						</div>
+						<?php if($RestParams != ''): ?>
+						<a style="height: 40px;float: right;" onclick="" href="javascript:window.history.back();"><label>
+							<img  style="height: 40px;" src="./img/icon/go-first.png"  id="backFolder" >Atras</label>
+						</a>
+						<?php endif; ?>
 					</div>
 				</div>
 				<div id="collapseNews" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
