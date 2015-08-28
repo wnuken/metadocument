@@ -121,9 +121,12 @@ class Views {
 				$stringQuery .= " and title contains '" . $value . "'";
 			}
 		}
-		// var_dump($stringQuery);
 
-		// $paramsUser['user'] = $_SESSION['user_path'];
+		if(is_array($query)){
+			foreach ($query as $key => $value) {
+				$stringQuery .= " or fullText contains '" . $value . "'";
+			}
+		}
 
 		if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])) {
 			$linkToken = '';
@@ -137,15 +140,8 @@ class Views {
 			$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
 		}else{
-			/*
-			$Querys = new Querys();
-			$userValues = $Querys->AdminUserByUser($paramsUser);
-			$path = $userValues->getGFolder();
-			$params['q'] = "'$path' in parents" . $stringQuery; 
-			*/
 			$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' " . $stringQuery;
-			
 		}
 
 		$General = new General();
@@ -193,7 +189,7 @@ class Views {
 	static public function registerUser(){
 		$General = new General();
 		$register = $General->registerUser($_POST);
-		include './views/register/finish.php';
+		// include './views/register/finish.php';
 	}
 
 

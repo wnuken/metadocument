@@ -77,17 +77,48 @@ input[type="text"].inputborder:focus, input[type="password"].inputborder:focus {
 	color: #E70101;
 }
 
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #E70101;
+    background-color: #ccc;
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: #ccc;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu .divider {
+    background-color: #ccc;
+}
+
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
-	background-color: #000F81;
+	background-color: #3B81BE;
 	color: #fff;
 }
 
 .navbar-inverse .navbar-nav > li > a {
-	color: #000F81;
+	color: #3B81BE;
+}
+
+.dropdown-menu > li > a {
+    color: #3B81BE;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+    color: #3B81BE;
 }
 
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a {
 	text-shadow: 0 -1px 0 rgba(0, 15, 129, 0.25);
+}
+
+.navbar-inverse .navbar-toggle {
+    border-color: #E70101;
+    background-color: #E70101;
+}
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+    background-color: #3B81BE;
+    border-color: #3B81BE;
 }
 
 .loading-ms {
@@ -128,3 +159,4 @@ input[type="text"].inputborder:focus, input[type="password"].inputborder:focus {
 	cursor: inherit;
 	display: block;
 }
+

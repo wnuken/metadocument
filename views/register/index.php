@@ -1,4 +1,3 @@
-
 <?php if($_SESSION['userinfo']):
 	$userData = json_decode($_SESSION['userinfo'], true);
 
@@ -15,14 +14,9 @@
 				<div class="panel-body">
 					<h3>Te damos la bienvenida: <?php print $userData['name']; ?></h3>
 					<img width="50px" src="<?php print $userData['picture']; ?>">
-					<h4>Se creará una nueva carpeta en tu cuenta de Drive</h4>
+					<h4>Desde ahora podras gestionar tus archivos con Metadocument</h4>
 					<form id="register">
-						
-						<div class="form-group">
-							<label for="folder">Nombre de carpeta</label>
-							<input name="folder" id="folder" type="text" autofocus="" value="Metadocument" class="form-control" >
-						</div>
-
+						<input name="folder" id="folder" type="hidden" autofocus="" value="root" >
 						<input name="name" id="name" type="hidden" value="<?php print $userData['name']; ?>">
 						<input name="email" id="email" type="hidden" value="<?php print $userData['email']; ?>">
 						<input name="verified_email" id="verified_email" type="hidden" value="<?php print $userData['verified_email']; ?>">
@@ -32,11 +26,9 @@
 						<div class="text-center">
 							<div class="btn-group">
 								
-								<button class="btn btn-danger btn-block" id="submit" type="submit">Ingresar</button>
+								<button class="btn btn-danger btn-block" id="submit" type="submit">Continuar</button>
 							</div>
 						</div>
-
-
 					</form>
 				</div>
 			</div>

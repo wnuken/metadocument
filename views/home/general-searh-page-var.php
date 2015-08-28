@@ -1,50 +1,51 @@
-<?php 
+<?php
 $htmlData = '';
 if(is_array($filesList)){
 	foreach($filesList as $key => $file){
 		if(is_numeric($key)){
 
-			$htmlData .= "<div class='col-xs-6 col-sm-3 col-md-3 col-lg-2 multielemt' height='400'>
-			<div class='toelement' >
-				<div style='height:200px; overflow: hidden;' class='img-thumbnail text-center'>
-					<img style='width:95%' 
-					src='".$file['image']."' 
-					data-mime='".$file['mimeType']."' 
-					alt='".$file['title']."' 
-					title='".$file['title']."'>
+			$htmlData .= "<div class='col-xs-12 col-sm-4 col-md-3 col-lg-3' style='height: 300px; margin-bottom: 5px;'>
+			<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 img-thumbnail' style='height: 300px;'>
+				<div class='col-xs-6'>
+					<div class='row'>
+						<img   
+						src='" . $file['image'] . "' 
+						data-mime='" . $file['mimeType'] . "' 
+						alt='" . $file['title'] . "' 
+						title='" . $file['title'] . "'
+						class='img-thumbnail'>
+					</div>
+					<div class='row' style='overflow: hidden;'>
+						<a href='" . $file['url'] . "' target='_blank' class='text-center'>
+							<img src='" . $file['icon'] . "' 
+							alt='" . $file['mimeType'] . "' 
+							title='" . $file['mimeType'] . "'>
+							" . $file['title'] . "
+						</a>
+					</div>
 				</div>
-				<h5 class='hidden-xs'>
-					<a href='".$file['url']."' target='_blank' class='text-center'>
-						<img src='".$file['icon']."' 
-						alt='". $file['mimeType']."' 
-						title='". $file['mimeType'].">'".
-						$file['title'] .
-						"</a>
-					</h5>
-				</div>
-				<div class='fromelement' style='display:none;'>";
+				<div class='col-xs-6'>";
 
 					if(isset($file['exportLinks'])){
-						$htmlData .=  "<div class='row'>";
+						$htmlData .= "<div class='row'>";
 						foreach($file['exportLinks'] as $keyb => $exportlink){ 
-							$htmlData .= "<div id='exportlink' class='col-xs-6 col-sm-3 col-md-2 col-lg-2'><a href='" . 
-							$exportlink . "'><img width='32' src='./img/icon/" . $keyb . "'></a> </div>";
+							$htmlData .= "<div id='exportlink' class='col-xs-2'>
+							<a href='" . $exportlink . "'><img width='32' src='./img/icon/" . $keyb . "'></a> </div>";
 						} 
 						$htmlData .= "</div>";
 					}
 
-
-					$htmlData .= "<div class='hidden-xs'>
-					<small>Emisión: " . date('Y-m-d h:i:s a',strtotime($file['createdDate'])) . "</small><br />". 
-					"<small>Actualización: " . date('Y-m-d h:i:s a',strtotime($file['modifiedDate'])) . "</small> <br />".
-					"<small>descripción: " . $file['description'] . "</small>".
-					"</div>
-					<div class='hidden-xs'>
-						<button type='button' class='btn btn-danger btn-xs buttonProperies' data-toggle='modal' data-target='#myModal' data-document-id=" .
-						$file['id']. ">
-						<i class='glyphicon glyphicon-list-alt'></i> Edición
-					</button>
-				</div>
+					$htmlData .= "<div >
+					<small>Emisión: " . date('Y-m-d h:i:s a',strtotime($file['createdDate'])) . "</small><br />
+					<small>Actualización: " . date('Y-m-d h:i:s a',strtotime($file['modifiedDate'])) . "</small> <br />
+					<small>descripción: " . $file['description'] . "</small>";
+					"</div>";
+					$htmlData .=  "<div >
+						<button type='button' class='btn btn-danger btn-xs buttonProperies' data-toggle='modal' data-target='#myModal' data-document-id='". $file['id'] . "'>
+							<i class='glyphicon glyphicon-list-alt'></i> Metadatos
+						</button>
+					</div>
+				</div></div>
 			</div>
 		</div>";
 	}

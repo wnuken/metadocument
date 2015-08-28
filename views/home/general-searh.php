@@ -6,7 +6,7 @@
 	if(is_array($folderList)): ?>
 	<div class="row">
 	<!--div id="thisForder" data-parent="<?php print $filesList['parents']; ?>"></div-->
-		<div class="col-md-12 hidden-xs">
+		<div class="col-md-12 hidden-xs hidden-sm">
 			<?php foreach($folderList as $key => $file):
 			if(is_numeric($key)):
 				?>
@@ -22,7 +22,7 @@
 								title="<?php print $file['title']; ?>">
 							</div>
 							<div style=" height: 26px; overflow:hidden;">
-								<h5 class="hidden-sm" >
+								<h5>
 									<?php print substr($file['title'], 0, 20); ?>
 								</h5>
 							</div>

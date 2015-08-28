@@ -6,33 +6,31 @@
 				<h4 class="modal-title" id="myModalLabel">Editar / Crear Metadatos</h4>
 			</div>
 			<div class="modal-body">
-				<form id="propertiesForm">
+				<form id="metaDAtaForm">
 					<div class="form-group">
-						<label for="key">Tipo</label>
-						<select class="form-control" name="key" id="key">
-							<option value="author">Autor</option>
-							<option value="type">Tipo</option>
-							<option value="description">Descripción</option>
-							<option value="gen2">Gen2</option>
-						</select>
+						<label for="description">Descripción</label>
+						<input type="text" class="form-control" id="description" name="description" placeholder="Descripción">
 					</div>
 					<div class="form-group">
-						<label for="value">Valor</label>
-						<input type="text" class="form-control" id="value" name="value" placeholder="Valor">
+						<label for="content">Contenido</label>
+						<input type="text" class="form-control" id="content" name="content" placeholder="Contenido">
 					</div>
-					<div class="form-group">
-						<label for="exampleInputPassword1">Visibilidad</label>
-						
-						<select class="form-control" name="visibility" id="visibility">
-							<option value="PUBLIC">Publico</option>
-							<option value="PRIVATE">Privado</option>
-						</select>
-					</div>
-					<input type="hidden"  id="fileId" name="fileId" value="">
-					<button type="submit" class="btn btn-default" id="save">Guardar</button>
+
+					
+
+            <textarea name="editor1" id="editor1" rows="10" cols="80">
+                This is my textarea to be replaced with CKEditor.
+            </textarea>
+           
+
+					
+
+					<input type="text"  id="fileId" name="fileId" value="">
+					
 				</form>
 			</div>
 			<div class="modal-footer">
+				<button type="submit" class="btn btn-default" id="save">Guardar</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				<!--button type="button" class="btn btn-primary" id="save">Guardar</button-->
 			</div>

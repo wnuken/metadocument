@@ -4,7 +4,7 @@ var $changeform = $('div#changeform');
 var $chagelogin = $('div#chagelogin');
 var $seahfrom = $('form#drivesearh');
 var $generalFolder = $('div#generalfolder')
-var $propertiesForm = $('form#propertiesForm');
+var $metaDAtaForm = $('form#metaDAtaForm');
 var $multielemt = $('div.multielemt');
 var $uploadFileForm = $('form#uploadFileForm');
 var $registerform = $('form#register');
@@ -202,7 +202,7 @@ function pagesearh(that){
 		"pageToken" : $that.attr('data-g-id'),
 		"parents" : $that.attr('data-g-parents')
 	}
-	console.log(data);
+	//console.log(data);
 	var params = {
 		url : 'searhpage'
 	};
@@ -296,12 +296,13 @@ $registerform.submit(function(e){
 		data: data,
 		async: true,
 		success: function(response) {
-			$('#progress').css({'display':'none'});
-			$('div#registerResult').fadeOut("slow", function(){
+			// $('#progress').css({'display':'none'});
+			window.location='/';
+			/*$('div#registerResult').fadeOut("slow", function(){
 				$thet = $(this);
 				$thet.html('');
 				$thet.html(response).fadeIn();
-			});
+			});*/
 		},
 		error: function() {
 			var message = "Rayos parece que no puedo validar los datos";
@@ -321,7 +322,7 @@ $('button.buttonProperies').on('click', function(){
 });
 
 $('#myModal').on('shown.bs.modal', function () {
-	$('input#fileId', $propertiesForm).val(documentId);
+	$('input#fileId', $metaDAtaForm).val(documentId);
    //$('input#fileId', $propertiesForm).attr('value':documentId);
 });
 
@@ -334,13 +335,13 @@ $('div.toelement', $multielemt).on('click', function(){
 	});
 });
 
-$('button#save', $propertiesForm).on('click', function(e){
+$('button#save', $metaDAtaForm).on('click', function(e){
 	e.preventDefault();
 	var params = {
 		"url" : "setpropeties"
 	}
 	console.log(params);
-	$propertiesForm.setPropeties(params);
+	$metaDAtaForm.setPropeties(params);
 });
 
 
@@ -380,8 +381,8 @@ $(window).scroll(function(){
 	if($(window).scrollTop() + $(window).height() == documentHeight) {
 
 		var data = {
-			"pageToken" : $('img#addFolder').attr('data-token'),
-			"parents" : $('img#addFolder').attr('data-parent')
+			"pageToken" : $('div#addFolder').attr('data-token'),
+			"parents" : $('div#addFolder').attr('data-parent')
 		}
 
 		if(data.pageToken !== undefined && data.pageToken != ''){
@@ -399,8 +400,7 @@ $(window).scroll(function(){
 				async: true,
 				success: function(response) {
 					$('#progress-mini').css({'display':'none'});
-					console.log(response);
-					$('img#addFolder').attr('data-token', response.pageToken);
+					$('div#addFolder').attr('data-token', response.pageToken);
 					$(response.html).appendTo($listDocument);
 					documentHeight = $(document).height();
 				},
@@ -422,12 +422,9 @@ $('#addFolderBt', $modalAddFolder).on('click', function(){
 		'url': 'new-folder'
 	};
 
-	var folderName = $('input#title', $thisForm).val();
-	var currentFolder = $("img#addFolder").attr("data-parent");
-	
 	var data = {
 		'title': $('input#title', $thisForm).val(),
-		'parentId': $("img#addFolder").attr("data-parent")
+		'parentId': $("div#addFolder").attr("data-parent")
 	}
 
 	if(data.title != ''){
@@ -461,12 +458,11 @@ $('#addFolderBt', $modalAddFolder).on('click', function(){
 
 });
 
+CKEDITOR.replace( 'editor1' );
 
-
-
-
-
-
-
-
-
+CKEDITOR.editorConfig = function( config ) {
+	config.language = 'es';
+	config.uiColor = '#F7B42C';
+	config.height = 300;
+	config.toolbarCanCollapse = true;
+};

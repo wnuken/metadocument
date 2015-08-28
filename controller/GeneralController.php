@@ -430,8 +430,10 @@
 			//if(in_array($file['modelData']['parents'][0]['id'], $_SESSION['arrayFolder'])){
 				if($file->mimeType == 'application/vnd.google-apps.document'){
 					$image = $file->thumbnailLink . $linkToken;
-				}else{
+				}else if($file->thumbnailLink){
 					$image = $file->thumbnailLink;
+				}else{
+					$image = './img/icon/blank.png';
 				}
 
 				$filesList[$key] = array(
@@ -500,13 +502,14 @@
 
 	public function registerUser($params){
 		
-		$paramsFolder['title'] = $params['folder'];
-		$newFolder = $this->insertFolder($paramsFolder);
+		// $paramsFolder['title'] = $params['folder'];
+		//$newFolder = $this->insertFolder($paramsFolder);
 
 		$AdminUser = new AdminUser();
 		$AdminUser->setUser($params['id']);
 		$AdminUser->setPassword($params['email']);
-		$AdminUser->setGFolder($newFolder->id);
+		$AdminUser->setGFolder('root');
+		//$AdminUser->setRol(2);
 
 		$result = $AdminUser->save();
 
@@ -518,7 +521,9 @@
 		$searh = array(
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+			'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 			'application/vnd.oasis.opendocument.text',
+			'application/msword',
 			'application/rtf',
 			'text/html',
 			'text/plain',
@@ -527,13 +532,18 @@
 			'image/png',
 			'image/jpeg',
 			'image/bmp',
-			'image/tiff'
+			'image/tiff',
+			'application/rar',
+			'application/octet-stream',
+			'application/vnd.google-apps.drawing'
 			);
 
 		$replace = array(
 			'application-msword.png',
 			'application-vnd.ms-excel.png',
+			'application-presentation.png',
 			'application-vnd.oasis.opendocument.text.png',
+			'application-msword.png',
 			'rtf.png',
 			'text-html.png',
 			'text.png',
@@ -542,10 +552,17 @@
 			'application-image.png',
 			'application-image.png',
 			'application-image.png',
-			'application-image.png'
+			'application-image.png',
+			'rar.png',
+			'unknown.png',
+			'application-drawing.png'
 			);
 
 		$result = str_replace($searh, $replace, $params);
+
+		if(strpos($result, '.png') === false)
+			$result = 'unknown.png';
+
 		return $result;
 	}
 	
