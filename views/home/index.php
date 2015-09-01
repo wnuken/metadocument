@@ -85,7 +85,7 @@
 									<i class="glyphicon glyphicon-folder-open"></i> Nueva Carpeta
 								</button> 
 								<button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-open"></i> Subir archivo</button>
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editMetaform">
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFormModal">
 								<i class="glyphicon glyphicon-indent-left"></i> Metadata
 								</button>
 							</div>

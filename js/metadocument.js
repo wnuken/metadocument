@@ -368,6 +368,11 @@ var errorMessages = {
 
 var $modalAddFolder = $('div#modalAddFolder');
 var $metaDataModal = $('div#metaDataModal');
+
+var $createFormModal = $('div#createFormModal');
+var $createFormBody = $('div#createFormBody', $createFormModal);
+var $createForm = $('form#createForm', $createFormBody);
+
 var $metaDataForm = $('form#metaDataForm', $metaDataModal);
 
 /* PageSearh */
@@ -437,32 +442,59 @@ $('#addFolderBt', $modalAddFolder).on('click', function(){
 				$(AddFoldermessageSuccess).appendTo($('div#addFolderError'));
 			},
 			error: function() {
-				var AddFoldermessageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
+				var messageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
 				'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
 				'<span aria-hidden="true">&times;</span></button><strong>Alerta!</strong> '+ errorMessages.save_folder_error + ' </div>';
-				$(AddFoldermessageError).appendTo($('div#addFolderError'));
+				$(messageError).appendTo($('div#addFolderError'));
 			}
 		});
 	}else{
-		var AddFoldermessageError = '<div class="alert alert-danger alert-dismissible" role="alert">' +
+		var messageError = '<div class="alert alert-danger alert-dismissible" role="alert">' +
 		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
 		'<span aria-hidden="true">&times;</span></button><strong>Error!</strong> La carpeta debe tener un nombre</div>';
-		$(AddFoldermessageError).appendTo($('div#addFolderError'));
+		$(messageError).appendTo($('div#addFolderError'));
 	}
 
 
 
 });
 
+$createFormModal.on('shown.bs.modal', function () {
+	var idFolder = $('div#addFolder').attr('data-parent');
+	$('input#id', $createForm).val(idFolder);
+});
 
-//CKEDITOR.replace( 'editor1' );
 
-/*CKEDITOR.editorConfig = function( config ) {
-	config.language = 'es';
-	config.uiColor = '#F7B42C';
-	config.height = 300;
-	config.toolbarCanCollapse = true;
-};*/
+$('button#add', $createForm).on('click', function(){
+	var valuesForm = $createForm.serialize();
+
+	var params = {
+		url: "create-form",
+		data: valuesForm
+	};
+
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'json',
+		data: params.data,
+		async: true,
+		success: function(response) {
+          $(response.message).appendTo($('div#formCreated', $createFormBody));
+      	},
+      	error: function() {
+      		var messageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
+      		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+      		'<span aria-hidden="true">&times;</span></button><strong>Alerta!</strong> '+ errorMessages.validate_error + ' </div>';
+      		$(messageError).appendTo($('div#formCreated', $createFormBody));
+      	}
+  	});
+});
+
+
+
+/* Fin aprobado */
+
 
 
 

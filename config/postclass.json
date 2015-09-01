@@ -4,6 +4,7 @@
         "validate-gclient",
         "validate-gapp",
         "searh",
+        "create-form",
         "setpropeties",
         "uploadfile",
         "searhpage",

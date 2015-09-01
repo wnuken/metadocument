@@ -216,6 +216,44 @@ class Views {
 		include './views/destroy.php';
 	}
 
+	static public function createForm(){
+		$params = $_POST;
+		$folderMetadataContentArray = array();
+		$folderMetadataJson = './files/folderMetadata.json';
+
+
+		if(file_exists($folderMetadataJson)){
+			$folderMetadataContent = file_get_contents($folderMetadataJson, FILE_USE_INCLUDE_PATH);
+			$folderMetadataContentArray = json_decode($folderMetadataContent, true);
+		}
+
+		$idMeta = strtotime("now");
+		$folderMetadataContentArray[$params['id']][$idMeta] = array(
+			'name' => $params['name'],
+			'type' => $params['type'],
+			'id' => $idMeta
+			); 
+
+
+
+		$handle = fopen($folderMetadataJson, 'w+');
+		$content = json_encode($folderMetadataContentArray);
+		fwrite($handle, $content);
+		fclose($handle);
+
+		$resultArray = array(
+			"status" => true,
+			"message" => "<div class='alert alert-success alert-dismissible' role='alert'>
+			<button type='button' class='close' onclick='removeMataDataForm(this)' data-dismiss='alert' aria-label='Close' data-position-id='".$idMeta."'>
+				<span aria-hidden='true'>&times;</span></button><strong> Nombre: </strong>". $params['name'] . "<strong> Tipo:</strong>". $params['type'] . "</div>",
+				"post" => $params
+				);
+
+
+		$result = json_encode($resultArray);
+		print_r($result);
+	}
+
 	static public function metadataSave(){
 		$General = new General();
 		$resultFull = $General->setFileFullText($_POST);
