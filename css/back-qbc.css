@@ -160,3 +160,6 @@ input[type="text"].inputborder:focus, input[type="password"].inputborder:focus {
 	display: block;
 }
 
+.small-list ul{
+	    padding-left: 1px;
+}

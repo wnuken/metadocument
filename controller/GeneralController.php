@@ -369,12 +369,12 @@
       'fields' => 'description'
     ));
 
-    $result['message'] = $updatedFile;
-	$result['result'] = 'true';
+    // $result['message'] = $updatedFile;
+	$result['result'] = true;
 
     
   } catch (Exception $e) {
-  	$result['result'] = 'false';
+  	$result['result'] = false;
     $result['message'] = "An error occurred: " . $e->getMessage();
   }
   return $result;

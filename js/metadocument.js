@@ -351,7 +351,7 @@ $('.btn-file').on('change', function() {
         console.log(label);
     });
 
-/* Begin Again */
+/* Begin Again - Aprobado */
 
 /* Errors*/
 
@@ -367,13 +367,16 @@ var errorMessages = {
 /* Variables */
 
 var $modalAddFolder = $('div#modalAddFolder');
-var $metaDataModal = $('div#metaDataModal');
+
 
 var $createFormModal = $('div#createFormModal');
 var $createFormBody = $('div#createFormBody', $createFormModal);
 var $createForm = $('form#createForm', $createFormBody);
 
-var $metaDataForm = $('form#metaDataForm', $metaDataModal);
+var $metaDataModal = $('div#metaDataModal');
+var $metaDataBody = $('div#metaDataBody', $metaDataModal);
+var $metaDataForm = $('form#metaDataForm', $metaDataBody);
+var idDocument = '';
 
 /* PageSearh */
 var documentHeight = $(document).height();
@@ -460,12 +463,43 @@ $('#addFolderBt', $modalAddFolder).on('click', function(){
 });
 
 $createFormModal.on('shown.bs.modal', function () {
+
 	var idFolder = $('div#addFolder').attr('data-parent');
 	$('input#id', $createForm).val(idFolder);
+
+	var params = {
+			url: "get-metadata-fields",
+			data: {
+				id : idFolder
+			}
+		};
+	$.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'json',
+        data: params.data,
+        async: true,
+        success: function(response) {
+            $(response.message).appendTo($('div#createFormMessages', $createFormBody));
+        },
+        error: function() {
+            
+        }
+    });
+
+
+
+	
+});
+
+$createFormModal.on('hidden.bs.modal', function () {
+	$('div#createFormMessages', $createFormBody).html('');
 });
 
 
 $('button#add', $createForm).on('click', function(){
+	$that = $(this);
+	$that.button('loading');
 	var valuesForm = $createForm.serialize();
 
 	var params = {
@@ -480,16 +514,113 @@ $('button#add', $createForm).on('click', function(){
 		data: params.data,
 		async: true,
 		success: function(response) {
-          $(response.message).appendTo($('div#formCreated', $createFormBody));
+			$that.button('reset');
+          	$(response.message).appendTo($('div#createFormMessages', $createFormBody));
       	},
       	error: function() {
+      		$that.button('reset');
       		var messageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
       		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
       		'<span aria-hidden="true">&times;</span></button><strong>Alerta!</strong> '+ errorMessages.validate_error + ' </div>';
-      		$(messageError).appendTo($('div#formCreated', $createFormBody));
+      		$(messageError).appendTo($('div#createFormMessages', $createFormBody));
       	}
   	});
 });
+
+function removeMataDataField(element){
+	var $that = $(element);
+
+	var params = {
+			url: "remove-metadata-field",
+			data: {
+				metaid : $that.attr('data-position-id'),
+				id : $('div#addFolder').attr('data-parent'),
+			}
+		};
+
+	$.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'json',
+        data: params.data,
+        async: true,
+        success: function(response) {
+          	$(response.message).appendTo($('div#createFormMessages', $createFormBody));
+        },
+        error: function() {
+            
+        }
+    });
+
+};
+
+function loadDocumentId(id){
+	idDocument = id;
+};
+
+$metaDataModal.on('shown.bs.modal', function () {
+	var params = {
+			url: "get-metadata-form",
+			data: {
+				id : $('div#addFolder').attr('data-parent'),
+				elementId : idDocument
+			}
+		};
+	$.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'json',
+        data: params.data,
+        async: true,
+        success: function(response) {
+            $(response.message).appendTo($metaDataForm);
+        },
+        error: function() {
+            
+        }
+    });
+});
+
+$metaDataModal.on('hide.bs.modal', function () {
+	$metaDataForm.html('');
+	$('div#metaDataMessages', $metaDataBody).html('');
+});
+
+$('button#savedata', $metaDataModal).on('click', function(){
+	$that = $(this);
+	$that.button('loading');
+	$metaDataForm = $('form#metaDataForm');
+
+	var valuesForm = $metaDataForm.serialize();
+		
+		var params = {
+			url: "save-metada",
+			data: valuesForm
+		};
+		
+		$('div#metaDataMessages', $metaDataModal).html('');
+
+		$.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'json',
+        data: params.data,
+        async: true,
+        success: function(response) {
+        	$that.button('reset');
+            $(response.message).appendTo($('div#metaDataMessages', $metaDataModal));
+        },
+        error: function() {
+            $that.button('reset');
+        }
+    });
+
+	console.log(valuesForm);
+});
+
+/*var $metaDataModal = $('div#metaDataModal');
+var $metaDataBody = $'div#metaDataBody', $metaDataModal);
+var $metaDataForm = $('form#metaDataForm', $metaDataBody);*/
 
 
 
@@ -498,18 +629,8 @@ $('button#add', $createForm).on('click', function(){
 
 
 
+/*
 
-$metaDataModal.on('shown.bs.modal', function () {
-	// $('input#fileId', $metaDataForm).val(documentId);
-	// $('textarea#editor1', $metaDataForm).val(descriptionText);
-
-	//CKEDITOR.inline( 'editor1' );
-   //$('input#fileId', $propertiesForm).attr('value':documentId);
-});
-
-$metaDataModal.on('hide.bs.modal', function () {
-	//CKEDITOR.instances.editor1.destroy();	
-});
 
 $('button#save', $metaDataModal).on('click',function(){
 	var dataform = $metaDataForm.serialize();
@@ -550,7 +671,7 @@ $('button#save', $metaDataModal).on('click',function(){
 		}
 	});
 
-});
+});*/
 
 
 

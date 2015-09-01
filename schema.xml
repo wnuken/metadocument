@@ -4,10 +4,29 @@
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
     <column name="user" phpName="User" type="VARCHAR" size="50"/>
     <column name="password" phpName="Password" type="VARCHAR" size="256"/>
-    <column name="rol" phpName="Rol" type="INTEGER"/>
-    <column name="g_document" phpName="GDocument" type="INTEGER"/>
+    <column name="email" phpName="EMail" type="VARCHAR" size="50"/>
+    <column name="rol_id" phpName="RolId" type="INTEGER"/>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+
+  <table name="folder_metadata_form" idMethod="native" phpName="FolderMetadataForm">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="folder_id" phpName="FolderId" type="VARCHAR" size="256"/>
+    <column name="folder_params" phpName="FolderParams" type="LONGCHAR" />
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+
+  <table name="document_metadata" idMethod="native" phpName="DocumentMetadata">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="document_id" phpName="FolderId" type="VARCHAR" size="256"/>
+    <column name="document_params" phpName="FolderParams" type="LONGCHAR" />
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+
 </database>

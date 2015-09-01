@@ -5,11 +5,14 @@
         "validate-gapp",
         "searh",
         "create-form",
+        "get-metadata-fields",
+        "remove-metadata-field",
+        "get-metadata-form",
+        "save-metada",
         "setpropeties",
         "uploadfile",
         "searhpage",
         "register-user",
-        "new-folder",
-        "metadata-save"
+        "new-folder"
     ]
 }

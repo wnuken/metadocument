@@ -41,7 +41,10 @@ if(is_array($filesList)){
 					<small>descripción: " . $file['description'] . "</small>";
 					"</div>";
 					$htmlData .=  "<div >
-						<button type='button' class='btn btn-danger btn-xs buttonProperies' data-toggle='modal' data-target='#metaDataModal' data-document-id='". $file['id'] . "'>
+						<button type='button' 
+						class='btn btn-danger btn-xs buttonProperies' 
+						data-toggle='modal' data-target='#metaDataModal' 
+						onclick='loadDocumentId(" . $file['id'] .")'>
 							<i class='glyphicon glyphicon-list-alt'></i> Metadatos
 						</button>
 					</div>
