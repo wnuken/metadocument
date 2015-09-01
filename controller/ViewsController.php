@@ -16,11 +16,12 @@ class Views {
 
 	static public function Home($RestParams = ''){
 
-		// print('<pre>'); print_r($RestParams); print('</pre>');
+		
 
 		$path = '';
 		$filePath = './files/' . $_SESSION['user_path'] .'-home-' . $RestParams . '.json';
 		$foldersPath = './files/' . $_SESSION['user_path'] . '-folders-' . $RestParams . '.json'; // <-- Revisar para que sea solo un archivo
+		$foldersTotalPath = './files/' . $_SESSION['user_path'] . '-folders-total' . '.json';
 
 		if (file_exists($filePath) && filemtime($filePath) > strtotime(CACHE_TIME_APP)) {
 			$homeContent = file_get_contents($filePath, FILE_USE_INCLUDE_PATH);
@@ -30,12 +31,18 @@ class Views {
 				$folderList = json_decode($homeFolder, true);
 			}
 
+			if(file_exists($foldersTotalPath) && !isset($_SESSION['folders'])){
+				$totalFolder = file_get_contents($foldersTotalPath, FILE_USE_INCLUDE_PATH);
+				$_SESSION['folders'] = json_decode($totalFolder, true);
+			}
+
 			$filesList = json_decode($homeContent, true);
 			if(is_array($filesList) && !isset($filesList['error'])){
 				include './views/home/index.php';
 			}else {
 				unlink($filePath);
 				unlink($foldersPath);
+				unlink($foldersTotalPath);
 				include './views/destroy.php';
 			}
 		}else if(isset($_SESSION['user_path']) && !empty($_SESSION['user_path'])){
@@ -46,7 +53,7 @@ class Views {
 
 			if(!is_array($userValues)){
 				$path = $userValues->getGFolder();
-				$_SESSION['arrayFolder']['0'] = $path;
+				// $_SESSION['arrayFolder']['0'] = $path;
 
 				if($RestParams != ''){
 					$path = $RestParams;
@@ -79,13 +86,19 @@ class Views {
 				
 				$jsonList = $General->getFilesListJson($params1);
 				$arrayList = json_decode($jsonList, true);
-				print('<pre>'); print_r($arrayList); print('</pre>');*/
+				print('<pre>'); print_r($$path); print('</pre>');*/
+
+				// print('<pre>'); print_r($path); print('</pre>');
 				
-
-
+				if(!isset($_SESSION['folders']) && $path != 'root'){
+					$_SESSION['folders'][] = $path;
+					$folderTotal = $General->getFolderArray($paramsFolder);
+				}else if($path == 'root' && !isset($_SESSION['folders'])){
+					$_SESSION['folders'][] = $path;
+				}
 				
 				$folderList = $General->getFilesArray($paramsFolder, $linkToken);
-				//$folderList = $General->getFilesArray($paramsFolder, $linkToken);
+				
 				$filesList = $General->getFilesArray($params, $linkToken);
 				$filesList['parents'] = $path;
 
@@ -98,6 +111,11 @@ class Views {
 				$contentFolder = json_encode($folderList);
 				fwrite($handleF, $contentFolder);
 				fclose($handleF);
+
+				$handleFT = fopen($foldersTotalPath, 'w+'); // <-- Revisar para que sea solo un archivo
+				$contentFolderT = json_encode($_SESSION['folders']);
+				fwrite($handleFT, $contentFolderT);
+				fclose($handleFT);
 
 
 				include './views/home/index.php';
@@ -124,7 +142,7 @@ class Views {
 
 		if(is_array($query)){
 			foreach ($query as $key => $value) {
-				$stringQuery .= " or fullText contains '" . $value . "'";
+				$stringQuery .= " and fullText contains '" . $value . "'";
 			}
 		}
 
@@ -196,6 +214,13 @@ class Views {
 
 	static public function destroy(){
 		include './views/destroy.php';
+	}
+
+	static public function metadataSave(){
+		$General = new General();
+		$resultFull = $General->setFileFullText($_POST);
+		$result = json_encode($resultFull);
+		print_r($result);
 	}
 
 

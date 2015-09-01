@@ -7,9 +7,6 @@
       </div>
       <div class="modal-body">
       <div id="addFolderError"></div>
-
-      
-
       <form id="addfolderForm">
           <div class="form-group">
             <label for="title">Nombre de carpeta</label>
@@ -20,7 +17,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-danger" id="addFolderBt">Crear</button>
+        <button type="button" class="btn btn-primary" id="addFolderBt">Crear</button>
       </div>
     </div>
   </div>

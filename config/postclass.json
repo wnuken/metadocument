@@ -8,6 +8,7 @@
         "uploadfile",
         "searhpage",
         "register-user",
-        "new-folder"
+        "new-folder",
+        "metadata-save"
     ]
 }

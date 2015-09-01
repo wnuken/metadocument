@@ -356,6 +356,55 @@
 		return $result;
 	}
 
+
+	public function setFileFullText($params) {
+  try {
+  	//$file = new Google_Service_Drive_DriveFileIndexableText();
+    $file = new Google_Service_Drive_DriveFile();
+    $file->setDescription($params['text']);
+   // $file->setIndexableText($params['text']);
+    // 'fields' => 'description,indexableText'
+
+    $updatedFile = $this->service->files->patch($params['fileId'], $file, array(
+      'fields' => 'description'
+    ));
+
+    $result['message'] = $updatedFile;
+	$result['result'] = 'true';
+
+    
+  } catch (Exception $e) {
+  	$result['result'] = 'false';
+    $result['message'] = "An error occurred: " . $e->getMessage();
+  }
+  return $result;
+}
+
+
+public function setFileFullTextSET($params) {
+  try {
+  	$file = new Google_Service_Drive_DriveFileIndexableText();
+   // $file = new Google_Service_Drive_DriveFile();
+    $file->setText($params['text']);
+   // $file->setIndexableText($params['text']);
+    // 'fields' => 'description,indexableText'
+
+    $updatedFile = $this->service->files->patch($params['fileId'], $file, array(
+      'fields' => 'indexableText'
+    ));
+
+    $result['message'] = $updatedFile;
+	$result['result'] = 'true';
+
+    
+  } catch (Exception $e) {
+  	$result['result'] = 'false';
+    $result['message'] = "An error occurred: " . $e->getMessage();
+  }
+  return $result;
+}
+
+
 	function retrieveProperties($service, $fileId) {
 		try {
 			$properties = $service->properties->listProperties($fileId);
@@ -427,7 +476,7 @@
 		}
 
 		foreach ($getFilesList['items'] as $key => $file) {
-			//if(in_array($file['modelData']['parents'][0]['id'], $_SESSION['arrayFolder'])){
+			if($_SESSION['folders'][0] == 'root'){
 				if($file->mimeType == 'application/vnd.google-apps.document'){
 					$image = $file->thumbnailLink . $linkToken;
 				}else if($file->thumbnailLink){
@@ -463,7 +512,43 @@
 					$filesList[$key]['exportLinks'][$iconlink] = $file->downloadUrl . $linkToken;
 				}
 
-			//}
+			}else if(in_array($file['modelData']['parents'][0]['id'], $_SESSION['folders'])){
+				if($file->mimeType == 'application/vnd.google-apps.document'){
+					$image = $file->thumbnailLink . $linkToken;
+				}else if($file->thumbnailLink){
+					$image = $file->thumbnailLink;
+				}else{
+					$image = './img/icon/blank.png';
+				}
+
+				$filesList[$key] = array(
+					'id' => $file->getId(),
+					'icon' => $file->iconLink,
+					'title' => $file->getTitle(),
+					'url' => $file->alternateLink,
+					'image' => $image,
+					'mimeType' => $file->mimeType,
+					'createdDate' => $file->createdDate,
+					'modifiedDate' => $file->modifiedDate,
+					'description' => $file->getDescription()
+					);
+
+				if(isset($files->properties)){
+					$filesList[$key]['properties']['key'] = $files->properties['key'];
+					$filesList[$key]['properties']['value'] = $files->properties['value'];
+				}
+
+				if(isset($file->exportLinks)){
+					foreach($file->exportLinks as $keyb => $exportlink){
+						$iconlink = $this->setNameIcon($keyb);
+						$filesList[$key]['exportLinks'][$iconlink] = $exportlink . $linkToken;
+					}
+				}else if(isset($file->downloadUrl)){
+					$iconlink = $this->setNameIcon($file->mimeType);
+					$filesList[$key]['exportLinks'][$iconlink] = $file->downloadUrl . $linkToken;
+				}
+
+			}
 		}
 		$filesList['pageToken'] = $getFilesList['pageToken'];
 		
@@ -473,23 +558,25 @@
 
 	public function getFolderArray($params){
 		$result = array();
-		$getAllFolder = $this->retrieveAllFiles($params);
+		$getAllFolder = $this->getFilesList($params);
 		/*$result[] = array(
 				'id' => $params,
 				'title' => 'Principal'
 				);*/
 		
-		if(!is_array($getAllFolder)){
-			foreach ($getAllFolder as $key => $folder) {
-			$result[] = array(
-				'id' => $folder->getId(),
-				'title' => $folder->getTitle()
-				);
+		//if(is_object($getAllFolder)){
+			foreach ($getAllFolder['items'] as $key => $folder) {
+
+			$path = $folder->getId();
+			$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
+			$result = $this->getFolderArray($paramsFolder);
+
+			$_SESSION['folders'][] =  $folder->getId();
 		}
-		}
+		//}
 		
 
-		return $result;
+		return true;
 
 		/*if($getAllFolder){
 			foreach ($getAllFolder as $key => $value) {

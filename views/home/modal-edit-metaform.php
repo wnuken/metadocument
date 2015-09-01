@@ -1,4 +1,4 @@
-<div class="modal fade" id="metaDataModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="editMetaform" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -6,15 +6,14 @@
 				<h4 class="modal-title" id="myModalLabel">Editar / Crear Metadatos</h4>
 			</div>
 			<div class="modal-body">
-				<div id="MetaDataError"></div>
-				<form id="metaDataForm">
-					<!--div class="form-group">
+				<div id="editDataFormError"></div>
+				<form id="editDataForm">
+					<div class="form-group">
 						<label for="description">Descripción</label>
 						<input type="text" class="form-control" id="description" name="description" placeholder="Descripción">
-					</div-->
-					<textarea name="editor1" id="editor1" rows="10" cols="40">
-					</textarea>
-					<input type="hidden"  id="fileId" name="fileId" value="">
+					</div>
+					
+					<input type="text"  id="fileId" name="fileId" value="">
 					
 				</form>
 			</div>

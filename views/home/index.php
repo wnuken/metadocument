@@ -8,51 +8,6 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<!--div style="height:30px;">
-						<div class="btn-group col-md-12">
-							<button class="btn btn-default btn dropdown-toggle xs-visible" type="button" data-toggle="dropdown" aria-expanded="false">
-								<i class="glyphicon glyphicon-folder-close"></i> Explorar <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu" id="generalfolder">
-								<?php 
-								if(is_array($folderList)):
-									foreach($folderList as $key => $folder):
-										if(is_numeric($key)):
-									 ?>
-								<li>
-									<a href="/<?php print $folder['id']; ?>" onclick="loadigPage();">
-										<i class="glyphicon glyphicon-folder-open"></i> 
-										<?php print $folder['title']; ?>
-									</a>
-								</li>
-								<?php
-								$_SESSION['arrayFolder'][] = $folder['id'];
-								endif;
-								endforeach;
-								endif; ?>
-							</ul>
-
-							<button class="btn btn-default " type="button">
-							<img src="./img/icon/folder-add.png" style="height: 18px;" 
-							id="addFolder" data-toggle="modal" data-target="#modalAddFolder"
-							data-parent="<?php print $filesList['parents']; ?>"
-							data-token="<?php print $filesList['pageToken']; ?>"
-							>
-						</button>
-						<?php if($RestParams != ''): ?>
-							<button class="btn btn-default " type="button">
-						<a href="javascript:window.history.back();"><small>
-							<img  style="height: 18px;" src="./img/icon/go-first.png"  id="backFolder" >Atras</small>
-						</a>
-						</button>
-						<?php endif; ?>
-
-
-						</div>
-						
-						
-					</div-->
-
 					<div id="addFolder" data-parent="<?php print $filesList['parents']; ?>"	data-token="<?php print $filesList['pageToken']; ?>"></div>
 					
 					<div class="btn-group btn-group-xs visible-xs" style="height: 18px;" role="group" aria-label="...">
@@ -130,6 +85,9 @@
 									<i class="glyphicon glyphicon-folder-open"></i> Nueva Carpeta
 								</button> 
 								<button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-open"></i> Subir archivo</button>
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editMetaform">
+								<i class="glyphicon glyphicon-indent-left"></i> Metadata
+								</button>
 							</div>
 
 
@@ -168,6 +126,9 @@
 	</div>
 	<div class="row">
 		<?php require_once('./views/home/modal-add-folder.php'); ?>		
+	</div>
+	<div class="row">
+		<?php require_once('./views/home/modal-edit-metaform.php'); ?>		
 	</div>
 
 

@@ -4,7 +4,7 @@ if(is_array($filesList)){
 	foreach($filesList as $key => $file){
 		if(is_numeric($key)){
 
-			$htmlData .= "<div class='col-xs-12 col-sm-4 col-md-3 col-lg-3' style='height: 300px; margin-bottom: 5px;'>
+			$htmlData .= "<div class='col-xs-12 col-sm-4 col-md-3 col-lg-2' style='height: 300px; margin-bottom: 5px;'>
 			<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 img-thumbnail' style='height: 300px;'>
 				<div class='col-xs-6'>
 					<div class='row'>
@@ -41,7 +41,7 @@ if(is_array($filesList)){
 					<small>descripción: " . $file['description'] . "</small>";
 					"</div>";
 					$htmlData .=  "<div >
-						<button type='button' class='btn btn-danger btn-xs buttonProperies' data-toggle='modal' data-target='#myModal' data-document-id='". $file['id'] . "'>
+						<button type='button' class='btn btn-danger btn-xs buttonProperies' data-toggle='modal' data-target='#metaDataModal' data-document-id='". $file['id'] . "'>
 							<i class='glyphicon glyphicon-list-alt'></i> Metadatos
 						</button>
 					</div>

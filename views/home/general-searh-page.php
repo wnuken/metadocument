@@ -42,9 +42,11 @@ if(is_array($filesList)){
 								?>
 							</div>
 							<div >
-								<button type="button" class="btn btn-danger btn-xs buttonProperies" data-toggle="modal" data-target="#myModal" data-document-id="<?php print $file['id']; ?>">
+								<button type="button" class="btn btn-danger btn-xs buttonProperies" data-toggle="modal" data-target="#metaDataModal" data-document-id="<?php print $file['id']; ?>">
 									<i class="glyphicon glyphicon-list-alt"></i> Metadatos
+									<textarea id="data-description" style="display:none"><?php print html_entity_decode($file['description']); ?></textarea>
 								</button>
+
 							</div>
 					</div>
 

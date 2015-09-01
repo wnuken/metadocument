@@ -8,8 +8,8 @@ var $metaDAtaForm = $('form#metaDAtaForm');
 var $multielemt = $('div.multielemt');
 var $uploadFileForm = $('form#uploadFileForm');
 var $registerform = $('form#register');
-var $modalAddFolder = $('#modalAddFolder');
 var documentId = '';
+var descriptionText = '';
 
 $.fn.postUrl = function(params){
 	var $that = $(this);
@@ -319,12 +319,9 @@ $registerform.submit(function(e){
 $('button.buttonProperies').on('click', function(){
 	var $that = $(this);
 	documentId = $that.attr('data-document-id');
+	descriptionText = $('#data-description', $that).text();
 });
 
-$('#myModal').on('shown.bs.modal', function () {
-	$('input#fileId', $metaDAtaForm).val(documentId);
-   //$('input#fileId', $propertiesForm).attr('value':documentId);
-});
 
 $('div.toelement', $multielemt).on('click', function(){
 	console.log('hola');
@@ -333,15 +330,6 @@ $('div.toelement', $multielemt).on('click', function(){
 		$thatSib = $that.siblings('div');
 		$thatSib.fadeIn('slow');
 	});
-});
-
-$('button#save', $metaDAtaForm).on('click', function(e){
-	e.preventDefault();
-	var params = {
-		"url" : "setpropeties"
-	}
-	console.log(params);
-	$metaDAtaForm.setPropeties(params);
 });
 
 
@@ -369,10 +357,18 @@ $('.btn-file').on('change', function() {
 
 VALIDATE_ERROR_MG = 'Rayos parece que no puedo validar los datos';
 SAVE_FOLDER_MG = 'Parece que no se pudo crear la carpeta';
+SAVE_META_DATA_MG = 'No se logro incluir los metadatos';
 var errorMessages = {
 	'validate_error': VALIDATE_ERROR_MG,
-	'save_folder_error':SAVE_FOLDER_MG
+	'save_folder_error':SAVE_FOLDER_MG,
+	'meta_data_error': SAVE_META_DATA_MG
 }
+
+/* Variables */
+
+var $modalAddFolder = $('div#modalAddFolder');
+var $metaDataModal = $('div#metaDataModal');
+var $metaDataForm = $('form#metaDataForm', $metaDataModal);
 
 /* PageSearh */
 var documentHeight = $(document).height();
@@ -458,11 +454,82 @@ $('#addFolderBt', $modalAddFolder).on('click', function(){
 
 });
 
-CKEDITOR.replace( 'editor1' );
 
-CKEDITOR.editorConfig = function( config ) {
+//CKEDITOR.replace( 'editor1' );
+
+/*CKEDITOR.editorConfig = function( config ) {
 	config.language = 'es';
 	config.uiColor = '#F7B42C';
 	config.height = 300;
 	config.toolbarCanCollapse = true;
-};
+};*/
+
+
+
+
+$metaDataModal.on('shown.bs.modal', function () {
+	// $('input#fileId', $metaDataForm).val(documentId);
+	// $('textarea#editor1', $metaDataForm).val(descriptionText);
+
+	//CKEDITOR.inline( 'editor1' );
+   //$('input#fileId', $propertiesForm).attr('value':documentId);
+});
+
+$metaDataModal.on('hide.bs.modal', function () {
+	//CKEDITOR.instances.editor1.destroy();	
+});
+
+$('button#save', $metaDataModal).on('click',function(){
+	var dataform = $metaDataForm.serialize();
+	//var CKedit = CKEDITOR.instances.editor1.getData();
+	console.log(CKedit);
+
+	var data = {
+		'description': $('input#description', $metaDataForm).val(),
+		'text': 'CKedit',
+		'fileId': $('input#fileId', $metaDataForm).val()
+	};
+
+	console.log(data);
+
+	var params = {
+		url : 'metadata-save'
+	};
+	$('#progress').css({'display':'block'});
+
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'json',
+		data: data,
+		async: true,
+		success: function(response) {
+			$('#progress').css({'display':'none'});
+			var AddFoldermessageSuccess = '<div class="alert alert-success alert-dismissible" role="alert">' +
+			'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+			'<span aria-hidden="true">&times;</span></button><strong>Se guardaron los metadatos correctamente</strong></div>';
+			$(AddFoldermessageSuccess).appendTo($('div#MetaDataError'));
+		},
+		error: function() {
+			var AddFoldermessageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
+			'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+			'<span aria-hidden="true">&times;</span></button><strong>Alerta!</strong> '+ errorMessages.meta_data_error + ' </div>';
+			$(AddFoldermessageError).appendTo($('div#MetaDataError'));
+		}
+	});
+
+});
+
+
+
+
+
+
+/*$('button#save', $metaDAtaForm).on('click', function(e){
+	e.preventDefault();
+	var params = {
+		"url" : "setpropeties"
+	}
+	console.log(params);
+	$metaDAtaForm.setPropeties(params);
+});*/
