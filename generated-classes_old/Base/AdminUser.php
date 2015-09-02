@@ -92,12 +92,6 @@ abstract class AdminUser implements ActiveRecordInterface
     protected $email;
 
     /**
-     * The value for the folder_root field.
-     * @var        string
-     */
-    protected $folder_root;
-
-    /**
      * The value for the rol_id field.
      * @var        int
      */
@@ -368,7 +362,7 @@ abstract class AdminUser implements ActiveRecordInterface
      *
      * @return string
      */
-    public function getName()
+    public function getUser()
     {
         return $this->name;
     }
@@ -381,16 +375,6 @@ abstract class AdminUser implements ActiveRecordInterface
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * Get the [folder_root] column value.
-     *
-     * @return string
-     */
-    public function getFolderRoot()
-    {
-        return $this->folder_root;
     }
 
     /**
@@ -469,7 +453,7 @@ abstract class AdminUser implements ActiveRecordInterface
      * @param string $v new value
      * @return $this|\AdminUser The current object (for fluent API support)
      */
-    public function setName($v)
+    public function setUser($v)
     {
         if ($v !== null) {
             $v = (string) $v;
@@ -481,7 +465,7 @@ abstract class AdminUser implements ActiveRecordInterface
         }
 
         return $this;
-    } // setName()
+    } // setUser()
 
     /**
      * Set the value of [email] column.
@@ -502,26 +486,6 @@ abstract class AdminUser implements ActiveRecordInterface
 
         return $this;
     } // setEmail()
-
-    /**
-     * Set the value of [folder_root] column.
-     *
-     * @param string $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
-     */
-    public function setFolderRoot($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->folder_root !== $v) {
-            $this->folder_root = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_FOLDER_ROOT] = true;
-        }
-
-        return $this;
-    } // setFolderRoot()
 
     /**
      * Set the value of [rol_id] column.
@@ -592,16 +556,13 @@ abstract class AdminUser implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : AdminUserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
             $this->password = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : AdminUserTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : AdminUserTableMap::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)];
             $this->name = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : AdminUserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
             $this->email = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : AdminUserTableMap::translateFieldName('FolderRoot', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->folder_root = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : AdminUserTableMap::translateFieldName('RolId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : AdminUserTableMap::translateFieldName('RolId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->rol_id = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
@@ -611,7 +572,7 @@ abstract class AdminUser implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = AdminUserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = AdminUserTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\AdminUser'), 0, $e);
@@ -835,9 +796,6 @@ abstract class AdminUser implements ActiveRecordInterface
         if ($this->isColumnModified(AdminUserTableMap::COL_EMAIL)) {
             $modifiedColumns[':p' . $index++]  = 'email';
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_FOLDER_ROOT)) {
-            $modifiedColumns[':p' . $index++]  = 'folder_root';
-        }
         if ($this->isColumnModified(AdminUserTableMap::COL_ROL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'rol_id';
         }
@@ -866,9 +824,6 @@ abstract class AdminUser implements ActiveRecordInterface
                         break;
                     case 'email':
                         $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
-                        break;
-                    case 'folder_root':
-                        $stmt->bindValue($identifier, $this->folder_root, PDO::PARAM_STR);
                         break;
                     case 'rol_id':
                         $stmt->bindValue($identifier, $this->rol_id, PDO::PARAM_INT);
@@ -938,15 +893,12 @@ abstract class AdminUser implements ActiveRecordInterface
                 return $this->getPassword();
                 break;
             case 3:
-                return $this->getName();
+                return $this->getUser();
                 break;
             case 4:
                 return $this->getEmail();
                 break;
             case 5:
-                return $this->getFolderRoot();
-                break;
-            case 6:
                 return $this->getRolId();
                 break;
             default:
@@ -982,10 +934,9 @@ abstract class AdminUser implements ActiveRecordInterface
             $keys[0] => $this->getId(),
             $keys[1] => $this->getUser(),
             $keys[2] => $this->getPassword(),
-            $keys[3] => $this->getName(),
+            $keys[3] => $this->getUser(),
             $keys[4] => $this->getEmail(),
-            $keys[5] => $this->getFolderRoot(),
-            $keys[6] => $this->getRolId(),
+            $keys[5] => $this->getRolId(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1052,15 +1003,12 @@ abstract class AdminUser implements ActiveRecordInterface
                 $this->setPassword($value);
                 break;
             case 3:
-                $this->setName($value);
+                $this->setUser($value);
                 break;
             case 4:
                 $this->setEmail($value);
                 break;
             case 5:
-                $this->setFolderRoot($value);
-                break;
-            case 6:
                 $this->setRolId($value);
                 break;
         } // switch()
@@ -1099,16 +1047,13 @@ abstract class AdminUser implements ActiveRecordInterface
             $this->setPassword($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setName($arr[$keys[3]]);
+            $this->setUser($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
             $this->setEmail($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setFolderRoot($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setRolId($arr[$keys[6]]);
+            $this->setRolId($arr[$keys[5]]);
         }
     }
 
@@ -1165,9 +1110,6 @@ abstract class AdminUser implements ActiveRecordInterface
         }
         if ($this->isColumnModified(AdminUserTableMap::COL_EMAIL)) {
             $criteria->add(AdminUserTableMap::COL_EMAIL, $this->email);
-        }
-        if ($this->isColumnModified(AdminUserTableMap::COL_FOLDER_ROOT)) {
-            $criteria->add(AdminUserTableMap::COL_FOLDER_ROOT, $this->folder_root);
         }
         if ($this->isColumnModified(AdminUserTableMap::COL_ROL_ID)) {
             $criteria->add(AdminUserTableMap::COL_ROL_ID, $this->rol_id);
@@ -1261,9 +1203,8 @@ abstract class AdminUser implements ActiveRecordInterface
         $copyObj->setId($this->getId());
         $copyObj->setUser($this->getUser());
         $copyObj->setPassword($this->getPassword());
-        $copyObj->setName($this->getName());
+        $copyObj->setUser($this->getUser());
         $copyObj->setEmail($this->getEmail());
-        $copyObj->setFolderRoot($this->getFolderRoot());
         $copyObj->setRolId($this->getRolId());
         if ($makeNew) {
             $copyObj->setNew(true);
@@ -1358,7 +1299,6 @@ abstract class AdminUser implements ActiveRecordInterface
         $this->password = null;
         $this->name = null;
         $this->email = null;
-        $this->folder_root = null;
         $this->rol_id = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();

@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \AdminUser;
-use \AdminUserQuery;
+use \Conuntries;
+use \ConuntriesQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'admin_user' table.
+ * This class defines the structure of the 'countries' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class AdminUserTableMap extends TableMap
+class ConuntriesTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class AdminUserTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.AdminUserTableMap';
+    const CLASS_NAME = '.Map.ConuntriesTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class AdminUserTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'admin_user';
+    const TABLE_NAME = 'countries';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\AdminUser';
+    const OM_CLASS = '\\Conuntries';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'AdminUser';
+    const CLASS_DEFAULT = 'Conuntries';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,42 +69,27 @@ class AdminUserTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the id field
      */
-    const COL_ID = 'admin_user.id';
+    const COL_ID = 'countries.id';
 
     /**
-     * the column name for the user field
+     * the column name for the country_name field
      */
-    const COL_USER = 'admin_user.user';
+    const COL_COUNTRY_NAME = 'countries.country_name';
 
     /**
-     * the column name for the password field
+     * the column name for the description field
      */
-    const COL_PASSWORD = 'admin_user.password';
+    const COL_DESCRIPTION = 'countries.description';
 
     /**
-     * the column name for the name field
+     * the column name for the iso_code field
      */
-    const COL_NAME = 'admin_user.name';
-
-    /**
-     * the column name for the email field
-     */
-    const COL_EMAIL = 'admin_user.email';
-
-    /**
-     * the column name for the folder_root field
-     */
-    const COL_FOLDER_ROOT = 'admin_user.folder_root';
-
-    /**
-     * the column name for the rol_id field
-     */
-    const COL_ROL_ID = 'admin_user.rol_id';
+    const COL_ISO_CODE = 'countries.iso_code';
 
     /**
      * The default string format for model objects of the related table
@@ -118,11 +103,11 @@ class AdminUserTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'User', 'Password', 'Name', 'Email', 'FolderRoot', 'RolId', ),
-        self::TYPE_CAMELNAME     => array('id', 'user', 'password', 'name', 'email', 'folderRoot', 'rolId', ),
-        self::TYPE_COLNAME       => array(AdminUserTableMap::COL_ID, AdminUserTableMap::COL_USER, AdminUserTableMap::COL_PASSWORD, AdminUserTableMap::COL_NAME, AdminUserTableMap::COL_EMAIL, AdminUserTableMap::COL_FOLDER_ROOT, AdminUserTableMap::COL_ROL_ID, ),
-        self::TYPE_FIELDNAME     => array('id', 'user', 'password', 'name', 'email', 'folder_root', 'rol_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id', 'CountryName', 'Description', 'IsoCode', ),
+        self::TYPE_CAMELNAME     => array('id', 'countryName', 'description', 'isoCode', ),
+        self::TYPE_COLNAME       => array(ConuntriesTableMap::COL_ID, ConuntriesTableMap::COL_COUNTRY_NAME, ConuntriesTableMap::COL_DESCRIPTION, ConuntriesTableMap::COL_ISO_CODE, ),
+        self::TYPE_FIELDNAME     => array('id', 'country_name', 'description', 'iso_code', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -132,11 +117,11 @@ class AdminUserTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'User' => 1, 'Password' => 2, 'Name' => 3, 'Email' => 4, 'FolderRoot' => 5, 'RolId' => 6, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'user' => 1, 'password' => 2, 'name' => 3, 'email' => 4, 'folderRoot' => 5, 'rolId' => 6, ),
-        self::TYPE_COLNAME       => array(AdminUserTableMap::COL_ID => 0, AdminUserTableMap::COL_USER => 1, AdminUserTableMap::COL_PASSWORD => 2, AdminUserTableMap::COL_NAME => 3, AdminUserTableMap::COL_EMAIL => 4, AdminUserTableMap::COL_FOLDER_ROOT => 5, AdminUserTableMap::COL_ROL_ID => 6, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'user' => 1, 'password' => 2, 'name' => 3, 'email' => 4, 'folder_root' => 5, 'rol_id' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'CountryName' => 1, 'Description' => 2, 'IsoCode' => 3, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'countryName' => 1, 'description' => 2, 'isoCode' => 3, ),
+        self::TYPE_COLNAME       => array(ConuntriesTableMap::COL_ID => 0, ConuntriesTableMap::COL_COUNTRY_NAME => 1, ConuntriesTableMap::COL_DESCRIPTION => 2, ConuntriesTableMap::COL_ISO_CODE => 3, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'country_name' => 1, 'description' => 2, 'iso_code' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -149,20 +134,17 @@ class AdminUserTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('admin_user');
-        $this->setPhpName('AdminUser');
+        $this->setName('countries');
+        $this->setPhpName('Conuntries');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\AdminUser');
+        $this->setClassName('\\Conuntries');
         $this->setPackage('');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('user', 'User', 'VARCHAR', false, 50, null);
-        $this->addColumn('password', 'Password', 'VARCHAR', false, 255, null);
-        $this->addColumn('name', 'Name', 'VARCHAR', false, 50, null);
-        $this->addColumn('email', 'Email', 'VARCHAR', false, 50, null);
-        $this->addColumn('folder_root', 'FolderRoot', 'LONGVARCHAR', false, null, null);
-        $this->addForeignKey('rol_id', 'RolId', 'INTEGER', 'roles', 'id', false, null, null);
+        $this->addColumn('country_name', 'CountryName', 'VARCHAR', false, 50, null);
+        $this->addColumn('description', 'Description', 'VARCHAR', false, 256, null);
+        $this->addColumn('iso_code', 'IsoCode', 'VARCHAR', false, 10, null);
     } // initialize()
 
     /**
@@ -170,13 +152,6 @@ class AdminUserTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Roles', '\\Roles', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':rol_id',
-    1 => ':id',
-  ),
-), null, null, null, false);
     } // buildRelations()
 
     /**
@@ -236,7 +211,7 @@ class AdminUserTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? AdminUserTableMap::CLASS_DEFAULT : AdminUserTableMap::OM_CLASS;
+        return $withPrefix ? ConuntriesTableMap::CLASS_DEFAULT : ConuntriesTableMap::OM_CLASS;
     }
 
     /**
@@ -250,22 +225,22 @@ class AdminUserTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (AdminUser object, last column rank)
+     * @return array           (Conuntries object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = AdminUserTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = AdminUserTableMap::getInstanceFromPool($key))) {
+        $key = ConuntriesTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = ConuntriesTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + AdminUserTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + ConuntriesTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = AdminUserTableMap::OM_CLASS;
-            /** @var AdminUser $obj */
+            $cls = ConuntriesTableMap::OM_CLASS;
+            /** @var Conuntries $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            AdminUserTableMap::addInstanceToPool($obj, $key);
+            ConuntriesTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -288,18 +263,18 @@ class AdminUserTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = AdminUserTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = AdminUserTableMap::getInstanceFromPool($key))) {
+            $key = ConuntriesTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = ConuntriesTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var AdminUser $obj */
+                /** @var Conuntries $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                AdminUserTableMap::addInstanceToPool($obj, $key);
+                ConuntriesTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -320,21 +295,15 @@ class AdminUserTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(AdminUserTableMap::COL_ID);
-            $criteria->addSelectColumn(AdminUserTableMap::COL_USER);
-            $criteria->addSelectColumn(AdminUserTableMap::COL_PASSWORD);
-            $criteria->addSelectColumn(AdminUserTableMap::COL_NAME);
-            $criteria->addSelectColumn(AdminUserTableMap::COL_EMAIL);
-            $criteria->addSelectColumn(AdminUserTableMap::COL_FOLDER_ROOT);
-            $criteria->addSelectColumn(AdminUserTableMap::COL_ROL_ID);
+            $criteria->addSelectColumn(ConuntriesTableMap::COL_ID);
+            $criteria->addSelectColumn(ConuntriesTableMap::COL_COUNTRY_NAME);
+            $criteria->addSelectColumn(ConuntriesTableMap::COL_DESCRIPTION);
+            $criteria->addSelectColumn(ConuntriesTableMap::COL_ISO_CODE);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.user');
-            $criteria->addSelectColumn($alias . '.password');
-            $criteria->addSelectColumn($alias . '.name');
-            $criteria->addSelectColumn($alias . '.email');
-            $criteria->addSelectColumn($alias . '.folder_root');
-            $criteria->addSelectColumn($alias . '.rol_id');
+            $criteria->addSelectColumn($alias . '.country_name');
+            $criteria->addSelectColumn($alias . '.description');
+            $criteria->addSelectColumn($alias . '.iso_code');
         }
     }
 
@@ -347,7 +316,7 @@ class AdminUserTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(AdminUserTableMap::DATABASE_NAME)->getTable(AdminUserTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(ConuntriesTableMap::DATABASE_NAME)->getTable(ConuntriesTableMap::TABLE_NAME);
     }
 
     /**
@@ -355,16 +324,16 @@ class AdminUserTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(AdminUserTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(AdminUserTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new AdminUserTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(ConuntriesTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(ConuntriesTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new ConuntriesTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a AdminUser or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Conuntries or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or AdminUser object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Conuntries object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -375,27 +344,27 @@ class AdminUserTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(AdminUserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ConuntriesTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \AdminUser) { // it's a model object
+        } elseif ($values instanceof \Conuntries) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(AdminUserTableMap::DATABASE_NAME);
-            $criteria->add(AdminUserTableMap::COL_ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(ConuntriesTableMap::DATABASE_NAME);
+            $criteria->add(ConuntriesTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
-        $query = AdminUserQuery::create()->mergeWith($criteria);
+        $query = ConuntriesQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            AdminUserTableMap::clearInstancePool();
+            ConuntriesTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                AdminUserTableMap::removeInstanceFromPool($singleval);
+                ConuntriesTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -403,20 +372,20 @@ class AdminUserTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the admin_user table.
+     * Deletes all rows from the countries table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return AdminUserQuery::create()->doDeleteAll($con);
+        return ConuntriesQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a AdminUser or Criteria object.
+     * Performs an INSERT on the database, given a Conuntries or Criteria object.
      *
-     * @param mixed               $criteria Criteria or AdminUser object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Conuntries object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -425,18 +394,22 @@ class AdminUserTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(AdminUserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ConuntriesTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from AdminUser object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Conuntries object
+        }
+
+        if ($criteria->containsKey(ConuntriesTableMap::COL_ID) && $criteria->keyContainsValue(ConuntriesTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.ConuntriesTableMap::COL_ID.')');
         }
 
 
         // Set the correct dbName
-        $query = AdminUserQuery::create()->mergeWith($criteria);
+        $query = ConuntriesQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -445,7 +418,7 @@ class AdminUserTableMap extends TableMap
         });
     }
 
-} // AdminUserTableMap
+} // ConuntriesTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-AdminUserTableMap::buildTableMap();
+ConuntriesTableMap::buildTableMap();

@@ -594,9 +594,11 @@ public function setFileFullTextSET($params) {
 
 		$AdminUser = new AdminUser();
 		$AdminUser->setUser($params['id']);
-		$AdminUser->setPassword($params['email']);
-		$AdminUser->setGFolder('root');
-		//$AdminUser->setRol(2);
+		$AdminUser->setName($params['name']);
+		$AdminUser->setPassword($params['link']);
+		$AdminUser->setEmail($params['email']);
+		$AdminUser->setFolderRoot('root');
+		// $AdminUser->setRolId('2');
 
 		$result = $AdminUser->save();
 

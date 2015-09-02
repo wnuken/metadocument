@@ -30,6 +30,7 @@ CREATE TABLE `admin_user`
     `password` VARCHAR(255),
     `name` VARCHAR(50),
     `email` VARCHAR(50),
+    `folder_root` TEXT,
     `rol_id` INTEGER,
     PRIMARY KEY (`id`),
     INDEX `admin_user_fi_97e680` (`rol_id`),

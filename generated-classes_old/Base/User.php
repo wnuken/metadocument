@@ -2,12 +2,10 @@
 
 namespace Base;
 
-use \AdminUserQuery as ChildAdminUserQuery;
-use \Roles as ChildRoles;
-use \RolesQuery as ChildRolesQuery;
+use \UserQuery as ChildUserQuery;
 use \Exception;
 use \PDO;
-use Map\AdminUserTableMap;
+use Map\UserTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -21,18 +19,18 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 
 /**
- * Base class that represents a row from the 'admin_user' table.
+ * Base class that represents a row from the 'user' table.
  *
  *
  *
 * @package    propel.generator..Base
 */
-abstract class AdminUser implements ActiveRecordInterface
+abstract class User implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\AdminUserTableMap';
+    const TABLE_MAP = '\\Map\\UserTableMap';
 
 
     /**
@@ -68,45 +66,82 @@ abstract class AdminUser implements ActiveRecordInterface
     protected $id;
 
     /**
-     * The value for the user field.
-     * @var        string
-     */
-    protected $user;
-
-    /**
-     * The value for the password field.
-     * @var        string
-     */
-    protected $password;
-
-    /**
      * The value for the name field.
      * @var        string
      */
     protected $name;
 
     /**
-     * The value for the email field.
+     * The value for the rut field.
      * @var        string
      */
-    protected $email;
+    protected $rut;
 
     /**
-     * The value for the folder_root field.
+     * The value for the code field.
      * @var        string
      */
-    protected $folder_root;
+    protected $code;
 
     /**
-     * The value for the rol_id field.
+     * The value for the e_mail field.
+     * @var        string
+     */
+    protected $e_mail;
+
+    /**
+     * The value for the address field.
+     * @var        string
+     */
+    protected $address;
+
+    /**
+     * The value for the gender field.
+     * @var        string
+     */
+    protected $gender;
+
+    /**
+     * The value for the phone field.
+     * @var        string
+     */
+    protected $phone;
+
+    /**
+     * The value for the id_city field.
      * @var        int
      */
-    protected $rol_id;
+    protected $id_city;
 
     /**
-     * @var        ChildRoles
+     * The value for the id_location field.
+     * @var        int
      */
-    protected $aRoles;
+    protected $id_location;
+
+    /**
+     * The value for the id_country field.
+     * @var        int
+     */
+    protected $id_country;
+
+    /**
+     * The value for the id_nationality field.
+     * @var        int
+     */
+    protected $id_nationality;
+
+    /**
+     * The value for the id_type field.
+     * @var        int
+     */
+    protected $id_type;
+
+    /**
+     * The value for the id_admin field.
+     * @var        int
+     */
+    protected $id_admin;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -117,7 +152,7 @@ abstract class AdminUser implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of Base\AdminUser object.
+     * Initializes internal state of Base\User object.
      */
     public function __construct()
     {
@@ -212,9 +247,9 @@ abstract class AdminUser implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>AdminUser</code> instance.  If
-     * <code>obj</code> is an instance of <code>AdminUser</code>, delegates to
-     * <code>equals(AdminUser)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>User</code> instance.  If
+     * <code>obj</code> is an instance of <code>User</code>, delegates to
+     * <code>equals(User)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -280,7 +315,7 @@ abstract class AdminUser implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|AdminUser The current object, for fluid interface
+     * @return $this|User The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -344,26 +379,6 @@ abstract class AdminUser implements ActiveRecordInterface
     }
 
     /**
-     * Get the [user] column value.
-     *
-     * @return string
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * Get the [password] column value.
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
      * Get the [name] column value.
      *
      * @return string
@@ -374,40 +389,130 @@ abstract class AdminUser implements ActiveRecordInterface
     }
 
     /**
-     * Get the [email] column value.
+     * Get the [rut] column value.
      *
      * @return string
      */
-    public function getEmail()
+    public function getRut()
     {
-        return $this->email;
+        return $this->rut;
     }
 
     /**
-     * Get the [folder_root] column value.
+     * Get the [code] column value.
      *
      * @return string
      */
-    public function getFolderRoot()
+    public function getCode()
     {
-        return $this->folder_root;
+        return $this->code;
     }
 
     /**
-     * Get the [rol_id] column value.
+     * Get the [e_mail] column value.
+     *
+     * @return string
+     */
+    public function getEMail()
+    {
+        return $this->e_mail;
+    }
+
+    /**
+     * Get the [address] column value.
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Get the [gender] column value.
+     *
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Get the [phone] column value.
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Get the [id_city] column value.
      *
      * @return int
      */
-    public function getRolId()
+    public function getIdCity()
     {
-        return $this->rol_id;
+        return $this->id_city;
+    }
+
+    /**
+     * Get the [id_location] column value.
+     *
+     * @return int
+     */
+    public function getIdLocation()
+    {
+        return $this->id_location;
+    }
+
+    /**
+     * Get the [id_country] column value.
+     *
+     * @return int
+     */
+    public function getIdCountry()
+    {
+        return $this->id_country;
+    }
+
+    /**
+     * Get the [id_nationality] column value.
+     *
+     * @return int
+     */
+    public function getIdNationality()
+    {
+        return $this->id_nationality;
+    }
+
+    /**
+     * Get the [id_type] column value.
+     *
+     * @return int
+     */
+    public function getIdType()
+    {
+        return $this->id_type;
+    }
+
+    /**
+     * Get the [id_admin] column value.
+     *
+     * @return int
+     */
+    public function getIdUser()
+    {
+        return $this->id_admin;
     }
 
     /**
      * Set the value of [id] column.
      *
      * @param int $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
+     * @return $this|\User The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -417,57 +522,17 @@ abstract class AdminUser implements ActiveRecordInterface
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_ID] = true;
+            $this->modifiedColumns[UserTableMap::COL_ID] = true;
         }
 
         return $this;
     } // setId()
 
     /**
-     * Set the value of [user] column.
-     *
-     * @param string $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
-     */
-    public function setUser($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->user !== $v) {
-            $this->user = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_USER] = true;
-        }
-
-        return $this;
-    } // setUser()
-
-    /**
-     * Set the value of [password] column.
-     *
-     * @param string $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
-     */
-    public function setPassword($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->password !== $v) {
-            $this->password = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_PASSWORD] = true;
-        }
-
-        return $this;
-    } // setPassword()
-
-    /**
      * Set the value of [name] column.
      *
      * @param string $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
+     * @return $this|\User The current object (for fluent API support)
      */
     public function setName($v)
     {
@@ -477,75 +542,251 @@ abstract class AdminUser implements ActiveRecordInterface
 
         if ($this->name !== $v) {
             $this->name = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_NAME] = true;
+            $this->modifiedColumns[UserTableMap::COL_NAME] = true;
         }
 
         return $this;
     } // setName()
 
     /**
-     * Set the value of [email] column.
+     * Set the value of [rut] column.
      *
      * @param string $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
+     * @return $this|\User The current object (for fluent API support)
      */
-    public function setEmail($v)
+    public function setRut($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->email !== $v) {
-            $this->email = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_EMAIL] = true;
+        if ($this->rut !== $v) {
+            $this->rut = $v;
+            $this->modifiedColumns[UserTableMap::COL_RUT] = true;
         }
 
         return $this;
-    } // setEmail()
+    } // setRut()
 
     /**
-     * Set the value of [folder_root] column.
+     * Set the value of [code] column.
      *
      * @param string $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
+     * @return $this|\User The current object (for fluent API support)
      */
-    public function setFolderRoot($v)
+    public function setCode($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->folder_root !== $v) {
-            $this->folder_root = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_FOLDER_ROOT] = true;
+        if ($this->code !== $v) {
+            $this->code = $v;
+            $this->modifiedColumns[UserTableMap::COL_CODE] = true;
         }
 
         return $this;
-    } // setFolderRoot()
+    } // setCode()
 
     /**
-     * Set the value of [rol_id] column.
+     * Set the value of [e_mail] column.
+     *
+     * @param string $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setEMail($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->e_mail !== $v) {
+            $this->e_mail = $v;
+            $this->modifiedColumns[UserTableMap::COL_E_MAIL] = true;
+        }
+
+        return $this;
+    } // setEMail()
+
+    /**
+     * Set the value of [address] column.
+     *
+     * @param string $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setAddress($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->address !== $v) {
+            $this->address = $v;
+            $this->modifiedColumns[UserTableMap::COL_ADDRESS] = true;
+        }
+
+        return $this;
+    } // setAddress()
+
+    /**
+     * Set the value of [gender] column.
+     *
+     * @param string $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setGender($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->gender !== $v) {
+            $this->gender = $v;
+            $this->modifiedColumns[UserTableMap::COL_GENDER] = true;
+        }
+
+        return $this;
+    } // setGender()
+
+    /**
+     * Set the value of [phone] column.
+     *
+     * @param string $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setPhone($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->phone !== $v) {
+            $this->phone = $v;
+            $this->modifiedColumns[UserTableMap::COL_PHONE] = true;
+        }
+
+        return $this;
+    } // setPhone()
+
+    /**
+     * Set the value of [id_city] column.
      *
      * @param int $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
+     * @return $this|\User The current object (for fluent API support)
      */
-    public function setRolId($v)
+    public function setIdCity($v)
     {
         if ($v !== null) {
             $v = (int) $v;
         }
 
-        if ($this->rol_id !== $v) {
-            $this->rol_id = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_ROL_ID] = true;
-        }
-
-        if ($this->aRoles !== null && $this->aRoles->getId() !== $v) {
-            $this->aRoles = null;
+        if ($this->id_city !== $v) {
+            $this->id_city = $v;
+            $this->modifiedColumns[UserTableMap::COL_ID_CITY] = true;
         }
 
         return $this;
-    } // setRolId()
+    } // setIdCity()
+
+    /**
+     * Set the value of [id_location] column.
+     *
+     * @param int $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setIdLocation($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->id_location !== $v) {
+            $this->id_location = $v;
+            $this->modifiedColumns[UserTableMap::COL_ID_LOCATION] = true;
+        }
+
+        return $this;
+    } // setIdLocation()
+
+    /**
+     * Set the value of [id_country] column.
+     *
+     * @param int $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setIdCountry($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->id_country !== $v) {
+            $this->id_country = $v;
+            $this->modifiedColumns[UserTableMap::COL_ID_COUNTRY] = true;
+        }
+
+        return $this;
+    } // setIdCountry()
+
+    /**
+     * Set the value of [id_nationality] column.
+     *
+     * @param int $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setIdNationality($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->id_nationality !== $v) {
+            $this->id_nationality = $v;
+            $this->modifiedColumns[UserTableMap::COL_ID_NATIONALITY] = true;
+        }
+
+        return $this;
+    } // setIdNationality()
+
+    /**
+     * Set the value of [id_type] column.
+     *
+     * @param int $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setIdType($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->id_type !== $v) {
+            $this->id_type = $v;
+            $this->modifiedColumns[UserTableMap::COL_ID_TYPE] = true;
+        }
+
+        return $this;
+    } // setIdType()
+
+    /**
+     * Set the value of [id_admin] column.
+     *
+     * @param int $v new value
+     * @return $this|\User The current object (for fluent API support)
+     */
+    public function setIdUser($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->id_admin !== $v) {
+            $this->id_admin = $v;
+            $this->modifiedColumns[UserTableMap::COL_ID_ADMIN] = true;
+        }
+
+        return $this;
+    } // setIdUser()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -583,26 +824,47 @@ abstract class AdminUser implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : AdminUserTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : UserTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : AdminUserTableMap::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->user = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : AdminUserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->password = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : AdminUserTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : UserTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
             $this->name = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : AdminUserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->email = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : UserTableMap::translateFieldName('Rut', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->rut = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : AdminUserTableMap::translateFieldName('FolderRoot', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->folder_root = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : UserTableMap::translateFieldName('Code', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->code = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : AdminUserTableMap::translateFieldName('RolId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->rol_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : UserTableMap::translateFieldName('EMail', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->e_mail = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : UserTableMap::translateFieldName('Address', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->address = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : UserTableMap::translateFieldName('Gender', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->gender = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : UserTableMap::translateFieldName('Phone', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->phone = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : UserTableMap::translateFieldName('IdCity', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->id_city = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : UserTableMap::translateFieldName('IdLocation', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->id_location = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : UserTableMap::translateFieldName('IdCountry', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->id_country = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : UserTableMap::translateFieldName('IdNationality', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->id_nationality = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : UserTableMap::translateFieldName('IdType', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->id_type = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : UserTableMap::translateFieldName('IdUser', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->id_admin = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -611,10 +873,10 @@ abstract class AdminUser implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = AdminUserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 14; // 14 = UserTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\AdminUser'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\User'), 0, $e);
         }
     }
 
@@ -633,9 +895,6 @@ abstract class AdminUser implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aRoles !== null && $this->rol_id !== $this->aRoles->getId()) {
-            $this->aRoles = null;
-        }
     } // ensureConsistency
 
     /**
@@ -659,13 +918,13 @@ abstract class AdminUser implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(AdminUserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(UserTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildAdminUserQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildUserQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -675,7 +934,6 @@ abstract class AdminUser implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aRoles = null;
         } // if (deep)
     }
 
@@ -685,8 +943,8 @@ abstract class AdminUser implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see AdminUser::setDeleted()
-     * @see AdminUser::isDeleted()
+     * @see User::setDeleted()
+     * @see User::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -695,11 +953,11 @@ abstract class AdminUser implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(AdminUserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(UserTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildAdminUserQuery::create()
+            $deleteQuery = ChildUserQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -730,7 +988,7 @@ abstract class AdminUser implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(AdminUserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(UserTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -749,7 +1007,7 @@ abstract class AdminUser implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                AdminUserTableMap::addInstanceToPool($this);
+                UserTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -774,18 +1032,6 @@ abstract class AdminUser implements ActiveRecordInterface
         $affectedRows = 0; // initialize var to track total num of affected rows
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
-
-            // We call the save method on the following object(s) if they
-            // were passed to this object by their corresponding set
-            // method.  This object relates to these object(s) by a
-            // foreign key reference.
-
-            if ($this->aRoles !== null) {
-                if ($this->aRoles->isModified() || $this->aRoles->isNew()) {
-                    $affectedRows += $this->aRoles->save($con);
-                }
-                $this->setRoles($this->aRoles);
-            }
 
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
@@ -818,32 +1064,57 @@ abstract class AdminUser implements ActiveRecordInterface
         $modifiedColumns = array();
         $index = 0;
 
+        $this->modifiedColumns[UserTableMap::COL_ID] = true;
+        if (null !== $this->id) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . UserTableMap::COL_ID . ')');
+        }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(AdminUserTableMap::COL_ID)) {
+        if ($this->isColumnModified(UserTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_USER)) {
-            $modifiedColumns[':p' . $index++]  = 'user';
-        }
-        if ($this->isColumnModified(AdminUserTableMap::COL_PASSWORD)) {
-            $modifiedColumns[':p' . $index++]  = 'password';
-        }
-        if ($this->isColumnModified(AdminUserTableMap::COL_NAME)) {
+        if ($this->isColumnModified(UserTableMap::COL_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'name';
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_EMAIL)) {
-            $modifiedColumns[':p' . $index++]  = 'email';
+        if ($this->isColumnModified(UserTableMap::COL_RUT)) {
+            $modifiedColumns[':p' . $index++]  = 'rut';
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_FOLDER_ROOT)) {
-            $modifiedColumns[':p' . $index++]  = 'folder_root';
+        if ($this->isColumnModified(UserTableMap::COL_CODE)) {
+            $modifiedColumns[':p' . $index++]  = 'code';
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_ROL_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'rol_id';
+        if ($this->isColumnModified(UserTableMap::COL_E_MAIL)) {
+            $modifiedColumns[':p' . $index++]  = 'e_mail';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ADDRESS)) {
+            $modifiedColumns[':p' . $index++]  = 'address';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_GENDER)) {
+            $modifiedColumns[':p' . $index++]  = 'gender';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_PHONE)) {
+            $modifiedColumns[':p' . $index++]  = 'phone';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ID_CITY)) {
+            $modifiedColumns[':p' . $index++]  = 'id_city';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ID_LOCATION)) {
+            $modifiedColumns[':p' . $index++]  = 'id_location';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ID_COUNTRY)) {
+            $modifiedColumns[':p' . $index++]  = 'id_country';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ID_NATIONALITY)) {
+            $modifiedColumns[':p' . $index++]  = 'id_nationality';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ID_TYPE)) {
+            $modifiedColumns[':p' . $index++]  = 'id_type';
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ID_ADMIN)) {
+            $modifiedColumns[':p' . $index++]  = 'id_admin';
         }
 
         $sql = sprintf(
-            'INSERT INTO admin_user (%s) VALUES (%s)',
+            'INSERT INTO user (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -855,23 +1126,44 @@ abstract class AdminUser implements ActiveRecordInterface
                     case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'user':
-                        $stmt->bindValue($identifier, $this->user, PDO::PARAM_STR);
-                        break;
-                    case 'password':
-                        $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
-                        break;
                     case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case 'email':
-                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
+                    case 'rut':
+                        $stmt->bindValue($identifier, $this->rut, PDO::PARAM_STR);
                         break;
-                    case 'folder_root':
-                        $stmt->bindValue($identifier, $this->folder_root, PDO::PARAM_STR);
+                    case 'code':
+                        $stmt->bindValue($identifier, $this->code, PDO::PARAM_STR);
                         break;
-                    case 'rol_id':
-                        $stmt->bindValue($identifier, $this->rol_id, PDO::PARAM_INT);
+                    case 'e_mail':
+                        $stmt->bindValue($identifier, $this->e_mail, PDO::PARAM_STR);
+                        break;
+                    case 'address':
+                        $stmt->bindValue($identifier, $this->address, PDO::PARAM_STR);
+                        break;
+                    case 'gender':
+                        $stmt->bindValue($identifier, $this->gender, PDO::PARAM_STR);
+                        break;
+                    case 'phone':
+                        $stmt->bindValue($identifier, $this->phone, PDO::PARAM_STR);
+                        break;
+                    case 'id_city':
+                        $stmt->bindValue($identifier, $this->id_city, PDO::PARAM_INT);
+                        break;
+                    case 'id_location':
+                        $stmt->bindValue($identifier, $this->id_location, PDO::PARAM_INT);
+                        break;
+                    case 'id_country':
+                        $stmt->bindValue($identifier, $this->id_country, PDO::PARAM_INT);
+                        break;
+                    case 'id_nationality':
+                        $stmt->bindValue($identifier, $this->id_nationality, PDO::PARAM_INT);
+                        break;
+                    case 'id_type':
+                        $stmt->bindValue($identifier, $this->id_type, PDO::PARAM_INT);
+                        break;
+                    case 'id_admin':
+                        $stmt->bindValue($identifier, $this->id_admin, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -880,6 +1172,13 @@ abstract class AdminUser implements ActiveRecordInterface
             Propel::log($e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', $sql), 0, $e);
         }
+
+        try {
+            $pk = $con->lastInsertId();
+        } catch (Exception $e) {
+            throw new PropelException('Unable to get autoincrement id.', 0, $e);
+        }
+        $this->setId($pk);
 
         $this->setNew(false);
     }
@@ -912,7 +1211,7 @@ abstract class AdminUser implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = AdminUserTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = UserTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -932,22 +1231,43 @@ abstract class AdminUser implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getUser();
-                break;
-            case 2:
-                return $this->getPassword();
-                break;
-            case 3:
                 return $this->getName();
                 break;
+            case 2:
+                return $this->getRut();
+                break;
+            case 3:
+                return $this->getCode();
+                break;
             case 4:
-                return $this->getEmail();
+                return $this->getEMail();
                 break;
             case 5:
-                return $this->getFolderRoot();
+                return $this->getAddress();
                 break;
             case 6:
-                return $this->getRolId();
+                return $this->getGender();
+                break;
+            case 7:
+                return $this->getPhone();
+                break;
+            case 8:
+                return $this->getIdCity();
+                break;
+            case 9:
+                return $this->getIdLocation();
+                break;
+            case 10:
+                return $this->getIdCountry();
+                break;
+            case 11:
+                return $this->getIdNationality();
+                break;
+            case 12:
+                return $this->getIdType();
+                break;
+            case 13:
+                return $this->getIdUser();
                 break;
             default:
                 return null;
@@ -966,49 +1286,38 @@ abstract class AdminUser implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_PHPNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
-     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
+    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
     {
 
-        if (isset($alreadyDumpedObjects['AdminUser'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['User'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['AdminUser'][$this->hashCode()] = true;
-        $keys = AdminUserTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['User'][$this->hashCode()] = true;
+        $keys = UserTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getUser(),
-            $keys[2] => $this->getPassword(),
-            $keys[3] => $this->getName(),
-            $keys[4] => $this->getEmail(),
-            $keys[5] => $this->getFolderRoot(),
-            $keys[6] => $this->getRolId(),
+            $keys[1] => $this->getName(),
+            $keys[2] => $this->getRut(),
+            $keys[3] => $this->getCode(),
+            $keys[4] => $this->getEMail(),
+            $keys[5] => $this->getAddress(),
+            $keys[6] => $this->getGender(),
+            $keys[7] => $this->getPhone(),
+            $keys[8] => $this->getIdCity(),
+            $keys[9] => $this->getIdLocation(),
+            $keys[10] => $this->getIdCountry(),
+            $keys[11] => $this->getIdNationality(),
+            $keys[12] => $this->getIdType(),
+            $keys[13] => $this->getIdUser(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
-        if ($includeForeignObjects) {
-            if (null !== $this->aRoles) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'roles';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'roles';
-                        break;
-                    default:
-                        $key = 'Roles';
-                }
-
-                $result[$key] = $this->aRoles->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-        }
 
         return $result;
     }
@@ -1022,11 +1331,11 @@ abstract class AdminUser implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\AdminUser
+     * @return $this|\User
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = AdminUserTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = UserTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1037,7 +1346,7 @@ abstract class AdminUser implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\AdminUser
+     * @return $this|\User
      */
     public function setByPosition($pos, $value)
     {
@@ -1046,22 +1355,43 @@ abstract class AdminUser implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setUser($value);
-                break;
-            case 2:
-                $this->setPassword($value);
-                break;
-            case 3:
                 $this->setName($value);
                 break;
+            case 2:
+                $this->setRut($value);
+                break;
+            case 3:
+                $this->setCode($value);
+                break;
             case 4:
-                $this->setEmail($value);
+                $this->setEMail($value);
                 break;
             case 5:
-                $this->setFolderRoot($value);
+                $this->setAddress($value);
                 break;
             case 6:
-                $this->setRolId($value);
+                $this->setGender($value);
+                break;
+            case 7:
+                $this->setPhone($value);
+                break;
+            case 8:
+                $this->setIdCity($value);
+                break;
+            case 9:
+                $this->setIdLocation($value);
+                break;
+            case 10:
+                $this->setIdCountry($value);
+                break;
+            case 11:
+                $this->setIdNationality($value);
+                break;
+            case 12:
+                $this->setIdType($value);
+                break;
+            case 13:
+                $this->setIdUser($value);
                 break;
         } // switch()
 
@@ -1087,28 +1417,49 @@ abstract class AdminUser implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = AdminUserTableMap::getFieldNames($keyType);
+        $keys = UserTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setUser($arr[$keys[1]]);
+            $this->setName($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setPassword($arr[$keys[2]]);
+            $this->setRut($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setName($arr[$keys[3]]);
+            $this->setCode($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setEmail($arr[$keys[4]]);
+            $this->setEMail($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setFolderRoot($arr[$keys[5]]);
+            $this->setAddress($arr[$keys[5]]);
         }
         if (array_key_exists($keys[6], $arr)) {
-            $this->setRolId($arr[$keys[6]]);
+            $this->setGender($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setPhone($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setIdCity($arr[$keys[8]]);
+        }
+        if (array_key_exists($keys[9], $arr)) {
+            $this->setIdLocation($arr[$keys[9]]);
+        }
+        if (array_key_exists($keys[10], $arr)) {
+            $this->setIdCountry($arr[$keys[10]]);
+        }
+        if (array_key_exists($keys[11], $arr)) {
+            $this->setIdNationality($arr[$keys[11]]);
+        }
+        if (array_key_exists($keys[12], $arr)) {
+            $this->setIdType($arr[$keys[12]]);
+        }
+        if (array_key_exists($keys[13], $arr)) {
+            $this->setIdUser($arr[$keys[13]]);
         }
     }
 
@@ -1129,7 +1480,7 @@ abstract class AdminUser implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\AdminUser The current object, for fluid interface
+     * @return $this|\User The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1149,28 +1500,49 @@ abstract class AdminUser implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(AdminUserTableMap::DATABASE_NAME);
+        $criteria = new Criteria(UserTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(AdminUserTableMap::COL_ID)) {
-            $criteria->add(AdminUserTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(UserTableMap::COL_ID)) {
+            $criteria->add(UserTableMap::COL_ID, $this->id);
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_USER)) {
-            $criteria->add(AdminUserTableMap::COL_USER, $this->user);
+        if ($this->isColumnModified(UserTableMap::COL_NAME)) {
+            $criteria->add(UserTableMap::COL_NAME, $this->name);
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_PASSWORD)) {
-            $criteria->add(AdminUserTableMap::COL_PASSWORD, $this->password);
+        if ($this->isColumnModified(UserTableMap::COL_RUT)) {
+            $criteria->add(UserTableMap::COL_RUT, $this->rut);
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_NAME)) {
-            $criteria->add(AdminUserTableMap::COL_NAME, $this->name);
+        if ($this->isColumnModified(UserTableMap::COL_CODE)) {
+            $criteria->add(UserTableMap::COL_CODE, $this->code);
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_EMAIL)) {
-            $criteria->add(AdminUserTableMap::COL_EMAIL, $this->email);
+        if ($this->isColumnModified(UserTableMap::COL_E_MAIL)) {
+            $criteria->add(UserTableMap::COL_E_MAIL, $this->e_mail);
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_FOLDER_ROOT)) {
-            $criteria->add(AdminUserTableMap::COL_FOLDER_ROOT, $this->folder_root);
+        if ($this->isColumnModified(UserTableMap::COL_ADDRESS)) {
+            $criteria->add(UserTableMap::COL_ADDRESS, $this->address);
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_ROL_ID)) {
-            $criteria->add(AdminUserTableMap::COL_ROL_ID, $this->rol_id);
+        if ($this->isColumnModified(UserTableMap::COL_GENDER)) {
+            $criteria->add(UserTableMap::COL_GENDER, $this->gender);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_PHONE)) {
+            $criteria->add(UserTableMap::COL_PHONE, $this->phone);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ID_CITY)) {
+            $criteria->add(UserTableMap::COL_ID_CITY, $this->id_city);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ID_LOCATION)) {
+            $criteria->add(UserTableMap::COL_ID_LOCATION, $this->id_location);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ID_COUNTRY)) {
+            $criteria->add(UserTableMap::COL_ID_COUNTRY, $this->id_country);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ID_NATIONALITY)) {
+            $criteria->add(UserTableMap::COL_ID_NATIONALITY, $this->id_nationality);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ID_TYPE)) {
+            $criteria->add(UserTableMap::COL_ID_TYPE, $this->id_type);
+        }
+        if ($this->isColumnModified(UserTableMap::COL_ID_ADMIN)) {
+            $criteria->add(UserTableMap::COL_ID_ADMIN, $this->id_admin);
         }
 
         return $criteria;
@@ -1188,8 +1560,8 @@ abstract class AdminUser implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildAdminUserQuery::create();
-        $criteria->add(AdminUserTableMap::COL_ID, $this->id);
+        $criteria = ChildUserQuery::create();
+        $criteria->add(UserTableMap::COL_ID, $this->id);
 
         return $criteria;
     }
@@ -1251,22 +1623,29 @@ abstract class AdminUser implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \AdminUser (or compatible) type.
+     * @param      object $copyObj An object of \User (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setId($this->getId());
-        $copyObj->setUser($this->getUser());
-        $copyObj->setPassword($this->getPassword());
         $copyObj->setName($this->getName());
-        $copyObj->setEmail($this->getEmail());
-        $copyObj->setFolderRoot($this->getFolderRoot());
-        $copyObj->setRolId($this->getRolId());
+        $copyObj->setRut($this->getRut());
+        $copyObj->setCode($this->getCode());
+        $copyObj->setEMail($this->getEMail());
+        $copyObj->setAddress($this->getAddress());
+        $copyObj->setGender($this->getGender());
+        $copyObj->setPhone($this->getPhone());
+        $copyObj->setIdCity($this->getIdCity());
+        $copyObj->setIdLocation($this->getIdLocation());
+        $copyObj->setIdCountry($this->getIdCountry());
+        $copyObj->setIdNationality($this->getIdNationality());
+        $copyObj->setIdType($this->getIdType());
+        $copyObj->setIdUser($this->getIdUser());
         if ($makeNew) {
             $copyObj->setNew(true);
+            $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1279,7 +1658,7 @@ abstract class AdminUser implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \AdminUser Clone of current object.
+     * @return \User Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1293,73 +1672,26 @@ abstract class AdminUser implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildRoles object.
-     *
-     * @param  ChildRoles $v
-     * @return $this|\AdminUser The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setRoles(ChildRoles $v = null)
-    {
-        if ($v === null) {
-            $this->setRolId(NULL);
-        } else {
-            $this->setRolId($v->getId());
-        }
-
-        $this->aRoles = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildRoles object, it will not be re-added.
-        if ($v !== null) {
-            $v->addAdminUser($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildRoles object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildRoles The associated ChildRoles object.
-     * @throws PropelException
-     */
-    public function getRoles(ConnectionInterface $con = null)
-    {
-        if ($this->aRoles === null && ($this->rol_id !== null)) {
-            $this->aRoles = ChildRolesQuery::create()->findPk($this->rol_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aRoles->addAdminUsers($this);
-             */
-        }
-
-        return $this->aRoles;
-    }
-
-    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
-        if (null !== $this->aRoles) {
-            $this->aRoles->removeAdminUser($this);
-        }
         $this->id = null;
-        $this->user = null;
-        $this->password = null;
         $this->name = null;
-        $this->email = null;
-        $this->folder_root = null;
-        $this->rol_id = null;
+        $this->rut = null;
+        $this->code = null;
+        $this->e_mail = null;
+        $this->address = null;
+        $this->gender = null;
+        $this->phone = null;
+        $this->id_city = null;
+        $this->id_location = null;
+        $this->id_country = null;
+        $this->id_nationality = null;
+        $this->id_type = null;
+        $this->id_admin = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1380,7 +1712,6 @@ abstract class AdminUser implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
-        $this->aRoles = null;
     }
 
     /**
@@ -1390,7 +1721,7 @@ abstract class AdminUser implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(AdminUserTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(UserTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

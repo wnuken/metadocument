@@ -59,7 +59,7 @@ class AdminUserTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class AdminUserTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the id field
@@ -97,11 +97,6 @@ class AdminUserTableMap extends TableMap
     const COL_EMAIL = 'admin_user.email';
 
     /**
-     * the column name for the folder_root field
-     */
-    const COL_FOLDER_ROOT = 'admin_user.folder_root';
-
-    /**
      * the column name for the rol_id field
      */
     const COL_ROL_ID = 'admin_user.rol_id';
@@ -118,11 +113,11 @@ class AdminUserTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'User', 'Password', 'Name', 'Email', 'FolderRoot', 'RolId', ),
-        self::TYPE_CAMELNAME     => array('id', 'user', 'password', 'name', 'email', 'folderRoot', 'rolId', ),
-        self::TYPE_COLNAME       => array(AdminUserTableMap::COL_ID, AdminUserTableMap::COL_USER, AdminUserTableMap::COL_PASSWORD, AdminUserTableMap::COL_NAME, AdminUserTableMap::COL_EMAIL, AdminUserTableMap::COL_FOLDER_ROOT, AdminUserTableMap::COL_ROL_ID, ),
-        self::TYPE_FIELDNAME     => array('id', 'user', 'password', 'name', 'email', 'folder_root', 'rol_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id', 'User', 'Password', 'User', 'Email', 'RolId', ),
+        self::TYPE_CAMELNAME     => array('id', 'user', 'password', 'user', 'email', 'rolId', ),
+        self::TYPE_COLNAME       => array(AdminUserTableMap::COL_ID, AdminUserTableMap::COL_USER, AdminUserTableMap::COL_PASSWORD, AdminUserTableMap::COL_NAME, AdminUserTableMap::COL_EMAIL, AdminUserTableMap::COL_ROL_ID, ),
+        self::TYPE_FIELDNAME     => array('id', 'user', 'password', 'name', 'email', 'rol_id', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -132,11 +127,11 @@ class AdminUserTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'User' => 1, 'Password' => 2, 'Name' => 3, 'Email' => 4, 'FolderRoot' => 5, 'RolId' => 6, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'user' => 1, 'password' => 2, 'name' => 3, 'email' => 4, 'folderRoot' => 5, 'rolId' => 6, ),
-        self::TYPE_COLNAME       => array(AdminUserTableMap::COL_ID => 0, AdminUserTableMap::COL_USER => 1, AdminUserTableMap::COL_PASSWORD => 2, AdminUserTableMap::COL_NAME => 3, AdminUserTableMap::COL_EMAIL => 4, AdminUserTableMap::COL_FOLDER_ROOT => 5, AdminUserTableMap::COL_ROL_ID => 6, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'user' => 1, 'password' => 2, 'name' => 3, 'email' => 4, 'folder_root' => 5, 'rol_id' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'User' => 1, 'Password' => 2, 'User' => 3, 'Email' => 4, 'RolId' => 5, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'user' => 1, 'password' => 2, 'user' => 3, 'email' => 4, 'rolId' => 5, ),
+        self::TYPE_COLNAME       => array(AdminUserTableMap::COL_ID => 0, AdminUserTableMap::COL_USER => 1, AdminUserTableMap::COL_PASSWORD => 2, AdminUserTableMap::COL_NAME => 3, AdminUserTableMap::COL_EMAIL => 4, AdminUserTableMap::COL_ROL_ID => 5, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'user' => 1, 'password' => 2, 'name' => 3, 'email' => 4, 'rol_id' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -159,9 +154,8 @@ class AdminUserTableMap extends TableMap
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('user', 'User', 'VARCHAR', false, 50, null);
         $this->addColumn('password', 'Password', 'VARCHAR', false, 255, null);
-        $this->addColumn('name', 'Name', 'VARCHAR', false, 50, null);
+        $this->addColumn('name', 'User', 'VARCHAR', false, 50, null);
         $this->addColumn('email', 'Email', 'VARCHAR', false, 50, null);
-        $this->addColumn('folder_root', 'FolderRoot', 'LONGVARCHAR', false, null, null);
         $this->addForeignKey('rol_id', 'RolId', 'INTEGER', 'roles', 'id', false, null, null);
     } // initialize()
 
@@ -325,7 +319,6 @@ class AdminUserTableMap extends TableMap
             $criteria->addSelectColumn(AdminUserTableMap::COL_PASSWORD);
             $criteria->addSelectColumn(AdminUserTableMap::COL_NAME);
             $criteria->addSelectColumn(AdminUserTableMap::COL_EMAIL);
-            $criteria->addSelectColumn(AdminUserTableMap::COL_FOLDER_ROOT);
             $criteria->addSelectColumn(AdminUserTableMap::COL_ROL_ID);
         } else {
             $criteria->addSelectColumn($alias . '.id');
@@ -333,7 +326,6 @@ class AdminUserTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.password');
             $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.email');
-            $criteria->addSelectColumn($alias . '.folder_root');
             $criteria->addSelectColumn($alias . '.rol_id');
         }
     }

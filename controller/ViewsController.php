@@ -49,10 +49,10 @@ class Views {
 
 			$Querys = new Querys();
 			$paramsUser['user'] = $_SESSION['user_path'];
-			$userValues = $Querys->AdminUserByUser($paramsUser);
 
+			$userValues = $Querys->AdminUserByUser($paramsUser);
 			if(!is_array($userValues)){
-				$path = $userValues->getGFolder();
+				$path = $userValues->getFolderRoot();
 				// $_SESSION['arrayFolder']['0'] = $path;
 
 				if($RestParams != ''){

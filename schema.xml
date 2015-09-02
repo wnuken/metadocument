@@ -11,8 +11,9 @@
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
     <column name="user" phpName="User" type="VARCHAR" size="50"/>
     <column name="password" phpName="Password" type="VARCHAR" size="255"/>
-    <column name="name" phpName="User" type="VARCHAR" size="50"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="50"/>
     <column name="email" phpName="Email" type="VARCHAR" size="50"/>
+    <column name="folder_root" phpName="FolderRoot" type="LONGVARCHAR" />
     <column name="rol_id" phpName="RolId" type="INTEGER"/>
     <foreign-key foreignTable="roles" phpName="Roles" refPhpName="AdminUser">
       <reference local="rol_id" foreign="id"/>

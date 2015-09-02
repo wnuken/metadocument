@@ -2,12 +2,10 @@
 
 namespace Base;
 
-use \AdminUserQuery as ChildAdminUserQuery;
-use \Roles as ChildRoles;
-use \RolesQuery as ChildRolesQuery;
+use \DocumentMetadataQuery as ChildDocumentMetadataQuery;
 use \Exception;
 use \PDO;
-use Map\AdminUserTableMap;
+use Map\DocumentMetadataTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -21,18 +19,18 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Parser\AbstractParser;
 
 /**
- * Base class that represents a row from the 'admin_user' table.
+ * Base class that represents a row from the 'document_metadata' table.
  *
  *
  *
 * @package    propel.generator..Base
 */
-abstract class AdminUser implements ActiveRecordInterface
+abstract class DocumentMetadata implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Map\\AdminUserTableMap';
+    const TABLE_MAP = '\\Map\\DocumentMetadataTableMap';
 
 
     /**
@@ -68,45 +66,16 @@ abstract class AdminUser implements ActiveRecordInterface
     protected $id;
 
     /**
-     * The value for the user field.
+     * The value for the document_id field.
      * @var        string
      */
-    protected $user;
+    protected $document_id;
 
     /**
-     * The value for the password field.
+     * The value for the document_params field.
      * @var        string
      */
-    protected $password;
-
-    /**
-     * The value for the name field.
-     * @var        string
-     */
-    protected $name;
-
-    /**
-     * The value for the email field.
-     * @var        string
-     */
-    protected $email;
-
-    /**
-     * The value for the folder_root field.
-     * @var        string
-     */
-    protected $folder_root;
-
-    /**
-     * The value for the rol_id field.
-     * @var        int
-     */
-    protected $rol_id;
-
-    /**
-     * @var        ChildRoles
-     */
-    protected $aRoles;
+    protected $document_params;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -117,7 +86,7 @@ abstract class AdminUser implements ActiveRecordInterface
     protected $alreadyInSave = false;
 
     /**
-     * Initializes internal state of Base\AdminUser object.
+     * Initializes internal state of Base\DocumentMetadata object.
      */
     public function __construct()
     {
@@ -212,9 +181,9 @@ abstract class AdminUser implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>AdminUser</code> instance.  If
-     * <code>obj</code> is an instance of <code>AdminUser</code>, delegates to
-     * <code>equals(AdminUser)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>DocumentMetadata</code> instance.  If
+     * <code>obj</code> is an instance of <code>DocumentMetadata</code>, delegates to
+     * <code>equals(DocumentMetadata)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -280,7 +249,7 @@ abstract class AdminUser implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|AdminUser The current object, for fluid interface
+     * @return $this|DocumentMetadata The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -344,70 +313,30 @@ abstract class AdminUser implements ActiveRecordInterface
     }
 
     /**
-     * Get the [user] column value.
+     * Get the [document_id] column value.
      *
      * @return string
      */
-    public function getUser()
+    public function getDocumentId()
     {
-        return $this->user;
+        return $this->document_id;
     }
 
     /**
-     * Get the [password] column value.
+     * Get the [document_params] column value.
      *
      * @return string
      */
-    public function getPassword()
+    public function getDocumentParams()
     {
-        return $this->password;
-    }
-
-    /**
-     * Get the [name] column value.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get the [email] column value.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Get the [folder_root] column value.
-     *
-     * @return string
-     */
-    public function getFolderRoot()
-    {
-        return $this->folder_root;
-    }
-
-    /**
-     * Get the [rol_id] column value.
-     *
-     * @return int
-     */
-    public function getRolId()
-    {
-        return $this->rol_id;
+        return $this->document_params;
     }
 
     /**
      * Set the value of [id] column.
      *
      * @param int $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
+     * @return $this|\DocumentMetadata The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -417,135 +346,51 @@ abstract class AdminUser implements ActiveRecordInterface
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_ID] = true;
+            $this->modifiedColumns[DocumentMetadataTableMap::COL_ID] = true;
         }
 
         return $this;
     } // setId()
 
     /**
-     * Set the value of [user] column.
+     * Set the value of [document_id] column.
      *
      * @param string $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
+     * @return $this|\DocumentMetadata The current object (for fluent API support)
      */
-    public function setUser($v)
+    public function setDocumentId($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->user !== $v) {
-            $this->user = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_USER] = true;
+        if ($this->document_id !== $v) {
+            $this->document_id = $v;
+            $this->modifiedColumns[DocumentMetadataTableMap::COL_DOCUMENT_ID] = true;
         }
 
         return $this;
-    } // setUser()
+    } // setDocumentId()
 
     /**
-     * Set the value of [password] column.
+     * Set the value of [document_params] column.
      *
      * @param string $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
+     * @return $this|\DocumentMetadata The current object (for fluent API support)
      */
-    public function setPassword($v)
+    public function setDocumentParams($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->password !== $v) {
-            $this->password = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_PASSWORD] = true;
+        if ($this->document_params !== $v) {
+            $this->document_params = $v;
+            $this->modifiedColumns[DocumentMetadataTableMap::COL_DOCUMENT_PARAMS] = true;
         }
 
         return $this;
-    } // setPassword()
-
-    /**
-     * Set the value of [name] column.
-     *
-     * @param string $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
-     */
-    public function setName($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->name !== $v) {
-            $this->name = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_NAME] = true;
-        }
-
-        return $this;
-    } // setName()
-
-    /**
-     * Set the value of [email] column.
-     *
-     * @param string $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
-     */
-    public function setEmail($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->email !== $v) {
-            $this->email = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_EMAIL] = true;
-        }
-
-        return $this;
-    } // setEmail()
-
-    /**
-     * Set the value of [folder_root] column.
-     *
-     * @param string $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
-     */
-    public function setFolderRoot($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->folder_root !== $v) {
-            $this->folder_root = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_FOLDER_ROOT] = true;
-        }
-
-        return $this;
-    } // setFolderRoot()
-
-    /**
-     * Set the value of [rol_id] column.
-     *
-     * @param int $v new value
-     * @return $this|\AdminUser The current object (for fluent API support)
-     */
-    public function setRolId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->rol_id !== $v) {
-            $this->rol_id = $v;
-            $this->modifiedColumns[AdminUserTableMap::COL_ROL_ID] = true;
-        }
-
-        if ($this->aRoles !== null && $this->aRoles->getId() !== $v) {
-            $this->aRoles = null;
-        }
-
-        return $this;
-    } // setRolId()
+    } // setDocumentParams()
 
     /**
      * Indicates whether the columns in this object are only set to default values.
@@ -583,26 +428,14 @@ abstract class AdminUser implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : AdminUserTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : DocumentMetadataTableMap::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : AdminUserTableMap::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->user = (null !== $col) ? (string) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : DocumentMetadataTableMap::translateFieldName('DocumentId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->document_id = (null !== $col) ? (string) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : AdminUserTableMap::translateFieldName('Password', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->password = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : AdminUserTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->name = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : AdminUserTableMap::translateFieldName('Email', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->email = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : AdminUserTableMap::translateFieldName('FolderRoot', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->folder_root = (null !== $col) ? (string) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : AdminUserTableMap::translateFieldName('RolId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->rol_id = (null !== $col) ? (int) $col : null;
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : DocumentMetadataTableMap::translateFieldName('DocumentParams', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->document_params = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -611,10 +444,10 @@ abstract class AdminUser implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = AdminUserTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 3; // 3 = DocumentMetadataTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\AdminUser'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\DocumentMetadata'), 0, $e);
         }
     }
 
@@ -633,9 +466,6 @@ abstract class AdminUser implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aRoles !== null && $this->rol_id !== $this->aRoles->getId()) {
-            $this->aRoles = null;
-        }
     } // ensureConsistency
 
     /**
@@ -659,13 +489,13 @@ abstract class AdminUser implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(AdminUserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(DocumentMetadataTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildAdminUserQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildDocumentMetadataQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -675,7 +505,6 @@ abstract class AdminUser implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aRoles = null;
         } // if (deep)
     }
 
@@ -685,8 +514,8 @@ abstract class AdminUser implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see AdminUser::setDeleted()
-     * @see AdminUser::isDeleted()
+     * @see DocumentMetadata::setDeleted()
+     * @see DocumentMetadata::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -695,11 +524,11 @@ abstract class AdminUser implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(AdminUserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(DocumentMetadataTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildAdminUserQuery::create()
+            $deleteQuery = ChildDocumentMetadataQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -730,7 +559,7 @@ abstract class AdminUser implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(AdminUserTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(DocumentMetadataTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -749,7 +578,7 @@ abstract class AdminUser implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                AdminUserTableMap::addInstanceToPool($this);
+                DocumentMetadataTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -774,18 +603,6 @@ abstract class AdminUser implements ActiveRecordInterface
         $affectedRows = 0; // initialize var to track total num of affected rows
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
-
-            // We call the save method on the following object(s) if they
-            // were passed to this object by their corresponding set
-            // method.  This object relates to these object(s) by a
-            // foreign key reference.
-
-            if ($this->aRoles !== null) {
-                if ($this->aRoles->isModified() || $this->aRoles->isNew()) {
-                    $affectedRows += $this->aRoles->save($con);
-                }
-                $this->setRoles($this->aRoles);
-            }
 
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
@@ -820,30 +637,18 @@ abstract class AdminUser implements ActiveRecordInterface
 
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(AdminUserTableMap::COL_ID)) {
+        if ($this->isColumnModified(DocumentMetadataTableMap::COL_ID)) {
             $modifiedColumns[':p' . $index++]  = 'id';
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_USER)) {
-            $modifiedColumns[':p' . $index++]  = 'user';
+        if ($this->isColumnModified(DocumentMetadataTableMap::COL_DOCUMENT_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'document_id';
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_PASSWORD)) {
-            $modifiedColumns[':p' . $index++]  = 'password';
-        }
-        if ($this->isColumnModified(AdminUserTableMap::COL_NAME)) {
-            $modifiedColumns[':p' . $index++]  = 'name';
-        }
-        if ($this->isColumnModified(AdminUserTableMap::COL_EMAIL)) {
-            $modifiedColumns[':p' . $index++]  = 'email';
-        }
-        if ($this->isColumnModified(AdminUserTableMap::COL_FOLDER_ROOT)) {
-            $modifiedColumns[':p' . $index++]  = 'folder_root';
-        }
-        if ($this->isColumnModified(AdminUserTableMap::COL_ROL_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'rol_id';
+        if ($this->isColumnModified(DocumentMetadataTableMap::COL_DOCUMENT_PARAMS)) {
+            $modifiedColumns[':p' . $index++]  = 'document_params';
         }
 
         $sql = sprintf(
-            'INSERT INTO admin_user (%s) VALUES (%s)',
+            'INSERT INTO document_metadata (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -855,23 +660,11 @@ abstract class AdminUser implements ActiveRecordInterface
                     case 'id':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case 'user':
-                        $stmt->bindValue($identifier, $this->user, PDO::PARAM_STR);
+                    case 'document_id':
+                        $stmt->bindValue($identifier, $this->document_id, PDO::PARAM_STR);
                         break;
-                    case 'password':
-                        $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
-                        break;
-                    case 'name':
-                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
-                        break;
-                    case 'email':
-                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
-                        break;
-                    case 'folder_root':
-                        $stmt->bindValue($identifier, $this->folder_root, PDO::PARAM_STR);
-                        break;
-                    case 'rol_id':
-                        $stmt->bindValue($identifier, $this->rol_id, PDO::PARAM_INT);
+                    case 'document_params':
+                        $stmt->bindValue($identifier, $this->document_params, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -912,7 +705,7 @@ abstract class AdminUser implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = AdminUserTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = DocumentMetadataTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -932,22 +725,10 @@ abstract class AdminUser implements ActiveRecordInterface
                 return $this->getId();
                 break;
             case 1:
-                return $this->getUser();
+                return $this->getDocumentId();
                 break;
             case 2:
-                return $this->getPassword();
-                break;
-            case 3:
-                return $this->getName();
-                break;
-            case 4:
-                return $this->getEmail();
-                break;
-            case 5:
-                return $this->getFolderRoot();
-                break;
-            case 6:
-                return $this->getRolId();
+                return $this->getDocumentParams();
                 break;
             default:
                 return null;
@@ -966,49 +747,27 @@ abstract class AdminUser implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_PHPNAME.
      * @param     boolean $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param     array $alreadyDumpedObjects List of objects to skip to avoid recursion
-     * @param     boolean $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array an associative array containing the field names (as keys) and field values
      */
-    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
+    public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
     {
 
-        if (isset($alreadyDumpedObjects['AdminUser'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['DocumentMetadata'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['AdminUser'][$this->hashCode()] = true;
-        $keys = AdminUserTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['DocumentMetadata'][$this->hashCode()] = true;
+        $keys = DocumentMetadataTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getUser(),
-            $keys[2] => $this->getPassword(),
-            $keys[3] => $this->getName(),
-            $keys[4] => $this->getEmail(),
-            $keys[5] => $this->getFolderRoot(),
-            $keys[6] => $this->getRolId(),
+            $keys[1] => $this->getDocumentId(),
+            $keys[2] => $this->getDocumentParams(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
-        if ($includeForeignObjects) {
-            if (null !== $this->aRoles) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'roles';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'roles';
-                        break;
-                    default:
-                        $key = 'Roles';
-                }
-
-                $result[$key] = $this->aRoles->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
-        }
 
         return $result;
     }
@@ -1022,11 +781,11 @@ abstract class AdminUser implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\AdminUser
+     * @return $this|\DocumentMetadata
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = AdminUserTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = DocumentMetadataTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -1037,7 +796,7 @@ abstract class AdminUser implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\AdminUser
+     * @return $this|\DocumentMetadata
      */
     public function setByPosition($pos, $value)
     {
@@ -1046,22 +805,10 @@ abstract class AdminUser implements ActiveRecordInterface
                 $this->setId($value);
                 break;
             case 1:
-                $this->setUser($value);
+                $this->setDocumentId($value);
                 break;
             case 2:
-                $this->setPassword($value);
-                break;
-            case 3:
-                $this->setName($value);
-                break;
-            case 4:
-                $this->setEmail($value);
-                break;
-            case 5:
-                $this->setFolderRoot($value);
-                break;
-            case 6:
-                $this->setRolId($value);
+                $this->setDocumentParams($value);
                 break;
         } // switch()
 
@@ -1087,28 +834,16 @@ abstract class AdminUser implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = AdminUserTableMap::getFieldNames($keyType);
+        $keys = DocumentMetadataTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
             $this->setId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setUser($arr[$keys[1]]);
+            $this->setDocumentId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
-            $this->setPassword($arr[$keys[2]]);
-        }
-        if (array_key_exists($keys[3], $arr)) {
-            $this->setName($arr[$keys[3]]);
-        }
-        if (array_key_exists($keys[4], $arr)) {
-            $this->setEmail($arr[$keys[4]]);
-        }
-        if (array_key_exists($keys[5], $arr)) {
-            $this->setFolderRoot($arr[$keys[5]]);
-        }
-        if (array_key_exists($keys[6], $arr)) {
-            $this->setRolId($arr[$keys[6]]);
+            $this->setDocumentParams($arr[$keys[2]]);
         }
     }
 
@@ -1129,7 +864,7 @@ abstract class AdminUser implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\AdminUser The current object, for fluid interface
+     * @return $this|\DocumentMetadata The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1149,28 +884,16 @@ abstract class AdminUser implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(AdminUserTableMap::DATABASE_NAME);
+        $criteria = new Criteria(DocumentMetadataTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(AdminUserTableMap::COL_ID)) {
-            $criteria->add(AdminUserTableMap::COL_ID, $this->id);
+        if ($this->isColumnModified(DocumentMetadataTableMap::COL_ID)) {
+            $criteria->add(DocumentMetadataTableMap::COL_ID, $this->id);
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_USER)) {
-            $criteria->add(AdminUserTableMap::COL_USER, $this->user);
+        if ($this->isColumnModified(DocumentMetadataTableMap::COL_DOCUMENT_ID)) {
+            $criteria->add(DocumentMetadataTableMap::COL_DOCUMENT_ID, $this->document_id);
         }
-        if ($this->isColumnModified(AdminUserTableMap::COL_PASSWORD)) {
-            $criteria->add(AdminUserTableMap::COL_PASSWORD, $this->password);
-        }
-        if ($this->isColumnModified(AdminUserTableMap::COL_NAME)) {
-            $criteria->add(AdminUserTableMap::COL_NAME, $this->name);
-        }
-        if ($this->isColumnModified(AdminUserTableMap::COL_EMAIL)) {
-            $criteria->add(AdminUserTableMap::COL_EMAIL, $this->email);
-        }
-        if ($this->isColumnModified(AdminUserTableMap::COL_FOLDER_ROOT)) {
-            $criteria->add(AdminUserTableMap::COL_FOLDER_ROOT, $this->folder_root);
-        }
-        if ($this->isColumnModified(AdminUserTableMap::COL_ROL_ID)) {
-            $criteria->add(AdminUserTableMap::COL_ROL_ID, $this->rol_id);
+        if ($this->isColumnModified(DocumentMetadataTableMap::COL_DOCUMENT_PARAMS)) {
+            $criteria->add(DocumentMetadataTableMap::COL_DOCUMENT_PARAMS, $this->document_params);
         }
 
         return $criteria;
@@ -1188,8 +911,8 @@ abstract class AdminUser implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildAdminUserQuery::create();
-        $criteria->add(AdminUserTableMap::COL_ID, $this->id);
+        $criteria = ChildDocumentMetadataQuery::create();
+        $criteria->add(DocumentMetadataTableMap::COL_ID, $this->id);
 
         return $criteria;
     }
@@ -1251,7 +974,7 @@ abstract class AdminUser implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \AdminUser (or compatible) type.
+     * @param      object $copyObj An object of \DocumentMetadata (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -1259,12 +982,8 @@ abstract class AdminUser implements ActiveRecordInterface
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setId($this->getId());
-        $copyObj->setUser($this->getUser());
-        $copyObj->setPassword($this->getPassword());
-        $copyObj->setName($this->getName());
-        $copyObj->setEmail($this->getEmail());
-        $copyObj->setFolderRoot($this->getFolderRoot());
-        $copyObj->setRolId($this->getRolId());
+        $copyObj->setDocumentId($this->getDocumentId());
+        $copyObj->setDocumentParams($this->getDocumentParams());
         if ($makeNew) {
             $copyObj->setNew(true);
         }
@@ -1279,7 +998,7 @@ abstract class AdminUser implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \AdminUser Clone of current object.
+     * @return \DocumentMetadata Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1293,73 +1012,15 @@ abstract class AdminUser implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildRoles object.
-     *
-     * @param  ChildRoles $v
-     * @return $this|\AdminUser The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setRoles(ChildRoles $v = null)
-    {
-        if ($v === null) {
-            $this->setRolId(NULL);
-        } else {
-            $this->setRolId($v->getId());
-        }
-
-        $this->aRoles = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildRoles object, it will not be re-added.
-        if ($v !== null) {
-            $v->addAdminUser($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildRoles object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildRoles The associated ChildRoles object.
-     * @throws PropelException
-     */
-    public function getRoles(ConnectionInterface $con = null)
-    {
-        if ($this->aRoles === null && ($this->rol_id !== null)) {
-            $this->aRoles = ChildRolesQuery::create()->findPk($this->rol_id, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aRoles->addAdminUsers($this);
-             */
-        }
-
-        return $this->aRoles;
-    }
-
-    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
      */
     public function clear()
     {
-        if (null !== $this->aRoles) {
-            $this->aRoles->removeAdminUser($this);
-        }
         $this->id = null;
-        $this->user = null;
-        $this->password = null;
-        $this->name = null;
-        $this->email = null;
-        $this->folder_root = null;
-        $this->rol_id = null;
+        $this->document_id = null;
+        $this->document_params = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1380,7 +1041,6 @@ abstract class AdminUser implements ActiveRecordInterface
         if ($deep) {
         } // if ($deep)
 
-        $this->aRoles = null;
     }
 
     /**
@@ -1390,7 +1050,7 @@ abstract class AdminUser implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(AdminUserTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(DocumentMetadataTableMap::DEFAULT_STRING_FORMAT);
     }
 
     /**

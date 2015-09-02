@@ -23,17 +23,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildAdminUserQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildAdminUserQuery orderByUser($order = Criteria::ASC) Order by the user column
  * @method     ChildAdminUserQuery orderByPassword($order = Criteria::ASC) Order by the password column
- * @method     ChildAdminUserQuery orderByName($order = Criteria::ASC) Order by the name column
+ * @method     ChildAdminUserQuery orderByUser($order = Criteria::ASC) Order by the name column
  * @method     ChildAdminUserQuery orderByEmail($order = Criteria::ASC) Order by the email column
- * @method     ChildAdminUserQuery orderByFolderRoot($order = Criteria::ASC) Order by the folder_root column
  * @method     ChildAdminUserQuery orderByRolId($order = Criteria::ASC) Order by the rol_id column
  *
  * @method     ChildAdminUserQuery groupById() Group by the id column
  * @method     ChildAdminUserQuery groupByUser() Group by the user column
  * @method     ChildAdminUserQuery groupByPassword() Group by the password column
- * @method     ChildAdminUserQuery groupByName() Group by the name column
+ * @method     ChildAdminUserQuery groupByUser() Group by the name column
  * @method     ChildAdminUserQuery groupByEmail() Group by the email column
- * @method     ChildAdminUserQuery groupByFolderRoot() Group by the folder_root column
  * @method     ChildAdminUserQuery groupByRolId() Group by the rol_id column
  *
  * @method     ChildAdminUserQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
@@ -52,9 +50,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildAdminUser findOneById(int $id) Return the first ChildAdminUser filtered by the id column
  * @method     ChildAdminUser findOneByUser(string $user) Return the first ChildAdminUser filtered by the user column
  * @method     ChildAdminUser findOneByPassword(string $password) Return the first ChildAdminUser filtered by the password column
- * @method     ChildAdminUser findOneByName(string $name) Return the first ChildAdminUser filtered by the name column
+ * @method     ChildAdminUser findOneByUser(string $name) Return the first ChildAdminUser filtered by the name column
  * @method     ChildAdminUser findOneByEmail(string $email) Return the first ChildAdminUser filtered by the email column
- * @method     ChildAdminUser findOneByFolderRoot(string $folder_root) Return the first ChildAdminUser filtered by the folder_root column
  * @method     ChildAdminUser findOneByRolId(int $rol_id) Return the first ChildAdminUser filtered by the rol_id column *
 
  * @method     ChildAdminUser requirePk($key, ConnectionInterface $con = null) Return the ChildAdminUser by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -63,18 +60,16 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildAdminUser requireOneById(int $id) Return the first ChildAdminUser filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildAdminUser requireOneByUser(string $user) Return the first ChildAdminUser filtered by the user column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildAdminUser requireOneByPassword(string $password) Return the first ChildAdminUser filtered by the password column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildAdminUser requireOneByName(string $name) Return the first ChildAdminUser filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildAdminUser requireOneByUser(string $name) Return the first ChildAdminUser filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildAdminUser requireOneByEmail(string $email) Return the first ChildAdminUser filtered by the email column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildAdminUser requireOneByFolderRoot(string $folder_root) Return the first ChildAdminUser filtered by the folder_root column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildAdminUser requireOneByRolId(int $rol_id) Return the first ChildAdminUser filtered by the rol_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildAdminUser[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildAdminUser objects based on current ModelCriteria
  * @method     ChildAdminUser[]|ObjectCollection findById(int $id) Return ChildAdminUser objects filtered by the id column
  * @method     ChildAdminUser[]|ObjectCollection findByUser(string $user) Return ChildAdminUser objects filtered by the user column
  * @method     ChildAdminUser[]|ObjectCollection findByPassword(string $password) Return ChildAdminUser objects filtered by the password column
- * @method     ChildAdminUser[]|ObjectCollection findByName(string $name) Return ChildAdminUser objects filtered by the name column
+ * @method     ChildAdminUser[]|ObjectCollection findByUser(string $name) Return ChildAdminUser objects filtered by the name column
  * @method     ChildAdminUser[]|ObjectCollection findByEmail(string $email) Return ChildAdminUser objects filtered by the email column
- * @method     ChildAdminUser[]|ObjectCollection findByFolderRoot(string $folder_root) Return ChildAdminUser objects filtered by the folder_root column
  * @method     ChildAdminUser[]|ObjectCollection findByRolId(int $rol_id) Return ChildAdminUser objects filtered by the rol_id column
  * @method     ChildAdminUser[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
@@ -168,7 +163,7 @@ abstract class AdminUserQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, user, password, name, email, folder_root, rol_id FROM admin_user WHERE id = :p0';
+        $sql = 'SELECT id, user, password, name, email, rol_id FROM admin_user WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -362,28 +357,28 @@ abstract class AdminUserQuery extends ModelCriteria
      *
      * Example usage:
      * <code>
-     * $query->filterByName('fooValue');   // WHERE name = 'fooValue'
-     * $query->filterByName('%fooValue%'); // WHERE name LIKE '%fooValue%'
+     * $query->filterByUser('fooValue');   // WHERE name = 'fooValue'
+     * $query->filterByUser('%fooValue%'); // WHERE name LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $name The value to use as filter.
+     * @param     string $user The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildAdminUserQuery The current query, for fluid interface
      */
-    public function filterByName($name = null, $comparison = null)
+    public function filterByUser($user = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($name)) {
+            if (is_array($user)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $name)) {
-                $name = str_replace('*', '%', $name);
+            } elseif (preg_match('/[\%\*]/', $user)) {
+                $user = str_replace('*', '%', $user);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(AdminUserTableMap::COL_NAME, $name, $comparison);
+        return $this->addUsingAlias(AdminUserTableMap::COL_NAME, $user, $comparison);
     }
 
     /**
@@ -413,35 +408,6 @@ abstract class AdminUserQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(AdminUserTableMap::COL_EMAIL, $email, $comparison);
-    }
-
-    /**
-     * Filter the query on the folder_root column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByFolderRoot('fooValue');   // WHERE folder_root = 'fooValue'
-     * $query->filterByFolderRoot('%fooValue%'); // WHERE folder_root LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $folderRoot The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildAdminUserQuery The current query, for fluid interface
-     */
-    public function filterByFolderRoot($folderRoot = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($folderRoot)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $folderRoot)) {
-                $folderRoot = str_replace('*', '%', $folderRoot);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(AdminUserTableMap::COL_FOLDER_ROOT, $folderRoot, $comparison);
     }
 
     /**

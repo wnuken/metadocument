@@ -69,6 +69,7 @@ class Querys {
     public function AdminUserByUser($params){
         try{           
             $result = AdminUserQuery::create()->findOneByUser($params['user']);
+            // var_dump($result);
             if(empty($result)){
                 $result = array(
                     'message' => $this->error['NO_FOUND'] . json_encode($params['user']),
