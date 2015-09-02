@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database name="metadocument" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+ 
+ <table name="roles" idMethod="native" phpName="Roles">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="50"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="255"/>
+  </table>
+
   <table name="admin_user" idMethod="native" phpName="AdminUser">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
     <column name="user" phpName="User" type="VARCHAR" size="50"/>
-    <column name="password" phpName="Password" type="VARCHAR" size="256"/>
-    <column name="email" phpName="EMail" type="VARCHAR" size="50"/>
+    <column name="password" phpName="Password" type="VARCHAR" size="255"/>
+    <column name="name" phpName="User" type="VARCHAR" size="50"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="50"/>
     <column name="rol_id" phpName="RolId" type="INTEGER"/>
-    <vendor type="mysql">
-      <parameter name="Engine" value="InnoDB"/>
-    </vendor>
+    <foreign-key foreignTable="roles" phpName="Roles" refPhpName="AdminUser">
+      <reference local="rol_id" foreign="id"/>
+    </foreign-key>
   </table>
 
   <table name="folder_metadata_form" idMethod="native" phpName="FolderMetadataForm">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="folder_id" phpName="FolderId" type="VARCHAR" size="256"/>
-    <column name="folder_params" phpName="FolderParams" type="LONGCHAR" />
-    <vendor type="mysql">
-      <parameter name="Engine" value="InnoDB"/>
-    </vendor>
+    <column name="folder_id" phpName="FolderId" type="VARCHAR" size="255"/>
+    <column name="folder_params" phpName="FolderParams" type="LONGVARCHAR" />
   </table>
 
   <table name="document_metadata" idMethod="native" phpName="DocumentMetadata">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
-    <column name="document_id" phpName="FolderId" type="VARCHAR" size="256"/>
-    <column name="document_params" phpName="FolderParams" type="LONGCHAR" />
-    <vendor type="mysql">
-      <parameter name="Engine" value="InnoDB"/>
-    </vendor>
+    <column name="document_id" phpName="DocumentId" type="VARCHAR" size="255"/>
+    <column name="document_params" phpName="DocumentParams" type="LONGVARCHAR" />
   </table>
-
 </database>

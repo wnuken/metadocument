@@ -7,7 +7,7 @@ header("Expires: Sat, 1 Jul 2000 05:00:00 GMT"); // Fecha en el pasado*/
 require_once './classes.php';
 
 $urlpost = explode('/', $_SERVER['REQUEST_URI']);
-$classjson = file_get_contents(dirname(__FILE__) . '/config/postclass.json');
+$classjson = file_get_contents('./config/postclass.json', FILE_USE_INCLUDE_PATH);
 $classarray = json_decode($classjson, true);
 
 if((isset($urlpost[1]) && in_array($urlpost[1] , $classarray['class'])) && !isset($_SESSION['access_token'])){

@@ -1,3 +1,17 @@
+<?php
+//getSession()->set('name', array(1,2));
+
+
+
+$var = getSession()->get('name');
+print_r($var);
+
+//getSession()->set('name', '');
+// getSession()->end('home');
+
+
+?>
+
 <div class="">
 	<div id="progress" class="col-md-12" style="display:none;">
 		<div class="loading-ms text-center">
