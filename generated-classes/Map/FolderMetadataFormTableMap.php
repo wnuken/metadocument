@@ -134,7 +134,7 @@ class FolderMetadataFormTableMap extends TableMap
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\FolderMetadataForm');
         $this->setPackage('');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('folder_id', 'FolderId', 'VARCHAR', false, 255, null);
@@ -393,6 +393,10 @@ class FolderMetadataFormTableMap extends TableMap
             $criteria = clone $criteria; // rename for clarity
         } else {
             $criteria = $criteria->buildCriteria(); // build Criteria from FolderMetadataForm object
+        }
+
+        if ($criteria->containsKey(FolderMetadataFormTableMap::COL_ID) && $criteria->keyContainsValue(FolderMetadataFormTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.FolderMetadataFormTableMap::COL_ID.')');
         }
 
 

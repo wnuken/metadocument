@@ -83,4 +83,51 @@ class Querys {
         }
         return $result;
     }
+
+    public function FolderMetadataFormbyFolderId($params){
+        try{           
+            $result = FolderMetadataFormQuery::create()->findOneByFolderId($params['id']);
+            // var_dump($result);
+            if(empty($result)){
+                $result = array(
+                    'message' => $this->error['NO_FOUND'] . json_encode($params['id']),
+                    'status' => false
+                );
+                return $result;
+            }
+        }catch (Exception $e){
+            $result = $this->exception . $e->getMessage(). "\n";
+            $this->ErrorMessage($result);
+        }
+        return $result;
+    }
+
+    public function folderMetadata(){
+        $FolderMetadataForm = new FolderMetadataForm();
+        return $FolderMetadataForm;
+    }
+
+    public function DocumentMetadatabyDocumentId($params){
+        try{           
+            $result = DocumentMetadataQuery::create()->findOneByDocumentId($params['id']);
+            // var_dump($result);
+            if(empty($result)){
+                $result = array(
+                    'message' => $this->error['NO_FOUND'] . json_encode($params['id']),
+                    'status' => false
+                );
+                return $result;
+            }
+        }catch (Exception $e){
+            $result = $this->exception . $e->getMessage(). "\n";
+            $this->ErrorMessage($result);
+        }
+        return $result;
+    }
+
+    public function documentMD(){
+        $DocumentMetadata = new DocumentMetadata();
+        return $DocumentMetadata;
+    }
 }
+

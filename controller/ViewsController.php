@@ -226,65 +226,69 @@ class Views {
 	static public function createForm(){
 		$params = $_POST;
 		$folderMetadataContentArray = array();
-		$folderMetadataJson = './files/folderMetadata.json';
+		$Querys = new Querys();
 
-
-		if(file_exists($folderMetadataJson)){
-			$folderMetadataContent = file_get_contents($folderMetadataJson, FILE_USE_INCLUDE_PATH);
+		$FolderMetadataForm = $Querys->FolderMetadataFormbyFolderId($params);
+		if(is_array($FolderMetadataForm) && $FolderMetadataForm['status'] == false){
+			unset($FolderMetadataForm);
+			$FolderMetadataForm = $Querys->folderMetadata();
+			$FolderMetadataForm->setFolderId($params['id']);
+		}else{
+			$folderMetadataContent = $FolderMetadataForm->getFolderParams();
 			$folderMetadataContentArray = json_decode($folderMetadataContent, true);
 		}
 
 		$idMeta = strtotime("now");
-		$folderMetadataContentArray[$params['id']][$idMeta] = array(
+		$folderMetadataContentArray[$idMeta] = array(
 			'name' => $params['name'],
 			'type' => $params['type'],
 			'id' => $idMeta
-			); 
-
-
-
-		$handle = fopen($folderMetadataJson, 'w+');
+			);
 		$content = json_encode($folderMetadataContentArray);
-		fwrite($handle, $content);
-		fclose($handle);
 
+		$FolderMetadataForm->setFolderParams($content);
+		$FolderMetadataForm->save();
+		
 		$resultArray = array(
 			"status" => true,
 			"message" => "<div class='alert alert-success alert-dismissible' role='alert'>
-			<button type='button' class='close' onclick='removeMataDataField(this)' data-dismiss='alert' aria-label='Close' data-position-id='".$idMeta."' data-toggle='tooltip' data-placement='top' title='Eliminar Campo'>
+			<button type='button' class='close' onclick='removeMataDataField(this)' data-dismiss='alert' aria-label='Close' data-position-id='".$idMeta."' >Elimiar</button>
 				<span aria-hidden='true'>&times;</span></button><strong> Nombre: </strong>". $params['name'] . "<strong> Tipo:</strong>". $params['type'] . "</div>",
 				"post" => $params
 				);
-
 
 		$result = json_encode($resultArray);
 		print_r($result);
 	}
 
 	static public function getMetadataFields(){
-	$params = $_POST;
+		$params = $_POST;
 
-	$folderMetadataContentArray = array();
-	$folderMetadataJson = './files/folderMetadata.json';
-	$totalMetada = '';
+		$folderMetadataContentArray = array();
+		$folderMetadataJson = './files/folderMetadata.json';
+		$totalMetada = '';
 
-	if(file_exists($folderMetadataJson)){
-		$folderMetadataContent = file_get_contents($folderMetadataJson, FILE_USE_INCLUDE_PATH);
-		$folderMetadataContentArray = json_decode($folderMetadataContent, true);
+		$Querys = new Querys();
 
-		if(isset($folderMetadataContentArray[$params['id']])){
+		$FolderMetadataForm = $Querys->FolderMetadataFormbyFolderId($params);
+		if(is_array($FolderMetadataForm) && $FolderMetadataForm['status'] == false){
+			$totalMetada = "<div>Agrege nuevos campos </div>";
 
-			foreach ($folderMetadataContentArray[$params['id']] as $key => $metadada) {
+		}else{
+			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
+
+			foreach ($folderMetadataContentArray as $key => $metadada) {
 				$totalMetada .= "<div class='alert alert-success alert-dismissible' role='alert'>
-				<button type='button' class='close' onclick='removeMataDataField(this)' data-dismiss='alert' aria-label='Close' data-position-id='".$metadada['id'] ."' data-toggle='tooltip' data-placement='top' title='Eliminar Campo'>
-					<span aria-hidden='true'>&times;</span></button><strong> Nombre: </strong>". $metadada['name'] . "<strong> Tipo:</strong>". $metadada['type'] . "</div>";
-				}
+				<button type='button' class='close' onclick='removeMataDataField(this)' data-dismiss='alert' aria-label='Close' data-position-id='".$metadada['id'] ."'>Elimiar</button>
+				<span aria-hidden='true'>&times;</span></button><strong> Nombre: </strong>". $metadada['name'] . "<strong> Tipo:</strong>". $metadada['type'] . "</div>";
 			}
 		}
+
 		$resultArray = array(
 			"status" => true,
 			"message" => $totalMetada
 			);
+
 
 		$result = json_encode($resultArray);
 		print_r($result);
@@ -292,36 +296,41 @@ class Views {
 
 	static public function removeMetadataField(){
 		$params = $_POST;
-
+		$metaData = "";
 		$folderMetadataContentArray = array();
-		$folderMetadataJson = './files/folderMetadata.json';
+		$Querys = new Querys();
 
-		if(file_exists($folderMetadataJson)){
-			$folderMetadataContent = file_get_contents($folderMetadataJson, FILE_USE_INCLUDE_PATH);
-			$folderMetadataContentArray = json_decode($folderMetadataContent, true);
+		$FolderMetadataForm = $Querys->FolderMetadataFormbyFolderId($params);
+		if(is_array($FolderMetadataForm) && $FolderMetadataForm['status'] == false){
+			$metaData = "<div>No se puede eliminar el registro </div>";
 
-			if(isset($folderMetadataContentArray[$params['id']][$params['metaid']])){
-				$nameData = $folderMetadataContentArray[$params['id']][$params['metaid']]['name'];
-				unset($folderMetadataContentArray[$params['id']][$params['metaid']]);
+		}else{
+			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
 
-				$handle = fopen($folderMetadataJson, 'w+');
+			if(isset($folderMetadataContentArray[$params['metaid']])){
+				$nameData = $folderMetadataContentArray[$params['metaid']]['name'];
+				unset($folderMetadataContentArray[$params['metaid']]);
+				
 				$content = json_encode($folderMetadataContentArray);
-				fwrite($handle, $content);
-				fclose($handle);
-
+				$FolderMetadataForm->setFolderParams($content);
+				$FolderMetadataForm->save();
 			}
 
-			$resultArray = array(
-				"status" => true,
-				"message" => "<div class='alert alert-warning alert-dismissible' role='alert'>
+			$metaData =  "<div class='alert alert-warning alert-dismissible' role='alert'>
 				<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-					<span aria-hidden='true'>&times;</span></button><strong>Se elimino el MetaDato: </strong>". $nameData . "</div>"
+					<span aria-hidden='true'>&times;</span></button><strong>Se elimino el MetaDato: </strong>". $nameData . "</div>";
+		}
+
+
+		$resultArray = array(
+				"status" => true,
+				"message" => $metaData
 					);
 
-
+		
 			$result = json_encode($resultArray);
 			print_r($result);
-		}
+		
 	}
 
 	static public function getMetadataForm(){
@@ -344,21 +353,20 @@ class Views {
 					$fileMetadataContentArray = json_decode($fileMetadataContent, true);
 					$dataContent = $fileMetadataContentArray[$params['elementId']];
 				}			
-				
-
-			foreach ($folderMetadataContentArray[$params['id']] as $key => $metadada) {
-				$totalMetada .= "<div class='form-group'>
-  									<label for='id'>". $metadada['name'] ."</label>
-  									<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $dataContent[$metadada['id']]['value'] . "'>
-  									<input type='hidden' class='form-control' id='". $metadada['id'] . "-name' name='". $metadada['id'] ."-name' value='". $metadada['name'] ."'>
-  								</div>";
+					
+				foreach ($folderMetadataContentArray[$params['id']] as $key => $metadada) {
+					$totalMetada .= "<div class='form-group'>
+						<label for='id'>". $metadada['name'] ."</label>
+						<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $dataContent[$metadada['id']]['value'] . "'>
+						<input type='hidden' class='form-control' id='". $metadada['id'] . "-name' name='". $metadada['id'] ."-name' value='". $metadada['name'] ."'>
+					</div>";
 				}
 				$totalMetada .= "<input type='hidden' class='form-control' id='element' name='element' value='". $params['elementId'] ."'>";
 			}
 		}else{
-			$totalMetada = "<div class='alert alert-warning alert-dismissible' role='alert'>
-			<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-				<span aria-hidden='true'>&times;</span></button><strong>No hay metadatos para esta carpeta </strong></div>";
+		$totalMetada = "<div class='alert alert-warning alert-dismissible' role='alert'>
+		<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+			<span aria-hidden='true'>&times;</span></button><strong>No hay metadatos para esta carpeta </strong></div>";
 		}
 		$resultArray = array(
 			"status" => true,
@@ -373,7 +381,7 @@ class Views {
 		$params = $_POST;
 		$fullText['text'] = '<ul>';
 		$fileMetadataContentArray = array();
-		$fileMetadataJson = './files/fileMetadata.json';
+		//$fileMetadataJson = './files/fileMetadata.json';
 
 
 		if(file_exists($fileMetadataJson)){

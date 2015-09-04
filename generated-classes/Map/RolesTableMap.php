@@ -134,7 +134,7 @@ class RolesTableMap extends TableMap
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\Roles');
         $this->setPackage('');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('name', 'Name', 'VARCHAR', false, 50, null);
@@ -400,6 +400,10 @@ class RolesTableMap extends TableMap
             $criteria = clone $criteria; // rename for clarity
         } else {
             $criteria = $criteria->buildCriteria(); // build Criteria from Roles object
+        }
+
+        if ($criteria->containsKey(RolesTableMap::COL_ID) && $criteria->keyContainsValue(RolesTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.RolesTableMap::COL_ID.')');
         }
 
 

@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS `roles`;
 
 CREATE TABLE `roles`
 (
-    `id` INTEGER NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(50),
     `description` VARCHAR(255),
     PRIMARY KEY (`id`)
@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `admin_user`;
 
 CREATE TABLE `admin_user`
 (
-    `id` INTEGER NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `user` VARCHAR(50),
     `password` VARCHAR(255),
     `name` VARCHAR(50),
@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS `folder_metadata_form`;
 
 CREATE TABLE `folder_metadata_form`
 (
-    `id` INTEGER NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `folder_id` VARCHAR(255),
     `folder_params` TEXT,
     PRIMARY KEY (`id`)
@@ -61,7 +61,7 @@ DROP TABLE IF EXISTS `document_metadata`;
 
 CREATE TABLE `document_metadata`
 (
-    `id` INTEGER NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `document_id` VARCHAR(255),
     `document_params` TEXT,
     PRIMARY KEY (`id`)

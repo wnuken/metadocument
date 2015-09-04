@@ -154,7 +154,7 @@ class AdminUserTableMap extends TableMap
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\AdminUser');
         $this->setPackage('');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('user', 'User', 'VARCHAR', false, 50, null);
@@ -432,6 +432,10 @@ class AdminUserTableMap extends TableMap
             $criteria = clone $criteria; // rename for clarity
         } else {
             $criteria = $criteria->buildCriteria(); // build Criteria from AdminUser object
+        }
+
+        if ($criteria->containsKey(AdminUserTableMap::COL_ID) && $criteria->keyContainsValue(AdminUserTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.AdminUserTableMap::COL_ID.')');
         }
 
 

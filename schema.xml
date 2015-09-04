@@ -2,13 +2,13 @@
 <database name="metadocument" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
  
  <table name="roles" idMethod="native" phpName="Roles">
-    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true" autoIncrement="true"/>
     <column name="name" phpName="Name" type="VARCHAR" size="50"/>
     <column name="description" phpName="Description" type="VARCHAR" size="255"/>
   </table>
 
   <table name="admin_user" idMethod="native" phpName="AdminUser">
-    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true" autoIncrement="true"/>
     <column name="user" phpName="User" type="VARCHAR" size="50"/>
     <column name="password" phpName="Password" type="VARCHAR" size="255"/>
     <column name="name" phpName="Name" type="VARCHAR" size="50"/>
@@ -21,13 +21,13 @@
   </table>
 
   <table name="folder_metadata_form" idMethod="native" phpName="FolderMetadataForm">
-    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true" autoIncrement="true"/>
     <column name="folder_id" phpName="FolderId" type="VARCHAR" size="255"/>
     <column name="folder_params" phpName="FolderParams" type="LONGVARCHAR" />
   </table>
 
   <table name="document_metadata" idMethod="native" phpName="DocumentMetadata">
-    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true"/>
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true" autoIncrement="true"/>
     <column name="document_id" phpName="DocumentId" type="VARCHAR" size="255"/>
     <column name="document_params" phpName="DocumentParams" type="LONGVARCHAR" />
   </table>

@@ -134,7 +134,7 @@ class DocumentMetadataTableMap extends TableMap
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\DocumentMetadata');
         $this->setPackage('');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('document_id', 'DocumentId', 'VARCHAR', false, 255, null);
@@ -393,6 +393,10 @@ class DocumentMetadataTableMap extends TableMap
             $criteria = clone $criteria; // rename for clarity
         } else {
             $criteria = $criteria->buildCriteria(); // build Criteria from DocumentMetadata object
+        }
+
+        if ($criteria->containsKey(DocumentMetadataTableMap::COL_ID) && $criteria->keyContainsValue(DocumentMetadataTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.DocumentMetadataTableMap::COL_ID.')');
         }
 
 
