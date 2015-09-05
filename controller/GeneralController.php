@@ -602,7 +602,7 @@ public function setFileFullTextSET($params) {
 		$AdminUser->setPassword($params['link']);
 		$AdminUser->setEmail($params['email']);
 		$AdminUser->setFolderRoot('root');
-		// $AdminUser->setRolId('2');
+		$AdminUser->setRolId(2);
 
 		$result = $AdminUser->save();
 
@@ -613,7 +613,9 @@ public function setFileFullTextSET($params) {
 
 		$searh = array(
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+			'application/vnd.google-apps.document',
 			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+			'application/vnd.google-apps.spreadsheet',
 			'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 			'application/vnd.oasis.opendocument.text',
 			'application/msword',
@@ -627,12 +629,16 @@ public function setFileFullTextSET($params) {
 			'image/bmp',
 			'image/tiff',
 			'application/rar',
+			'application/zip',
 			'application/octet-stream',
-			'application/vnd.google-apps.drawing'
+			'application/vnd.google-apps.drawing',
+			'application/vnd.google-apps.map'
 			);
 
 		$replace = array(
 			'application-msword.png',
+			'application-msword.png',
+			'application-vnd.ms-excel.png',
 			'application-vnd.ms-excel.png',
 			'application-presentation.png',
 			'application-vnd.oasis.opendocument.text.png',
@@ -647,8 +653,10 @@ public function setFileFullTextSET($params) {
 			'application-image.png',
 			'application-image.png',
 			'rar.png',
+			'rar.png',
 			'unknown.png',
-			'application-drawing.png'
+			'application-drawing.png',
+			'application-vnd.oasis.opendocument.master-document.png'
 			);
 
 		$result = str_replace($searh, $replace, $params);

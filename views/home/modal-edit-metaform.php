@@ -40,8 +40,8 @@
 
 			</div>
 			<div class="modal-footer">
-				<!--button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="savedata">Guardar cambios</button-->
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				<!--button type="button" class="btn btn-primary" id="savedata">Guardar cambios</button-->
 			</div>
 		</div>
 	</div>

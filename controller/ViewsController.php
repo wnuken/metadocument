@@ -248,12 +248,22 @@ class Views {
 
 		$FolderMetadataForm->setFolderParams($content);
 		$FolderMetadataForm->save();
+
+		$message .= "<div class='form-group'>
+					<div class='input-group'>
+					<input type='text' class='form-control' id='". $idMeta . "' name='". $idMeta ."' value='". $params['name'] . " - " . $params['type'] . "' readonly>
+					<span class='input-group-btn'><button class='btn btn-danger' type='button' onclick='removeMataDataField(this)'><i class='glyphicon glyphicon-trash'></i></button></span></div>
+					</div>";
+
+					/*
+	"<div class='alert alert-success alert-dismissible' role='alert'>
+			<button type='button' class='close' onclick='removeMataDataField(this)' data-dismiss='alert' aria-label='Close' data-position-id='".$idMeta."' >Elimiar</button>
+				<span aria-hidden='true'>&times;</span></button><strong> Nombre: </strong>". $params['name'] . "<strong> Tipo:</strong>". $params['type'] . "</div>"
+					*/
 		
 		$resultArray = array(
 			"status" => true,
-			"message" => "<div class='alert alert-success alert-dismissible' role='alert'>
-			<button type='button' class='close' onclick='removeMataDataField(this)' data-dismiss='alert' aria-label='Close' data-position-id='".$idMeta."' >Elimiar</button>
-				<span aria-hidden='true'>&times;</span></button><strong> Nombre: </strong>". $params['name'] . "<strong> Tipo:</strong>". $params['type'] . "</div>",
+			"message" => $message,
 				"post" => $params
 				);
 
@@ -277,9 +287,17 @@ class Views {
 			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
 
 			foreach ($folderMetadataContentArray as $key => $metadada) {
-				$totalMetada .= "<div class='alert alert-success alert-dismissible' role='alert'>
+				/*$totalMetada .= "<div class='alert alert-success alert-dismissible' role='alert'>
 				<button type='button' class='close' onclick='removeMataDataField(this)' data-dismiss='alert' aria-label='Close' data-position-id='".$metadada['id'] ."'>Elimiar</button>
 				<span aria-hidden='true'>&times;</span></button><strong> Nombre: </strong>". $metadada['name'] . "<strong> Tipo:</strong>". $metadada['type'] . "</div>";
+*/
+
+				$totalMetada .= "<div class='form-group'>
+					<div class='input-group'>
+					<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $metadada['name'] . " - " . $metadada['type'] . "' readonly>
+					<span class='input-group-btn'><button class='btn btn-danger' type='button' onclick='removeMataDataField(this)'><i class='glyphicon glyphicon-trash'></i></button></span></div>
+					</div>";
+
 			}
 		}
 
@@ -314,7 +332,7 @@ class Views {
 				$FolderMetadataForm->save();
 			}
 
-			$metaData =  "<div class='alert alert-warning alert-dismissible' role='alert'>
+			$metaData =  "<div class='alert alert-danger alert-dismissible' role='alert'>
 				<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
 					<span aria-hidden='true'>&times;</span></button><strong>Se elimino el MetaDato: </strong>". $nameData . "</div>";
 		}
@@ -345,29 +363,49 @@ class Views {
 				<span aria-hidden='true'>&times;</span></button><strong>No hay metadatos para esta carpeta </strong></div>";
 		}else{
 			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
-
+			$paramsDocument['id'] = $params['elementId'];
 			$DocumentMetadata = $Querys->DocumentMetadatabyDocumentId($paramsDocument);
 			if(is_array($DocumentMetadata) && $DocumentMetadata['status'] == false){
 
 				foreach ($folderMetadataContentArray as $key => $metadada) {
 					$totalMetada .= "<div class='form-group'>
 					<label for='id'>". $metadada['name'] ."</label>
+					<div class='input-group'>
 					<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value=''>
+					<span class='input-group-btn'><button class='btn btn-warning' type='button' onclick='fieldMetadata(this)'><i class='glyphicon glyphicon-remove'></i></button></span></div>
 					<input type='hidden' class='form-control' id='". $metadada['id'] . "-name' name='". $metadada['id'] ."-name' value='". $metadada['name'] ."'>
 					</div>";
 				}
 
 			}else{
 				$fileMetadataContent = $FolderMetadataForm->getFolderParams();
-				$fileMetadataContentArray = json_decode($fileMetadataContent->getDocumentParams(), true);
+				$fileMetadataContentArray = json_decode($DocumentMetadata->getDocumentParams(), true);
 
 				foreach ($folderMetadataContentArray as $key => $metadada) {
 					$totalMetada .= "<div class='form-group'>
 					<label for='id'>". $metadada['name'] ."</label>
+					<div class='input-group'>
 					<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $fileMetadataContentArray[$metadada['id']]['value'] . "'>
+					<span class='input-group-btn'><button class='btn btn-warning' type='button' onclick='fieldMetadata(this)'><i class='glyphicon glyphicon-remove'></i></button></span></div>
 					<input type='hidden' class='form-control' id='". $metadada['id'] . "-name' name='". $metadada['id'] ."-name' value='". $metadada['name'] ."'>
 					</div>";
 				}
+
+				$totalMetada .= "<div class='page-header'>Otros Metadatos</div>";
+
+				foreach ($fileMetadataContentArray as $key => $metadada) {
+					if(!isset($folderMetadataContentArray[$metadada['id']])){
+					$totalMetada .= "<div class='form-group'>
+					<label for='id'>". $metadada['name'] ."</label>
+					<div class='input-group'>
+					<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $metadada['value'] . "'>
+					<span class='input-group-btn'><button class='btn btn-danger' type='button' onclick='fieldMetadata(this)'><i class='glyphicon glyphicon-trash'></i></button></span></div>
+					<input type='hidden' class='form-control' id='". $metadada['id'] . "-name' name='". $metadada['id'] ."-name' value='". $metadada['name'] ."'>
+					</div>";
+				}
+				}
+
+
 			}
 			$totalMetada .= "<input type='hidden' class='form-control' id='element' name='element' value='". $params['elementId'] ."'>";
 		}
@@ -395,8 +433,8 @@ class Views {
 			$DocumentMetadata = new DocumentMetadata();
 			$DocumentMetadata->setDocumentId($params['element']);
 		}else{
-			$fileMetadataContent = $FolderMetadataForm->getFolderParams();
-			$fileMetadataContentArray = json_decode($fileMetadataContent->getDocumentParams(), true);
+			// $fileMetadataContent = $FolderMetadataForm->getFolderParams();
+			// $fileMetadataContentArray = json_decode($DocumentMetadata->getDocumentParams(), true);
 		}
 
 

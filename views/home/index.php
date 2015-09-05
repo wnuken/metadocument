@@ -61,6 +61,8 @@ print_r($var);
 									<i class="glyphicon glyphicon-folder-open"></i> <strong>+</strong>
 								</button> 
 								<button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-open"></i> </button>
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFormModal">
+								<i class="glyphicon glyphicon-indent-left"></i> </button>
 							</div>
 
 

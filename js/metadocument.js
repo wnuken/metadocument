@@ -530,10 +530,14 @@ $('button#add', $createForm).on('click', function(){
 function removeMataDataField(element){
 	var $that = $(element);
 
+	var $parentInput = $that.parent().parent().parent();
+	var $parentElement = $that.parent().parent();
+	$parentInput.remove();
+
 	var params = {
 			url: "remove-metadata-field",
 			data: {
-				metaid : $that.attr('data-position-id'),
+				metaid : $('input', $parentElement).attr('id'),
 				id : $('div#addFolder').attr('data-parent'),
 			}
 		};
@@ -617,6 +621,13 @@ $('button#savedata', $metaDataModal).on('click', function(){
 
 	console.log(valuesForm);
 });
+
+function fieldMetadata(element){
+	var $that = $(element);
+	var $parentInput = $that.parent().parent().parent();
+	$parentInput.remove();
+	//console.log($parentInput);
+};
 
 /*var $metaDataModal = $('div#metaDataModal');
 var $metaDataBody = $'div#metaDataBody', $metaDataModal);
