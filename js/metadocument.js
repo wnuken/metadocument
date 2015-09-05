@@ -382,8 +382,8 @@ var idDocument = '';
 var documentHeight = $(document).height();
 
 $(window).scroll(function(){
+	documentHeight = $(document).height();
 	if($(window).scrollTop() + $(window).height() == documentHeight) {
-
 		var data = {
 			"pageToken" : $('div#addFolder').attr('data-token'),
 			"parents" : $('div#addFolder').attr('data-parent')

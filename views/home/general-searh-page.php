@@ -8,14 +8,14 @@ if(is_array($filesList)){
 					<div class="row">
 					
 						<div class="col-xs-6">
-							<div class="row">
+							<div class="row" style="height: 172px;">
 							<img
 							src="<?php print $file['image']; ?>" 
 							data-mime="<?php print $file['mimeType']; ?>" 
 							alt="<?php print $file['title']; ?>" 
 							title="<?php print $file['title']; ?>"
 							class="img-thumbnail"
-							style="max-height: 172px;">
+							style="max-height: 172px; margin-left: 2px; max-width: 137px;">
 							</div>
 							
 						</div>
@@ -26,28 +26,33 @@ if(is_array($filesList)){
 						</div>
 					
 					</div>
+
 					<div class="row">
-							<div class="col-xs-12">
+							<div class="col-xs-12" style="height: 23px;">
 								<a href="<?php print $file['url']; ?>" target="_blank" class="text-center">
-								<img src="<?php print $file['icon']; ?>" 
+								<img src="./img/icon/<?php print $file['icon']; ?>" 
+								style="width: 32px;"
 								alt="<?php print $file['mimeType']; ?>" 
 								title="<?php print $file['mimeType']; ?>">
 								<?php print $file['title']; ?>
 							</a>
 							</div>
-							<div class="col-xs-12">
+
+							<div class="col-xs-12" style="position: relative; bottom: -32px; height: 32px;">
 								<?php 
 							if(isset($file['exportLinks'])){
 
 								foreach($file['exportLinks'] as $keyb => $exportlink){ 
-									print "<div id='exportlink' class='col-xs-2'><a href='" . $exportlink . "'><img width='32' src='./img/icon/" . $keyb . "'></a> </div>";
+									print "<div id='exportlink' style='float: left;'><a href='" . $exportlink . "'><img width='32' src='./img/icon/" . $keyb . "'></a> </div>";
 								} 
 
 							}
 							?>
 							</div>
-							<div class="col-xs-12">
+
+							<div class="col-xs-12" style="pposition: relative; bottom: -40px;">
 								<button type="button" 
+								style="float: right;"
 								class="btn btn-danger btn-xs buttonProperies" 
 								data-toggle="modal" data-target="#metaDataModal" 
 								onclick="loadDocumentId('<?php print $file['id']; ?>')">

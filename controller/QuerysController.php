@@ -102,11 +102,6 @@ class Querys {
         return $result;
     }
 
-    public function folderMetadata(){
-        $FolderMetadataForm = new FolderMetadataForm();
-        return $FolderMetadataForm;
-    }
-
     public function DocumentMetadatabyDocumentId($params){
         try{           
             $result = DocumentMetadataQuery::create()->findOneByDocumentId($params['id']);
@@ -123,11 +118,6 @@ class Querys {
             $this->ErrorMessage($result);
         }
         return $result;
-    }
-
-    public function documentMD(){
-        $DocumentMetadata = new DocumentMetadata();
-        return $DocumentMetadata;
     }
 }
 

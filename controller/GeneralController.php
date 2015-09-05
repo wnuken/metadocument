@@ -485,9 +485,11 @@ public function setFileFullTextSET($params) {
 					$image = './img/icon/blank.png';
 				}
 
+				$icon = $this->setNameIcon($file->mimeType);
 				$filesList[$key] = array(
 					'id' => $file->getId(),
-					'icon' => $file->iconLink,
+					//'icon' => $file->iconLink,
+					'icon' => $icon,
 					'title' => $file->getTitle(),
 					'url' => $file->alternateLink,
 					'image' => $image,
@@ -521,9 +523,11 @@ public function setFileFullTextSET($params) {
 					$image = './img/icon/blank.png';
 				}
 
+				$icon = $this->setNameIcon($file->mimeType);
 				$filesList[$key] = array(
 					'id' => $file->getId(),
-					'icon' => $file->iconLink,
+					//'icon' => $file->iconLink,
+					'icon' => $icon,
 					'title' => $file->getTitle(),
 					'url' => $file->alternateLink,
 					'image' => $image,

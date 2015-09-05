@@ -231,7 +231,7 @@ class Views {
 		$FolderMetadataForm = $Querys->FolderMetadataFormbyFolderId($params);
 		if(is_array($FolderMetadataForm) && $FolderMetadataForm['status'] == false){
 			unset($FolderMetadataForm);
-			$FolderMetadataForm = $Querys->folderMetadata();
+			$FolderMetadataForm = new FolderMetadataForm();
 			$FolderMetadataForm->setFolderId($params['id']);
 		}else{
 			$folderMetadataContent = $FolderMetadataForm->getFolderParams();
@@ -263,9 +263,8 @@ class Views {
 
 	static public function getMetadataFields(){
 		$params = $_POST;
-
 		$folderMetadataContentArray = array();
-		$folderMetadataJson = './files/folderMetadata.json';
+		// $folderMetadataJson = './files/folderMetadata.json';
 		$totalMetada = '';
 
 		$Querys = new Querys();
@@ -302,8 +301,7 @@ class Views {
 
 		$FolderMetadataForm = $Querys->FolderMetadataFormbyFolderId($params);
 		if(is_array($FolderMetadataForm) && $FolderMetadataForm['status'] == false){
-			$metaData = "<div>No se puede eliminar el registro </div>";
-
+			$metaData = "<div>No se encuentra el registro </div>";
 		}else{
 			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
 
@@ -335,39 +333,45 @@ class Views {
 
 	static public function getMetadataForm(){
 		$params = $_POST;
-
+		$Querys = new Querys();
 		$folderMetadataContentArray = array();
 		$folderMetadataJson = './files/folderMetadata.json';
 		$totalMetada = '';
 
-		if(file_exists($folderMetadataJson)){
-			$folderMetadataContent = file_get_contents($folderMetadataJson, FILE_USE_INCLUDE_PATH);
-			$folderMetadataContentArray = json_decode($folderMetadataContent, true);
+		$FolderMetadataForm = $Querys->FolderMetadataFormbyFolderId($params);
+		if(is_array($FolderMetadataForm) && $FolderMetadataForm['status'] == false){
+			$totalMetada = "<div class='alert alert-warning alert-dismissible' role='alert'>
+			<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+				<span aria-hidden='true'>&times;</span></button><strong>No hay metadatos para esta carpeta </strong></div>";
+		}else{
+			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
 
-			if(isset($folderMetadataContentArray[$params['id']])){
+			$DocumentMetadata = $Querys->DocumentMetadatabyDocumentId($paramsDocument);
+			if(is_array($DocumentMetadata) && $DocumentMetadata['status'] == false){
 
-				$fileMetadataContentArray = array();
-				$fileMetadataJson = './files/fileMetadata.json';
-				if(file_exists($fileMetadataJson)){
-					$fileMetadataContent = file_get_contents($fileMetadataJson, FILE_USE_INCLUDE_PATH);
-					$fileMetadataContentArray = json_decode($fileMetadataContent, true);
-					$dataContent = $fileMetadataContentArray[$params['elementId']];
-				}			
-					
-				foreach ($folderMetadataContentArray[$params['id']] as $key => $metadada) {
+				foreach ($folderMetadataContentArray as $key => $metadada) {
 					$totalMetada .= "<div class='form-group'>
-						<label for='id'>". $metadada['name'] ."</label>
-						<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $dataContent[$metadada['id']]['value'] . "'>
-						<input type='hidden' class='form-control' id='". $metadada['id'] . "-name' name='". $metadada['id'] ."-name' value='". $metadada['name'] ."'>
+					<label for='id'>". $metadada['name'] ."</label>
+					<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value=''>
+					<input type='hidden' class='form-control' id='". $metadada['id'] . "-name' name='". $metadada['id'] ."-name' value='". $metadada['name'] ."'>
 					</div>";
 				}
-				$totalMetada .= "<input type='hidden' class='form-control' id='element' name='element' value='". $params['elementId'] ."'>";
+
+			}else{
+				$fileMetadataContent = $FolderMetadataForm->getFolderParams();
+				$fileMetadataContentArray = json_decode($fileMetadataContent->getDocumentParams(), true);
+
+				foreach ($folderMetadataContentArray as $key => $metadada) {
+					$totalMetada .= "<div class='form-group'>
+					<label for='id'>". $metadada['name'] ."</label>
+					<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $fileMetadataContentArray[$metadada['id']]['value'] . "'>
+					<input type='hidden' class='form-control' id='". $metadada['id'] . "-name' name='". $metadada['id'] ."-name' value='". $metadada['name'] ."'>
+					</div>";
+				}
 			}
-		}else{
-		$totalMetada = "<div class='alert alert-warning alert-dismissible' role='alert'>
-		<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-			<span aria-hidden='true'>&times;</span></button><strong>No hay metadatos para esta carpeta </strong></div>";
+			$totalMetada .= "<input type='hidden' class='form-control' id='element' name='element' value='". $params['elementId'] ."'>";
 		}
+
 		$resultArray = array(
 			"status" => true,
 			"message" => $totalMetada
@@ -382,16 +386,28 @@ class Views {
 		$fullText['text'] = '<ul>';
 		$fileMetadataContentArray = array();
 		//$fileMetadataJson = './files/fileMetadata.json';
+		$paramsDocument['id'] = $params['element'];
+		$Querys = new Querys();
+		
+		$DocumentMetadata = $Querys->DocumentMetadatabyDocumentId($paramsDocument);
+		if(is_array($DocumentMetadata) && $DocumentMetadata['status'] == false){
+			unset($DocumentMetadata);
+			$DocumentMetadata = new DocumentMetadata();
+			$DocumentMetadata->setDocumentId($params['element']);
+		}else{
+			$fileMetadataContent = $FolderMetadataForm->getFolderParams();
+			$fileMetadataContentArray = json_decode($fileMetadataContent->getDocumentParams(), true);
+		}
 
 
-		if(file_exists($fileMetadataJson)){
+		/*if(file_exists($fileMetadataJson)){
 			$fileMetadataContent = file_get_contents($fileMetadataJson, FILE_USE_INCLUDE_PATH);
 			$fileMetadataContentArray = json_decode($fileMetadataContent, true);
-		}
+		}*/
 
 		foreach ($params as $key => $value) {
 			if(is_numeric($key)){
-				$fileMetadataContentArray[$params['element']][$key] = array(
+				$fileMetadataContentArray[$key] = array(
 					'name' => $params[$key . '-name'],
 					'value' => $params[$key],
 					'id' => $key
@@ -399,17 +415,20 @@ class Views {
 			}
 		}
 
-		foreach ($fileMetadataContentArray[$params['element']] as $key => $indexText) {
+		foreach ($fileMetadataContentArray as $key => $indexText) {
 			$fullText['text'] .= "<li id='" . $indexText['id'] . "'><strong>" . $indexText['name'] . " </strong>" . $indexText['value'] . "</li>";
 		}
 		$fullText['text'] .= '</ul>';
 		$fullText['fileId'] = $params['element'];
 
-		$handle = fopen($fileMetadataJson, 'w+');
+		/*$handle = fopen($fileMetadataJson, 'w+');
 		$content = json_encode($fileMetadataContentArray);
 		fwrite($handle, $content);
-		fclose($handle);
+		fclose($handle);*/
 
+		$content = json_encode($fileMetadataContentArray);
+		$DocumentMetadata->setDocumentParams($content);
+		$DocumentMetadata->save();
 
 		$General = new General();
 		$resultFull = $General->setFileFullText($fullText);
