@@ -1,0 +1,7 @@
+[05-Sep-2015 17:08:17 America/Denver] PHP Notice:  Undefined property: Querys::$exception in /home1/metadocu/public_html/controller/QuerysController.php on line 81
+[05-Sep-2015 17:08:18 America/Denver] PHP Notice:  Undefined property: Querys::$exception in /home1/metadocu/public_html/controller/QuerysController.php on line 81
+[05-Sep-2015 17:10:40 America/Denver] PHP Notice:  Undefined property: Querys::$exception in /home1/metadocu/public_html/controller/QuerysController.php on line 81
+[05-Sep-2015 17:10:42 America/Denver] PHP Notice:  Undefined property: Querys::$exception in /home1/metadocu/public_html/controller/QuerysController.php on line 81
+[05-Sep-2015 17:11:44 America/Denver] PHP Notice:  Undefined property: Querys::$exception in /home1/metadocu/public_html/controller/QuerysController.php on line 81
+[05-Sep-2015 17:14:05 America/Denver] PHP Notice:  Undefined property: Querys::$exception in /home1/metadocu/public_html/controller/QuerysController.php on line 81
+[05-Sep-2015 17:15:56 America/Denver] PHP Notice:  Undefined property: Querys::$exception in /home1/metadocu/public_html/controller/QuerysController.php on line 81

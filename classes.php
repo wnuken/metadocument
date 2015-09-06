@@ -29,7 +29,7 @@ include_once dirname(__FILE__) . '/controller/src/Google/autoload.php';
 
 Epi::setPath('base', dirname(__FILE__) . '/controller/src/epiphany');
 Epi::setPath('config', dirname(__FILE__) . '/config');
-Epi::init('route', 'session-apc');
+Epi::init('route', 'session-php');
 
 getRoute()->load('config.ini');
 

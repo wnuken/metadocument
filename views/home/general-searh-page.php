@@ -21,24 +21,30 @@ if(is_array($filesList)){
 						</div>
 						<div class="col-xs-6" style="overflow: hidden;">
 							<?php 
-							print "<small class='small-list'>" . $file['description'] . "</small>";
+							if(empty($file['description'])){
+								print "<small> <strong>Creación: </strong> " . date('Y-m-d h:i:s a',strtotime($file['createdDate'])) . "</br>
+								<strong>Actualización: </strong>  " . date('Y-m-d h:i:s a',strtotime($file['modifiedDate'])) . "</small>";
+							}else{
+								print "<small class='small-list'>" . $file['description'] . "</small>";
+							}
+							
 							?>
 						</div>
 
 					</div>
 
 					<div class="row">
-						<div class="col-xs-12" style="height: 23px;">
+						<div class="col-xs-12" style="height: 35px;overflow: hidden;">
 							<a href="<?php print $file['url']; ?>" target="_blank" class="text-center">
 								<img src="./img/icon/<?php print $file['icon']; ?>" 
 								style="width: 32px;"
 								alt="<?php print $file['mimeType']; ?>" 
-								title="<?php print $file['mimeType']; ?>">
-								<?php print $file['title']; ?>
+								title="<?php print $file['title']; ?>">
+								<span><?php print $file['title']; ?></span>
 							</a>
 						</div>
 
-						<div class="col-xs-12" style="position: relative; bottom: -32px; height: 32px;">
+						<div class="col-xs-12" style="position: relative; bottom: -10px; height: 32px;">
 							<?php 
 							if(isset($file['exportLinks'])){
 
@@ -50,7 +56,7 @@ if(is_array($filesList)){
 							?>
 						</div>
 
-						<div class="col-xs-12" style="position: relative; bottom: -40px;">
+						<div class="col-xs-12" style="position: relative; bottom: -20px;">
 							<button type="button" 
 							style="float: right;"
 							class="btn btn-danger btn-xs buttonProperies" 
@@ -69,8 +75,8 @@ if(is_array($filesList)){
 						<img src="./img/icon/<?php print $file['icon']; ?>" 
 						style="width: 40px;"
 						alt="<?php print $file['mimeType']; ?>" 
-						title="<?php print $file['mimeType']; ?>">
-						<?php print $file['title']; ?>
+						title="<?php print $file['title']; ?>">
+						<span><?php print $file['title']; ?></span>
 					</a>
 				</div>
 				<div class="" >

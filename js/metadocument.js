@@ -462,7 +462,7 @@ $('#addFolderBt', $modalAddFolder).on('click', function(){
 
 });
 
-$createFormModal.on('shown.bs.modal', function () {
+$createFormModal.on('show.bs.modal', function () {
 
 	var idFolder = $('div#addFolder').attr('data-parent');
 	$('input#id', $createForm).val(idFolder);
@@ -480,15 +480,12 @@ $createFormModal.on('shown.bs.modal', function () {
         data: params.data,
         async: true,
         success: function(response) {
-            $(response.message).appendTo($('div#createFormMessages', $createFormBody));
+        		$(response.message).appendTo($('div#createFormMessages', $createFormBody));
         },
         error: function() {
             
         }
     });
-
-
-
 	
 });
 
@@ -562,7 +559,7 @@ function loadDocumentId(id){
 	idDocument = id;
 };
 
-$metaDataModal.on('shown.bs.modal', function () {
+$metaDataModal.on('show.bs.modal', function () {
 	var params = {
 			url: "get-metadata-form",
 			data: {

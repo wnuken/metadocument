@@ -59,7 +59,7 @@
 				$passGen = hash('sha256',$salt[1]. $pass);
 				if($salt[0] == $passGen){
 					$result['validate'] = true;
-					$result['rol'] = $userValues->getRol();
+					$result['rol'] = $userValues->getRolId();
 				}
 			} 
 			return $result;
