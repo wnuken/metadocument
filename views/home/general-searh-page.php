@@ -3,27 +3,27 @@ if(is_array($filesList)){
 	foreach($filesList as $key => $file){
 		if(is_numeric($key)){
 			?>
-			<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 hidden-xs" style="height: 300px;  margin-bottom: 5px;">
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 img-thumbnail" style="height: 300px;">
+			<div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 hidden-xs" style="height: 220px; margin-bottom: 5px;">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 img-thumbnail" style="height: 220px;">
 					<div class="row">
 
-						<div class="col-xs-6">
-							<div class="row" style="height: 172px;">
+						<div class="col-xs-6 text-center">
+							<div class="row" style="height: 100px;">
 								<img
 								src="<?php print $file['image']; ?>" 
 								data-mime="<?php print $file['mimeType']; ?>" 
 								alt="<?php print $file['title']; ?>" 
 								title="<?php print $file['title']; ?>"
 								class="img-thumbnail"
-								style="max-height: 172px; margin-left: 2px; max-width: 128px;">
+								style="max-height: 100px; margin-left: 2px; max-width: 128px;">
 							</div>
 							
 						</div>
-						<div class="col-xs-6" style="overflow: hidden;">
+						<div class="col-xs-6 img-thumbnail" style="overflow: hidden; height: 100px; max-width: 135px;">
 							<?php 
 							if(empty($file['description'])){
-								print "<small> <strong>Creación: </strong> " . date('Y-m-d h:i:s a',strtotime($file['createdDate'])) . "</br>
-								<strong>Actualización: </strong>  " . date('Y-m-d h:i:s a',strtotime($file['modifiedDate'])) . "</small>";
+								print "<small> <strong>Creación: </strong> " . date('Y-m-d',strtotime($file['createdDate'])) . "</br>
+								<strong>Actualización: </strong>  " . date('Y-m-d',strtotime($file['modifiedDate'])) . "</small>";
 							}else{
 								print "<small class='small-list'>" . $file['description'] . "</small>";
 							}
@@ -40,7 +40,7 @@ if(is_array($filesList)){
 								style="width: 32px;"
 								alt="<?php print $file['mimeType']; ?>" 
 								title="<?php print $file['title']; ?>">
-								<span><?php print $file['title']; ?></span>
+								<span><?php print substr($file['title'], 0, 20); ?></span>
 							</a>
 						</div>
 
