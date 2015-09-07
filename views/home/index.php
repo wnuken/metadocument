@@ -57,12 +57,12 @@ print_r($var);
 								<?php if($RestParams != ''): ?>
 									<button type="button" class="btn btn-primary" onclick="window.history.back()"><i class="glyphicon glyphicon-arrow-left"></i> Atras</button>
 								<?php endif; ?>
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddFolder">
+								<!--button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddFolder">
 									<i class="glyphicon glyphicon-folder-open"></i> <strong>+</strong>
 								</button> 
 								<button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-open"></i> </button>
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFormModal">
-								<i class="glyphicon glyphicon-indent-left"></i> </button>
+								<i class="glyphicon glyphicon-indent-left"></i> </button-->
 							</div>
 
 
@@ -97,13 +97,13 @@ print_r($var);
 								<?php if($RestParams != ''): ?>
 									<button type="button" class="btn btn-primary" onclick="window.history.back()"><i class="glyphicon glyphicon-arrow-left"></i> Atras</button>
 								<?php endif; ?>
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddFolder">
+								<!--button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAddFolder">
 									<i class="glyphicon glyphicon-folder-open"></i> Nueva Carpeta
 								</button> 
 								<button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-open"></i> Subir archivo</button>
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFormModal">
 								<i class="glyphicon glyphicon-indent-left"></i> Metadata
-								</button>
+								</button-->
 							</div>
 
 
@@ -145,6 +145,15 @@ print_r($var);
 	</div>
 	<div class="row">
 		<?php require_once('./views/home/modal-edit-metaform.php'); ?>		
+	</div>
+	<div class="row">
+		<?php require_once('./views/home/modal-avance-searh.php'); ?>		
+	</div>
+	<div class="row">
+		<?php require_once('./views/home/modal-upload-files.php'); ?>		
+	</div>
+	<div class="row">
+		<?php require_once('./views/home/modal-detail-file.php'); ?>		
 	</div>
 
 

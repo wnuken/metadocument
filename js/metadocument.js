@@ -626,6 +626,32 @@ function fieldMetadata(element){
 	//console.log($parentInput);
 };
 
+function loadDownloadDocument(element){
+	var $that = $(element);
+	var $parentElement = $that.parent().parent().parent();
+	$('div.info-download-gd', $parentElement).css('display', 'block');
+};
+
+
+function hideAlert(element){
+	var $that = $(element);
+	var $parentElement = $that.parent();
+	$parentElement.css('display', 'none');
+};
+
+var $modalDetailFile = $("div#modalDetailFile");
+function loadinfoDocument(element){
+	var $that = $(element);
+	var dateCreateFile = $that.attr('data-create-file');
+	var dateUpdateFile = $that.attr('data-update-file');
+	var dateDescriptionFile = $that.attr('data-description-file');
+	$('div#DetailFileBody', $modalDetailFile).html(dateCreateFile);
+	$('div#DetailFileBody', $modalDetailFile).append(dateUpdateFile);
+	$('div#DetailFileBody', $modalDetailFile).append(dateDescriptionFile);
+	$modalDetailFile.modal('show');
+
+};
+
 /*var $metaDataModal = $('div#metaDataModal');
 var $metaDataBody = $'div#metaDataBody', $metaDataModal);
 var $metaDataForm = $('form#metaDataForm', $metaDataBody);*/
