@@ -16,7 +16,14 @@ class Views {
 
 	static public function Home($RestParams = ''){
 
-		
+		/*$format = 'Y-m-d';
+		$date = "2015-10-12";
+		$dateCompare = DateTime::createFromFormat($format, $date);
+				if($dateCompare && $dateCompare->format($format) == $date){
+					print_r("Si es");
+				}else{
+					 print_r("No es");
+				}*/
 
 		$path = '';
 		$filePath = './files/' . $_SESSION['user_path'] .'-home-' . $RestParams . '.json';
@@ -353,7 +360,7 @@ class Views {
 		$params = $_POST;
 		$Querys = new Querys();
 		$folderMetadataContentArray = array();
-		$folderMetadataJson = './files/folderMetadata.json';
+		//$folderMetadataJson = './files/folderMetadata.json';
 		$totalMetada = '';
 
 		$FolderMetadataForm = $Querys->FolderMetadataFormbyFolderId($params);
@@ -421,7 +428,9 @@ class Views {
 
 	static public function saveMetada(){
 		$params = $_POST;
+		$format = 'Y-m-d';
 		$fullText['text'] = '<ul>';
+		$resultArray = array();
 		$fileMetadataContentArray = array();
 		//$fileMetadataJson = './files/fileMetadata.json';
 		$paramsDocument['id'] = $params['element'];
@@ -450,6 +459,17 @@ class Views {
 					'value' => $params[$key],
 					'id' => $key
 					);
+
+				$dateCompare = DateTime::createFromFormat($format, $params[$key]);
+				if($dateCompare && $dateCompare->format($format) == $params[$key]){
+					$DocumentDate = new DocumentDate();
+					$DocumentDate->setDocumentId($params['element']);
+					$DocumentDate->setMetadataId($key);
+					$DocumentDate->setMetadataDate($params[$key]);
+					$resultArray['savemeta'][] = $DocumentDate->save();
+				}else{
+					 $resultArray['savemeta'][] = 'nada';
+				}
 			}
 		}
 
@@ -472,12 +492,10 @@ class Views {
 		$resultFull = $General->setFileFullText($fullText);
 		
 		if($resultFull['result'] === true){
-			$resultArray = array(
-			"status" => true,
-			"message" => "<div class='alert alert-success alert-dismissible' role='alert'>
+			$resultArray['message'] = "<div class='alert alert-success alert-dismissible' role='alert'>
 			<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-				<span aria-hidden='true'>&times;</span></button><strong> El parametro fue indexado correctamente </strong></div>"
-				);
+				<span aria-hidden='true'>&times;</span></button><strong> El parametro fue indexado correctamente </strong></div>";
+			$resultArray['status'] = true;
 		}else{
 			$resultArray = array(
 			"status" => true,

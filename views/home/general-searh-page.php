@@ -36,7 +36,7 @@ if(is_array($filesList)){
 								style='float: right;'
 								class='btn btn-danger btn-xs buttonProperies' 
 								data-toggle='modal' data-target='#metaDataModal' 
-								onclick='loadDocumentId('<?php print $file['id']; ?>')'>
+								onclick="loadDocumentId('<?php print $file['id']; ?>')">
 								<i class='glyphicon glyphicon-list-alt'></i> Metadatos
 								</button>
 							</div>
@@ -58,7 +58,7 @@ if(is_array($filesList)){
 								onclick='loadinfoDocument(this)'
 								data-create-file='<p><strong>Creación: </strong><?php print date('Y-m-d',strtotime($file['createdDate'])); ?></p>'
 								data-update-file='<p><strong>Actualización: </strong><?php print date('Y-m-d',strtotime($file['modifiedDate'])); ?></p>'
-								data-description-file='<?php print $file['description']; ?>'
+								
 								>
 								<i class='glyphicon glyphicon-list-alt'></i> Detalles
 								</button>

@@ -31,4 +31,18 @@
     <column name="document_id" phpName="DocumentId" type="VARCHAR" size="255"/>
     <column name="document_params" phpName="DocumentParams" type="LONGVARCHAR" />
   </table>
+
+  <table name="document_date" idMethod="native" phpName="DocumentDate">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true" autoIncrement="true"/>
+    <column name="document_id" phpName="DocumentId" type="VARCHAR" size="255"/>
+    <column name="metadata_id" phpName="MetadataId" type="VARCHAR" size="30"/>
+    <column name="metadata_date" phpName="MetadataDate" type="TIMESTAMP" />
+    <index name="document_id">
+        <index-column name="document_id"/>
+    </index>
+    <index name="metadata_id">
+      <index-column name="metadata_id"/>
+    </index>
+  </table>
+
 </database>

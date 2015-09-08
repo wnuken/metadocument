@@ -336,10 +336,10 @@
 			}
 		}
 
-		public function & insertProperty(&$params) {
+		public function insertProperty($params) {
 
 			if(!isset($params['visibility']))
-			$params['visibility'] = 'PUBLIC'; // PRIVATE
+			$params['visibility'] = 'PUBLIC'; // PUBLIC | PRIVATE
 
 		$newProperty = new Google_Service_Drive_Property();
 		$newProperty->setKey($params['key']);
@@ -442,30 +442,6 @@ public function setFileFullTextSET($params) {
 	}
 
 
-	/*public function & retrieveAllFolders($params) {
-		$result = array();
-		$pageToken = NULL;
-		do 
-		{
-        try 
-        {
-		if (isset($params['pageToken'])) {
-		$params['pageToken'] = $pageToken;
-		}
-		$params['maxResults'] = 100;
-		$params['projection'] = 'FULL';			  
-		
-		$files = $this->service->files->listFiles($params);
-		$result = array_merge($result, $files->getItems());
-		$pageToken = $files->getNextPageToken();
-		} catch (Exception $e) 
-		{
-		print "An error occurred: " . $e->getMessage();
-		$pageToken = NULL;
-		}
-		} while ($pageToken);
-		return $result;
-	}*/
 	
 	public function getFilesArray($params, $linkToken){
 
@@ -477,87 +453,56 @@ public function setFileFullTextSET($params) {
 
 		foreach ($getFilesList['items'] as $key => $file) {
 			if($_SESSION['folders'][0] == 'root'){
-				if($file->mimeType == 'application/vnd.google-apps.document'){
-					$image = $file->thumbnailLink . $linkToken;
-				}else if($file->thumbnailLink){
-					$image = $file->thumbnailLink;
-				}else{
-					$image = './img/icon/blank.png';
-				}
-
-				$icon = $this->setNameIcon($file->mimeType);
-				$filesList[$key] = array(
-					'id' => $file->getId(),
-					//'icon' => $file->iconLink,
-					'icon' => $icon,
-					'title' => $file->getTitle(),
-					'url' => $file->alternateLink,
-					'image' => $image,
-					'mimeType' => $file->mimeType,
-					'createdDate' => $file->createdDate,
-					'modifiedDate' => $file->modifiedDate,
-					'description' => $file->getDescription()
-					);
-
-				if(isset($files->properties)){
-					$filesList[$key]['properties']['key'] = $files->properties['key'];
-					$filesList[$key]['properties']['value'] = $files->properties['value'];
-				}
-
-				if(isset($file->exportLinks)){
-					foreach($file->exportLinks as $keyb => $exportlink){
-						$iconlink = $this->setNameIcon($keyb);
-						$filesList[$key]['exportLinks'][$iconlink] = $exportlink . $linkToken;
-					}
-				}else if(isset($file->downloadUrl)){
-					$iconlink = $this->setNameIcon($file->mimeType);
-					$filesList[$key]['exportLinks'][$iconlink] = $file->downloadUrl . $linkToken;
-				}
-
+				$filesList[$key] = $this->createFilesList($file);
 			}else if(in_array($file['modelData']['parents'][0]['id'], $_SESSION['folders'])){
-				if($file->mimeType == 'application/vnd.google-apps.document'){
-					$image = $file->thumbnailLink . $linkToken;
-				}else if($file->thumbnailLink){
-					$image = $file->thumbnailLink;
-				}else{
-					$image = './img/icon/blank.png';
-				}
-
-				$icon = $this->setNameIcon($file->mimeType);
-				$filesList[$key] = array(
-					'id' => $file->getId(),
-					//'icon' => $file->iconLink,
-					'icon' => $icon,
-					'title' => $file->getTitle(),
-					'url' => $file->alternateLink,
-					'image' => $image,
-					'mimeType' => $file->mimeType,
-					'createdDate' => $file->createdDate,
-					'modifiedDate' => $file->modifiedDate,
-					'description' => $file->getDescription()
-					);
-
-				if(isset($files->properties)){
-					$filesList[$key]['properties']['key'] = $files->properties['key'];
-					$filesList[$key]['properties']['value'] = $files->properties['value'];
-				}
-
-				if(isset($file->exportLinks)){
-					foreach($file->exportLinks as $keyb => $exportlink){
-						$iconlink = $this->setNameIcon($keyb);
-						$filesList[$key]['exportLinks'][$iconlink] = $exportlink . $linkToken;
-					}
-				}else if(isset($file->downloadUrl)){
-					$iconlink = $this->setNameIcon($file->mimeType);
-					$filesList[$key]['exportLinks'][$iconlink] = $file->downloadUrl . $linkToken;
-				}
-
+				$filesList[$key] = $this->createFilesList($file);
 			}
 		}
 		$filesList['pageToken'] = $getFilesList['pageToken'];
 		
 
 		return $filesList;
+	}
+
+	private function createFilesList(&$file){
+
+		if($file->mimeType == 'application/vnd.google-apps.document'){
+					$image = $file->thumbnailLink . $linkToken;
+				}else if($file->thumbnailLink){
+					$image = $file->thumbnailLink;
+				}else{
+					$image = './img/icon/blank.png';
+				}
+
+				$icon = $this->setNameIcon($file->mimeType);
+				$filesList = array(
+					'id' => $file->getId(),
+					//'icon' => $file->iconLink,
+					'icon' => $icon,
+					'title' => $file->getTitle(),
+					'url' => $file->alternateLink,
+					'image' => $image,
+					'mimeType' => $file->mimeType,
+					'createdDate' => $file->createdDate,
+					'modifiedDate' => $file->modifiedDate,
+					'description' => $file->getDescription()
+					);
+
+				if(isset($files->properties)){
+					$filesList['properties']['key'] = $files->properties['key'];
+					$filesList['properties']['value'] = $files->properties['value'];
+				}
+
+				if(isset($file->exportLinks)){
+					foreach($file->exportLinks as $keyb => $exportlink){
+						$iconlink = $this->setNameIcon($keyb);
+						$filesList['exportLinks'][$iconlink] = $exportlink . $linkToken;
+					}
+				}else if(isset($file->downloadUrl)){
+					$iconlink = $this->setNameIcon($file->mimeType);
+					$filesList['exportLinks'][$iconlink] = $file->downloadUrl . $linkToken;
+				}
+				return $filesList;
 	}
 
 	public function getFolderArray($params){

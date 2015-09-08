@@ -1,14 +1,19 @@
 -- --------------------------------------------------------
 -- Host:                         192.168.33.10
--- Versión del servidor:         5.6.25-73.1 - Percona Server (GPL), Release 73.1, Revision 07b797f
+-- Versión del servidor:         5.6.25-73.0 - Percona Server (GPL), Release 73.0, Revision 5ccddf8
 -- SO del servidor:              Linux
--- HeidiSQL Versión:             9.2.0.4947
+-- HeidiSQL Versión:             9.3.0.4984
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- Volcando estructura de base de datos para metadocu_dbdocument
+CREATE DATABASE IF NOT EXISTS `metadocu_dbdocument` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `metadocu_dbdocument`;
+
 
 -- Volcando estructura para tabla metadocu_dbdocument.admin_user
 DROP TABLE IF EXISTS `admin_user`;
@@ -25,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `admin_user` (
   CONSTRAINT `admin_user_fk_97e680` FOREIGN KEY (`rol_id`) REFERENCES `roles` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla metadocu_dbdocument.admin_user: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla metadocu_dbdocument.admin_user: ~3 rows (aproximadamente)
 DELETE FROM `admin_user`;
 /*!40000 ALTER TABLE `admin_user` DISABLE KEYS */;
 INSERT INTO `admin_user` (`id`, `user`, `password`, `name`, `email`, `folder_root`, `rol_id`) VALUES
@@ -35,6 +40,26 @@ INSERT INTO `admin_user` (`id`, `user`, `password`, `name`, `email`, `folder_roo
 /*!40000 ALTER TABLE `admin_user` ENABLE KEYS */;
 
 
+-- Volcando estructura para tabla metadocu_dbdocument.document_date
+DROP TABLE IF EXISTS `document_date`;
+CREATE TABLE IF NOT EXISTS `document_date` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `document_id` varchar(255) DEFAULT NULL,
+  `metadata_id` varchar(30) DEFAULT NULL,
+  `metadata_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `document_id` (`document_id`),
+  KEY `metadata_id` (`metadata_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- Volcando datos para la tabla metadocu_dbdocument.document_date: ~0 rows (aproximadamente)
+DELETE FROM `document_date`;
+/*!40000 ALTER TABLE `document_date` DISABLE KEYS */;
+INSERT INTO `document_date` (`id`, `document_id`, `metadata_id`, `metadata_date`) VALUES
+	(2, '0B89z_nEGskBCQWFIN2x4UURMYmc', '1441481218', '2015-03-12 00:00:00');
+/*!40000 ALTER TABLE `document_date` ENABLE KEYS */;
+
+
 -- Volcando estructura para tabla metadocu_dbdocument.document_metadata
 DROP TABLE IF EXISTS `document_metadata`;
 CREATE TABLE IF NOT EXISTS `document_metadata` (
@@ -42,13 +67,13 @@ CREATE TABLE IF NOT EXISTS `document_metadata` (
   `document_id` varchar(255) DEFAULT NULL,
   `document_params` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- Volcando datos para la tabla metadocu_dbdocument.document_metadata: ~1 rows (aproximadamente)
 DELETE FROM `document_metadata`;
 /*!40000 ALTER TABLE `document_metadata` DISABLE KEYS */;
 INSERT INTO `document_metadata` (`id`, `document_id`, `document_params`) VALUES
-	(1, '0B89z_nEGskBCQWFIN2x4UURMYmc', '{"1441462568":{"name":"Nombre","value":"Brian","id":1441462568},"1441462578":{"name":"Direcci\\u00f3n","value":"Calle 123","id":1441462578}}');
+	(1, '0B89z_nEGskBCQWFIN2x4UURMYmc', '{"1441462568":{"name":"Nombre","value":"Brian","id":1441462568},"1441462578":{"name":"Direcci\\u00f3n","value":"Calle 123","id":1441462578},"1441481218":{"name":"Fecha","value":"2015-03-12","id":1441481218}}');
 /*!40000 ALTER TABLE `document_metadata` ENABLE KEYS */;
 
 

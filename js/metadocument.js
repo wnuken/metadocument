@@ -610,6 +610,7 @@ $('button#savedata', $metaDataModal).on('click', function(){
         success: function(response) {
         	$that.button('reset');
             $(response.message).appendTo($('div#metaDataMessages', $metaDataModal));
+            console.log(response);
         },
         error: function() {
             $that.button('reset');
