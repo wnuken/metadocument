@@ -4,6 +4,8 @@
         "validate-gclient",
         "validate-gapp",
         "searh",
+        "searhpage",
+        "advanced-search",
         "create-form",
         "get-metadata-fields",
         "remove-metadata-field",
@@ -11,7 +13,6 @@
         "save-metada",
         "setpropeties",
         "uploadfile",
-        "searhpage",
         "register-user",
         "new-folder"
     ]

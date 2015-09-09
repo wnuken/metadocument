@@ -14,7 +14,8 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
     
     <!-- Internal -->
-    <link rel="stylesheet" href="css/back-qbc.css">
+    <link rel="stylesheet" href="css/metadocument.css">
  </head>

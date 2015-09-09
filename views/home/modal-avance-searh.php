@@ -6,18 +6,25 @@
         <h4 class="modal-title" id="myModalLabel">Busqueda avanzada</h4>
       </div>
       <div class="modal-body">
-      <div id="AvanceSearhMessages"></div>
-      <form id="avanceSearhForm">
+        <div id="AvanceSearhMessages"></div>
+        <form id="AvanceSearhForm">
           <div class="form-group">
-            <label for="title">Parametos de busqueda</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Nombre de carpeta">
+            <label for="title">Nombre</label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Nombre del archivo">
+          </div>
+          <div class="form-group">
+            <label for="title">Contenido</label>
+            <input type="text" class="form-control" id="content" name="content" placeholder="Contenido y Metadatatos">
+          </div>
+          <div id="AvanceSearhDates">
+            
           </div>
           <!--button type="submit" class="btn btn-default" id="save">Guardar</button-->
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" id="AvanceSearhButton">Crear</button>
+        <button type="button" class="btn btn-primary" id="AvanceSearhButton"><i class="glyphicon glyphicon-search"></i> Buscar</button>
       </div>
     </div>
   </div>

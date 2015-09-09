@@ -376,6 +376,9 @@ var $createForm = $('form#createForm', $createFormBody);
 var $metaDataModal = $('div#metaDataModal');
 var $metaDataBody = $('div#metaDataBody', $metaDataModal);
 var $metaDataForm = $('form#metaDataForm', $metaDataBody);
+
+
+
 var idDocument = '';
 
 /* PageSearh */
@@ -652,6 +655,68 @@ function loadinfoDocument(element){
 	$modalDetailFile.modal('show');
 
 };
+
+
+$modalAvanceSearh = $('div#modalAvanceSearh');
+$AvanceSearhMessages = $('div#AvanceSearhMessages', $modalAvanceSearh);
+$AvanceSearhForm = $('form#AvanceSearhForm', $modalAvanceSearh);
+
+function AvanceSearhgetForm() {
+	var params = {
+		url: "get-metadata-form",
+		data: {
+			id : $('div#addFolder').attr('data-parent'),
+		}
+	};
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'json',
+		data: params.data,
+		async: true,
+		success: function(response) {
+			$('div#AvanceSearhDates',$AvanceSearhForm).html(response.message);
+			//$(response.message).appendTo($('div#AvanceSearhDates',$AvanceSearhForm));
+		},
+		error: function() {
+
+		}
+	});
+};
+
+$('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
+	$('#progress').css({'display':'block'});
+	var params = {
+		url: "advanced-search",
+		data: $AvanceSearhForm.serialize()
+	};
+	console.log(params);
+
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'json',
+		data: params.data,
+		async: true,
+		success: function(response) {
+			$('#progress').css({'display':'none'});
+			// $('div#AvanceSearhDates',$AvanceSearhForm).html(response.message);
+			//$(response.message).appendTo($('div#AvanceSearhDates',$AvanceSearhForm));
+		},
+		error: function() {
+			$('#progress').css({'display':'none'});
+		}
+	});
+});
+
+/*$('input#fecha-ini', $modalAvanceSearh).on('change', function(){
+	$('div.input-metadaterange input').each(function (){
+        $(this).datepicker("clearDates");
+    });
+});*/
+
+    
+
 
 /*var $metaDataModal = $('div#metaDataModal');
 var $metaDataBody = $'div#metaDataBody', $metaDataModal);

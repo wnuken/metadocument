@@ -218,6 +218,70 @@ class Views {
 
 	}
 
+	static public function advancedSearch(){
+
+		$stringQuery = '';
+		if(isset($_POST['title']))
+			$queryTitle = explode(' ', trim($_POST['title']));
+
+		if(isset($_POST['content']))
+			$queryContent = explode(' ', trim($_POST['content']));
+
+
+		if(is_array($queryTitle)){
+			foreach ($queryTitle as $key => $value) {
+				$stringQuery .= " and title contains '" . $value . "'";
+			}
+		}
+
+		if(is_array($queryContent)){
+			if(is_array($queryTitle)){
+				$stringQuery .= ' or (';
+			}else{
+				$stringQuery .= ' and (';
+			}
+			
+			foreach ($queryContent as $key => $value) {
+				if($key == 0){
+					$stringQuery .= " fullText contains '" . $value . "'";
+				}else{
+					$stringQuery .= " or fullText contains '" . $value . "'";
+				}
+				
+			}
+			$stringQuery .= ')';
+		}
+
+		foreach ($_POST as $key => $value) {
+			if($key != 'title' && $key != 'content'){
+
+				$searchDateIni = $_POST[$key];
+				$searchDateend = $_POST[$key . '-fin'];
+
+				$DocumentDate = DocumentDateQuery::create()
+				->filterByMetadataDate(array("min" => $searchDateIni." 00:00:00", "max" => $searchDateend." 23:59:59"))
+				->findByMetadataId($key);
+
+				foreach ($DocumentDate as $keyb => $valueb) {
+					$DocumentId[] = $valueb->getDocumentId();
+				}
+
+			
+			}
+		}
+		
+		$params['q'] = "mimeType!='application/vnd.google-apps.folder' " . $stringQuery;
+
+		print json_encode($DocumentId);
+		/*
+		$General = new General();
+
+
+
+		/*$filesList = $General->getFilesArray($params, $linkToken);
+		include './views/home/general-searh.php';*/
+	}
+
 	static public function registerUser(){
 		$General = new General();
 		$register = $General->registerUser($_POST);
@@ -365,18 +429,27 @@ class Views {
 
 		$FolderMetadataForm = $Querys->FolderMetadataFormbyFolderId($params);
 		if(is_array($FolderMetadataForm) && $FolderMetadataForm['status'] == false){
+			if($params['elementId']){
 			$totalMetada = "<div class='alert alert-warning alert-dismissible' role='alert'>
 			<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
 				<span aria-hidden='true'>&times;</span></button><strong>No hay metadatos para esta carpeta </strong></div>";
-		}else{
+			}else{
+				$totalMetada = "<div class='alert alert-info alert-dismissible' role='alert'>
+			<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+				<span aria-hidden='true'>&times;</span></button><strong>No criterios de busqueda adicionales </strong></div>";
+			}
+		}else if($params['elementId']){
 			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
 			$paramsDocument['id'] = $params['elementId'];
 			$DocumentMetadata = $Querys->DocumentMetadatabyDocumentId($paramsDocument);
 			if(is_array($DocumentMetadata) && $DocumentMetadata['status'] == false){
 
 				foreach ($folderMetadataContentArray as $key => $metadada) {
+					$dateFormat = '';
+					if($metadada['type'] == 'date')
+						$dateFormat = 'yyyy-mm-dd';
 					$totalMetada .= "<div class='form-group'>
-					<label for='id'>". $metadada['name'] ."</label>
+					<label for='id'>". $metadada['name'] ."</label><small> ". $dateFormat ."</small>
 					<div class='input-group'>
 					<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value=''>
 					<span class='input-group-btn'><button class='btn btn-warning' type='button' onclick='fieldMetadata(this)'><i class='glyphicon glyphicon-remove'></i></button></span></div>
@@ -389,8 +462,10 @@ class Views {
 				$fileMetadataContentArray = json_decode($DocumentMetadata->getDocumentParams(), true);
 
 				foreach ($folderMetadataContentArray as $key => $metadada) {
+					if($metadada['type'] == 'date')
+						$dateFormat = 'yyyy-mm-dd';
 					$totalMetada .= "<div class='form-group'>
-					<label for='id'>". $metadada['name'] ."</label>
+					<label for='id'>". $metadada['name'] ."</label><small> ". $dateFormat ."</small>
 					<div class='input-group'>
 					<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $fileMetadataContentArray[$metadada['id']]['value'] . "'>
 					<span class='input-group-btn'><button class='btn btn-warning' type='button' onclick='fieldMetadata(this)'><i class='glyphicon glyphicon-remove'></i></button></span></div>
@@ -402,8 +477,10 @@ class Views {
 
 				foreach ($fileMetadataContentArray as $key => $metadada) {
 					if(!isset($folderMetadataContentArray[$metadada['id']])){
+					if($metadada['type'] == 'date')
+						$dateFormat = 'yyyy-mm-dd';
 					$totalMetada .= "<div class='form-group'>
-					<label for='id'>". $metadada['name'] ."</label>
+					<label for='id'>". $metadada['name'] ."</label><small> ". $dateFormat ."</small>
 					<div class='input-group'>
 					<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $metadada['value'] . "'>
 					<span class='input-group-btn'><button class='btn btn-danger' type='button' onclick='fieldMetadata(this)'><i class='glyphicon glyphicon-trash'></i></button></span></div>
@@ -415,6 +492,43 @@ class Views {
 
 			}
 			$totalMetada .= "<input type='hidden' class='form-control' id='element' name='element' value='". $params['elementId'] ."'>";
+		}else{
+			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
+
+			foreach ($folderMetadataContentArray as $key => $metadata) {
+
+					if($metadata['type'] == 'date'){
+						
+						$totalMetada .= "<div class='form-group'>
+						<label for='title'>".$metadata['name']."</label>
+						<div class='row'>
+							<div class='col-xs-6'>
+								<input 
+								type='text'  
+								data-provide='datepicker' 
+								data-date-format='yyyy-mm-dd' 
+								data-date-language='es' 
+								class='form-control' 
+								id='".$metadata['id']."' 
+								name='".$metadata['id']."' 
+								placeholder=''>
+							</div>
+							<div class='col-xs-6'>
+								<input 
+								type='text'  
+								data-provide='datepicker' 
+								data-date-format='yyyy-mm-dd' 
+								data-date-language='es' 
+								class='form-control' 
+								id='".$metadata['id']."-fin'
+								name='".$metadata['id']."-fin' 
+								placeholder=''>
+							</div>
+						</div>
+					</div>";
+
+				}
+				}
 		}
 
 		$resultArray = array(

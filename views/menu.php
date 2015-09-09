@@ -19,7 +19,7 @@
                     <ul role="menu" class="dropdown-menu">
                         <li><a href="javascript:void(0);" data-toggle="modal" data-target="#modalAddFolder"><i class="glyphicon glyphicon-folder-open"></i> Nueva carpeta</a></li>
                         <li><a href="javascript:void(0);" data-toggle="modal" data-target="#createFormModal"><i class="glyphicon glyphicon-indent-left"></i> Crear Metadatos</a></li>
-                        <li><a href="javascript:void(0);" data-toggle="modal" data-target="#modalAvanceSearh"><i class="glyphicon glyphicon-random" ></i> Busqueda Avanzada</a></li>
+                        <li><a href="javascript:void(0);" onclick="AvanceSearhgetForm()" data-toggle="modal" data-target="#modalAvanceSearh"><i class="glyphicon glyphicon-random" ></i> Busqueda Avanzada</a></li>
                         <li><a href="javascript:void(0);" data-toggle="modal" data-target="#modalUploadFiles"><i class="glyphicon glyphicon-floppy-open"></i> Subir archivos</a></li>
                     </ul>
                 </li>
