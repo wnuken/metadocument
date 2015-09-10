@@ -221,21 +221,24 @@ class Views {
 	static public function advancedSearch(){
 
 		$stringQuery = '';
-		if(isset($_POST['title']))
-			$queryTitle = explode(' ', trim($_POST['title']));
 
 		if(isset($_POST['content']))
 			$queryContent = explode(' ', trim($_POST['content']));
 
+		/*if(isset($_POST['content']))
+			$queryContentSp = explode('"', trim($_POST['content']));
 
-		if(is_array($queryTitle)){
-			foreach ($queryTitle as $key => $value) {
-				$stringQuery .= " and title contains '" . $value . "'";
-			}
+		if(isset($queryContent[1]) && isset($queryContentSp[1])){
+			$queryContent[1] = '"' . $queryContentSp[1] . '"';
+			unset($queryContent[2]);
+		}*/
+
+		if(!empty($_POST['title'])){
+				$stringQuery .= " and title contains '" . $_POST['title'] . "'";
 		}
 
-		if(is_array($queryContent)){
-			if(is_array($queryTitle)){
+		if(is_array($queryContent) && !empty($_POST['content'])){
+			if(!empty($_POST['title'])){
 				$stringQuery .= ' or (';
 			}else{
 				$stringQuery .= ' and (';
@@ -245,7 +248,7 @@ class Views {
 				if($key == 0){
 					$stringQuery .= " fullText contains '" . $value . "'";
 				}else{
-					$stringQuery .= " or fullText contains '" . $value . "'";
+					$stringQuery .= " and fullText contains '" . $value . "'";
 				}
 				
 			}
@@ -253,33 +256,62 @@ class Views {
 		}
 
 		foreach ($_POST as $key => $value) {
-			if($key != 'title' && $key != 'content'){
+			if(is_numeric($key)){
 
 				$searchDateIni = $_POST[$key];
 				$searchDateend = $_POST[$key . '-fin'];
 
+				if(!empty($searchDateIni)){
 				$DocumentDate = DocumentDateQuery::create()
 				->filterByMetadataDate(array("min" => $searchDateIni." 00:00:00", "max" => $searchDateend." 23:59:59"))
 				->findByMetadataId($key);
 
 				foreach ($DocumentDate as $keyb => $valueb) {
-					$DocumentId[] = $valueb->getDocumentId();
+					$idvar = $valueb->getDocumentId();
+					$params['filterDate'][$idvar] = $idvar;
 				}
+			}
 
 			
 			}
 		}
-		
-		$params['q'] = "mimeType!='application/vnd.google-apps.folder' " . $stringQuery;
 
-		print json_encode($DocumentId);
-		/*
+		if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])) {
+			$linkToken = '';
+		}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])) {
+			$arrayServiceToken = json_decode($_SESSION['service_token'], true);
+			$linkToken = '&access_token=' . $arrayServiceToken['access_token'];
+		}
+
+
+		if(empty($_POST['title']) && empty($_POST['content'])){
+			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '".$_POST['parent']."' in parents";
+		}else{
+			$params['q'] = "mimeType!='application/vnd.google-apps.folder' " . $stringQuery . " and '".$_POST['parent']."' in parents";
+		}
+		
+
+		//print json_encode($params);
+		
 		$General = new General();
 
 
 
-		/*$filesList = $General->getFilesArray($params, $linkToken);
-		include './views/home/general-searh.php';*/
+		$filesList = $General->getFilesArray($params, $linkToken);
+
+
+
+
+		include './views/home/general-searh-page-var.php';
+
+		$resultArray['html'] = $htmlData;
+		$resultArray['bb'] = $queryContentSp;
+		$resultArray['pageToken'] = $filesList['pageToken'];
+		$resultArray['q'] = $params['q'];
+
+		$resultJson = json_encode($resultArray);
+
+		print $resultJson;
 	}
 
 	static public function registerUser(){
@@ -434,9 +466,10 @@ class Views {
 			<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
 				<span aria-hidden='true'>&times;</span></button><strong>No hay metadatos para esta carpeta </strong></div>";
 			}else{
-				$totalMetada = "<div class='alert alert-info alert-dismissible' role='alert'>
+				$totalMetada = "<input type='hidden' class='form-control' id='parent' name='parent' value='". $params['id'] ."'>";
+				/*$totalMetada .= "<div class='alert alert-info alert-dismissible' role='alert'>
 			<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-				<span aria-hidden='true'>&times;</span></button><strong>No criterios de busqueda adicionales </strong></div>";
+				<span aria-hidden='true'>&times;</span></button><strong>No existen criterios de busqueda adicionales </strong></div>";*/
 			}
 		}else if($params['elementId']){
 			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
@@ -529,6 +562,7 @@ class Views {
 
 				}
 				}
+				 $totalMetada .= "<input type='hidden' class='form-control' id='parent' name='parent' value='". $params['id'] ."'>";
 		}
 
 		$resultArray = array(

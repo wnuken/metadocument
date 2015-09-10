@@ -690,7 +690,6 @@ $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 		url: "advanced-search",
 		data: $AvanceSearhForm.serialize()
 	};
-	console.log(params);
 
 	$.ajax({
 		type: "POST",
@@ -700,8 +699,15 @@ $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 		async: true,
 		success: function(response) {
 			$('#progress').css({'display':'none'});
+
+			$('div#generalsearhresult').fadeOut("slow", function(){
+				var $thet = $(this);
+				$thet.html('');
+				$thet.html(response.html).fadeIn();
+			});
+
 			// $('div#AvanceSearhDates',$AvanceSearhForm).html(response.message);
-			//$(response.message).appendTo($('div#AvanceSearhDates',$AvanceSearhForm));
+			//$(response.html).appendTo($('div#AvanceSearhDates',$AvanceSearhForm));
 		},
 		error: function() {
 			$('#progress').css({'display':'none'});
