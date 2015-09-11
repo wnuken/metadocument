@@ -22,12 +22,14 @@ define('GOOGLE_CLIENT_ID_APP', '322974934904-m2g4rf3eucvft23p7jl2sbt3tvtekh1l.ap
 define('GOOGLE_SERVICE_ACCOUNT_APP', '322974934904-m2g4rf3eucvft23p7jl2sbt3tvtekh1l@developer.gserviceaccount.com');
 define('GOOGLE_LOCATION_KEY_APP', './ft23p7jl2sbt3tvtekh/Metadocument-9481caa3d5da.p12');
 
+define('URL_GOOGLE_API', 'https://www.googleapis.com/drive/v2/files');
+define('GOOGLE_URL_USER_INFO', 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=');
 
 /* ---- SERVER DATA ---- */
 define('SERVER_KEY', 'LLAVE_DEL_SERVIDOR');
 
-define('CACHE_TIME_APP', '-3000 seconds');
+define('CACHE_TIME_APP', '-30 seconds');
 define('MAX_FILES_PAGE', '50');
 
-define('URL_GOOGLE_API', 'https://www.googleapis.com/drive/v2/files');
+
 

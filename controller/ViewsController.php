@@ -16,14 +16,11 @@ class Views {
 
 	static public function Home($RestParams = ''){
 
-		/*$format = 'Y-m-d';
-		$date = "2015-10-12";
-		$dateCompare = DateTime::createFromFormat($format, $date);
-				if($dateCompare && $dateCompare->format($format) == $date){
-					print_r("Si es");
-				}else{
-					 print_r("No es");
-				}*/
+		/*getSession()->set('paths', array(
+			'filePath' => './files/' . getSession()->get('user_path') .'-home-' . $RestParams . '.json',
+			'foldersPath' => './files/' . getSession()->get('user_path') . '-folders-' . $RestParams . '.json',
+			'foldersTotalPath' => './files/' . getSession()->get('user_path') . '-folders-total' . '.json'
+			));*/
 
 		$path = '';
 		$filePath = './files/' . $_SESSION['user_path'] .'-home-' . $RestParams . '.json';
@@ -60,7 +57,7 @@ class Views {
 			$userValues = $Querys->AdminUserByUser($paramsUser);
 			if(!is_array($userValues)){
 				$path = $userValues->getFolderRoot();
-				// $_SESSION['arrayFolder']['0'] = $path;
+				$paramsExtra['path'] = $path;
 
 				if($RestParams != ''){
 					$path = $RestParams;
@@ -76,11 +73,11 @@ class Views {
 					$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
 					//$paramsFolder['q'] = "mimeType=". rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
 					$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
-					$linkToken = '';
+					$paramsExtra['linkToken'] = '';
 				}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])){
 					$arrayServiceToken = json_decode($_SESSION['service_token'], true);
 					//$params['access_token'] = $arrayServiceToken['access_token'];
-					$linkToken = '&access_token=' . $arrayServiceToken['access_token'];
+					$paramsExtra['linkToken'] = '&access_token=' . $arrayServiceToken['access_token'];
 					// $params['q'] = "mimeType!=". rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
 					$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
 					//$paramsFolder['q'] = "mimeType=". rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
@@ -96,6 +93,7 @@ class Views {
 				print('<pre>'); print_r($$path); print('</pre>');*/
 
 				// print('<pre>'); print_r($path); print('</pre>');
+				// unset($_SESSION['folders']);
 				
 				if(!isset($_SESSION['folders']) && $path != 'root'){
 					$_SESSION['folders'][] = $path;
@@ -104,9 +102,9 @@ class Views {
 					$_SESSION['folders'][] = $path;
 				}
 				
-				$folderList = $General->getFilesArray($paramsFolder, $linkToken);
+				$folderList = $General->getFilesArray($paramsFolder, $paramsExtra);
 				
-				$filesList = $General->getFilesArray($params, $linkToken);
+				$filesList = $General->getFilesArray($params, $paramsExtra);
 				$filesList['parents'] = $path;
 
 				$handle = fopen($filePath, 'w+');
@@ -140,7 +138,6 @@ class Views {
 		if(isset($_REQUEST['query']))
 			$query = explode(' ', trim($_REQUEST['query']));
 
-
 		if(is_array($query)){
 			foreach ($query as $key => $value) {
 				$stringQuery .= " and title contains '" . $value . "'";
@@ -154,21 +151,20 @@ class Views {
 					$stringQuery .= " fullText contains '" . $value . "'";
 				}else{
 					$stringQuery .= " or fullText contains '" . $value . "'";
-				}
-				
+				}			
 			}
 			$stringQuery .= ')';
 		}
 
 		if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])) {
-			$linkToken = '';
+			$paramsExtra['linkToken'] = '';
 		}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])) {
 			$arrayServiceToken = json_decode($_SESSION['service_token'], true);
-			$linkToken = '&access_token=' . $arrayServiceToken['access_token'];
+			$paramsExtra['linkToken'] = '&access_token=' . $arrayServiceToken['access_token'];
 		}
 
 		if(isset($_REQUEST['path'])){
-			$path = $_REQUEST['path'];
+			$paramsExtra['path'] = $_REQUEST['path'];
 			$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
 		}else{
@@ -177,8 +173,8 @@ class Views {
 		}
 
 		$General = new General();
-		$folderList = $General->getFilesArray($paramsFolder, $linkToken);
-		$filesList = $General->getFilesArray($params, $linkToken);
+		$folderList = $General->getFilesArray($paramsFolder, $paramsExtra);
+		$filesList = $General->getFilesArray($params, $paramsExtra);
 		include './views/home/general-searh.php';
 	}
 
@@ -191,21 +187,22 @@ class Views {
 		}
 
 		if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])) {
-			$linkToken = '';
+			$paramsExtra['linkToken'] = '';
 		}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])) {
 			$arrayServiceToken = json_decode($_SESSION['service_token'], true);
-			$linkToken = '&access_token=' . $arrayServiceToken['access_token'];
+			$paramsExtra['linkToken'] = '&access_token=' . $arrayServiceToken['access_token'];
 		}
 
 		if(isset($_REQUEST['parents'])){
 			$path = $_REQUEST['parents'];
+			$paramsExtra['path'] = $path;
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
 		}else{
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder'";
 		}
 
 		$General = new General();
-		$filesList = $General->getFilesArray($params, $linkToken);
+		$filesList = $General->getFilesArray($params, $paramsExtra);
 		
 		include './views/home/general-searh-page-var.php';
 
@@ -262,25 +259,25 @@ class Views {
 				$searchDateend = $_POST[$key . '-fin'];
 
 				if(!empty($searchDateIni)){
-				$DocumentDate = DocumentDateQuery::create()
-				->filterByMetadataDate(array("min" => $searchDateIni." 00:00:00", "max" => $searchDateend." 23:59:59"))
-				->findByMetadataId($key);
+					if(empty($searchDateend))
+						$searchDateend = $searchDateIni;
+					$DocumentDate = DocumentDateQuery::create()
+					->filterByMetadataDate(array("min" => $searchDateIni." 00:00:00", "max" => $searchDateend." 23:59:59"))
+					->findByMetadataId($key);
 
-				foreach ($DocumentDate as $keyb => $valueb) {
-					$idvar = $valueb->getDocumentId();
-					$params['filterDate'][$idvar] = $idvar;
+					foreach ($DocumentDate as $keyb => $valueb) {
+						$idvar = $valueb->getDocumentId();
+						$paramsExtra['filterDate'][$idvar] = $idvar;
+					}
 				}
-			}
-
-			
 			}
 		}
 
 		if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])) {
-			$linkToken = '';
+			$paramsExtra['linkToken'] = '';
 		}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])) {
 			$arrayServiceToken = json_decode($_SESSION['service_token'], true);
-			$linkToken = '&access_token=' . $arrayServiceToken['access_token'];
+			$paramsExtra['linkToken'] = '&access_token=' . $arrayServiceToken['access_token'];
 		}
 
 
@@ -289,28 +286,25 @@ class Views {
 		}else{
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' " . $stringQuery . " and '".$_POST['parent']."' in parents";
 		}
-		
 
-		//print json_encode($params);
-		
+		 $paramsExtra['path'] = $_POST['parents'];
+		/*if(empty($_POST['title']) && empty($_POST['content'])){
+			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '".$_POST['parent']."' in parents";
+		}else{
+			$params['q'] = "mimeType!='application/vnd.google-apps.folder' " . $stringQuery;
+		}*/
+
 		$General = new General();
 
 
-
-		$filesList = $General->getFilesArray($params, $linkToken);
-
-
+		$filesList = $General->getFilesArray($params, $paramsExtra);
 
 
 		include './views/home/general-searh-page-var.php';
 
 		$resultArray['html'] = $htmlData;
-		$resultArray['bb'] = $queryContentSp;
 		$resultArray['pageToken'] = $filesList['pageToken'];
-		$resultArray['q'] = $params['q'];
-
 		$resultJson = json_encode($resultArray);
-
 		print $resultJson;
 	}
 
@@ -495,6 +489,7 @@ class Views {
 				$fileMetadataContentArray = json_decode($DocumentMetadata->getDocumentParams(), true);
 
 				foreach ($folderMetadataContentArray as $key => $metadada) {
+					$dateFormat = '';
 					if($metadada['type'] == 'date')
 						$dateFormat = 'yyyy-mm-dd';
 					$totalMetada .= "<div class='form-group'>
@@ -510,6 +505,7 @@ class Views {
 
 				foreach ($fileMetadataContentArray as $key => $metadada) {
 					if(!isset($folderMetadataContentArray[$metadada['id']])){
+					$dateFormat = '';
 					if($metadada['type'] == 'date')
 						$dateFormat = 'yyyy-mm-dd';
 					$totalMetada .= "<div class='form-group'>

@@ -656,7 +656,6 @@ function loadinfoDocument(element){
 
 };
 
-
 $modalAvanceSearh = $('div#modalAvanceSearh');
 $AvanceSearhMessages = $('div#AvanceSearhMessages', $modalAvanceSearh);
 $AvanceSearhForm = $('form#AvanceSearhForm', $modalAvanceSearh);
@@ -699,15 +698,12 @@ $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 		async: true,
 		success: function(response) {
 			$('#progress').css({'display':'none'});
-
+			$('div#addFolder').attr('data-token', response.pageToken);
 			$('div#generalsearhresult').fadeOut("slow", function(){
 				var $thet = $(this);
 				$thet.html('');
 				$thet.html(response.html).fadeIn();
 			});
-
-			// $('div#AvanceSearhDates',$AvanceSearhForm).html(response.message);
-			//$(response.html).appendTo($('div#AvanceSearhDates',$AvanceSearhForm));
 		},
 		error: function() {
 			$('#progress').css({'display':'none'});

@@ -16,6 +16,7 @@ USE `metadocu_dbdocument`;
 
 
 -- Volcando estructura para tabla metadocu_dbdocument.admin_user
+DROP TABLE IF EXISTS `admin_user`;
 CREATE TABLE IF NOT EXISTS `admin_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user` varchar(50) DEFAULT NULL,
@@ -40,6 +41,7 @@ INSERT INTO `admin_user` (`id`, `user`, `password`, `name`, `email`, `folder_roo
 
 
 -- Volcando estructura para tabla metadocu_dbdocument.document_date
+DROP TABLE IF EXISTS `document_date`;
 CREATE TABLE IF NOT EXISTS `document_date` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `document_id` varchar(255) DEFAULT NULL,
@@ -48,19 +50,36 @@ CREATE TABLE IF NOT EXISTS `document_date` (
   PRIMARY KEY (`id`),
   KEY `document_id` (`document_id`),
   KEY `metadata_id` (`metadata_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
--- Volcando datos para la tabla metadocu_dbdocument.document_date: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla metadocu_dbdocument.document_date: ~19 rows (aproximadamente)
 DELETE FROM `document_date`;
 /*!40000 ALTER TABLE `document_date` DISABLE KEYS */;
 INSERT INTO `document_date` (`id`, `document_id`, `metadata_id`, `metadata_date`) VALUES
 	(2, '0B89z_nEGskBCQWFIN2x4UURMYmc', '1441481218', '2015-03-12 00:00:00'),
 	(3, '0B89z_nEGskBCUnpjQjdscGJSU0U', '1441481218', '2015-04-03 00:00:00'),
-	(4, '1fWjyJcrnHT3467SDb5rwibO3bW5RNJ3qXCXxY4LBetU', '1441481218', '2015-05-06 00:00:00');
+	(4, '1fWjyJcrnHT3467SDb5rwibO3bW5RNJ3qXCXxY4LBetU', '1441481218', '2015-05-06 00:00:00'),
+	(5, '1fWjyJcrnHT3467SDb5rwibO3bW5RNJ3qXCXxY4LBetU', '1441481218', '2015-05-06 00:00:00'),
+	(6, '1fWjyJcrnHT3467SDb5rwibO3bW5RNJ3qXCXxY4LBetU', '1441823207', '2015-06-12 00:00:00'),
+	(7, '0B89z_nEGskBCUnpjQjdscGJSU0U', '1441481218', '2015-04-03 00:00:00'),
+	(8, '0B89z_nEGskBCUnpjQjdscGJSU0U', '1441823207', '2015-03-26 00:00:00'),
+	(9, '0B89z_nEGskBCQWFIN2x4UURMYmc', '1441481218', '2015-03-12 00:00:00'),
+	(10, '0B89z_nEGskBCUnpjQjdscGJSU0U', '1441481218', '2015-04-03 00:00:00'),
+	(11, '0B89z_nEGskBCUnpjQjdscGJSU0U', '1441823207', '2015-03-26 00:00:00'),
+	(12, '0B89z_nEGskBCUnpjQjdscGJSU0U', '1441481218', '2015-04-03 00:00:00'),
+	(13, '0B89z_nEGskBCUnpjQjdscGJSU0U', '1441823207', '2015-03-26 00:00:00'),
+	(14, '1fWjyJcrnHT3467SDb5rwibO3bW5RNJ3qXCXxY4LBetU', '1441481218', '2015-05-06 00:00:00'),
+	(15, '1fWjyJcrnHT3467SDb5rwibO3bW5RNJ3qXCXxY4LBetU', '1441823207', '2015-06-12 00:00:00'),
+	(16, '1fWjyJcrnHT3467SDb5rwibO3bW5RNJ3qXCXxY4LBetU', '1441481218', '2015-05-06 00:00:00'),
+	(17, '1fWjyJcrnHT3467SDb5rwibO3bW5RNJ3qXCXxY4LBetU', '1441823207', '2015-06-12 00:00:00'),
+	(18, '0B89z_nEGskBCQWFIN2x4UURMYmc', '1441481218', '2015-03-12 00:00:00'),
+	(19, '0B89z_nEGskBCUnpjQjdscGJSU0U', '1441481218', '2015-04-03 00:00:00'),
+	(20, '0B89z_nEGskBCUnpjQjdscGJSU0U', '1441823207', '2015-03-26 00:00:00');
 /*!40000 ALTER TABLE `document_date` ENABLE KEYS */;
 
 
 -- Volcando estructura para tabla metadocu_dbdocument.document_metadata
+DROP TABLE IF EXISTS `document_metadata`;
 CREATE TABLE IF NOT EXISTS `document_metadata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `document_id` varchar(255) DEFAULT NULL,
@@ -72,14 +91,15 @@ CREATE TABLE IF NOT EXISTS `document_metadata` (
 DELETE FROM `document_metadata`;
 /*!40000 ALTER TABLE `document_metadata` DISABLE KEYS */;
 INSERT INTO `document_metadata` (`id`, `document_id`, `document_params`) VALUES
-	(1, '0B89z_nEGskBCQWFIN2x4UURMYmc', '{"1441462568":{"name":"Nombre","value":"Brian","id":1441462568},"1441462578":{"name":"Direcci\\u00f3n","value":"Calle 123","id":1441462578},"1441481218":{"name":"Fecha","value":"2015-03-12","id":1441481218}}'),
-	(3, '0B89z_nEGskBCUnpjQjdscGJSU0U', '{"1441462568":{"name":"Nombre","value":"Bria","id":1441462568},"1441462578":{"name":"Direcci\\u00f3n","value":"sdas","id":1441462578},"1441481218":{"name":"Fecha","value":"2015-04-03","id":1441481218}}'),
-	(4, '1fWjyJcrnHT3467SDb5rwibO3bW5RNJ3qXCXxY4LBetU', '{"1441462568":{"name":"Nombre","value":"bre","id":1441462568},"1441462578":{"name":"Direcci\\u00f3n","value":"wewe","id":1441462578},"1441481218":{"name":"Fecha","value":"2015-05-06","id":1441481218}}'),
+	(1, '0B89z_nEGskBCQWFIN2x4UURMYmc', '{"1441462568":{"name":"Nombre","value":"Andres","id":1441462568},"1441462578":{"name":"Direcci\\u00f3n","value":"Calle 123","id":1441462578},"1441481218":{"name":"Fecha","value":"2015-03-12","id":1441481218},"1441823207":{"name":"Fecha 2","value":"","id":1441823207},"1441922014":{"name":"Autor","value":"","id":1441922014}}'),
+	(3, '0B89z_nEGskBCUnpjQjdscGJSU0U', '{"1441462568":{"name":"Nombre","value":"Andres Parra","id":1441462568},"1441462578":{"name":"Direcci\\u00f3n","value":"Calle 3","id":1441462578},"1441481218":{"name":"Fecha","value":"2015-04-03","id":1441481218},"1441823207":{"name":"Fecha 2","value":"2015-03-26","id":1441823207},"1441922014":{"name":"Autor","value":"Camilo Torres","id":1441922014}}'),
+	(4, '1fWjyJcrnHT3467SDb5rwibO3bW5RNJ3qXCXxY4LBetU', '{"1441462568":{"name":"Nombre","value":"Andres Torres","id":1441462568},"1441462578":{"name":"Direcci\\u00f3n","value":"Calle 3","id":1441462578},"1441481218":{"name":"Fecha","value":"2015-05-06","id":1441481218},"1441823207":{"name":"Fecha 2","value":"2015-06-12","id":1441823207},"1441922014":{"name":"Autor","value":"Camilo Marin","id":1441922014}}'),
 	(5, NULL, '[]');
 /*!40000 ALTER TABLE `document_metadata` ENABLE KEYS */;
 
 
 -- Volcando estructura para tabla metadocu_dbdocument.folder_metadata_form
+DROP TABLE IF EXISTS `folder_metadata_form`;
 CREATE TABLE IF NOT EXISTS `folder_metadata_form` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `folder_id` varchar(255) DEFAULT NULL,
@@ -91,11 +111,12 @@ CREATE TABLE IF NOT EXISTS `folder_metadata_form` (
 DELETE FROM `folder_metadata_form`;
 /*!40000 ALTER TABLE `folder_metadata_form` DISABLE KEYS */;
 INSERT INTO `folder_metadata_form` (`id`, `folder_id`, `folder_params`) VALUES
-	(1, '0B89z_nEGskBCVzlzT3JPWGxqX1E', '{"1441462568":{"name":"Nombre","type":"text","id":1441462568},"1441462578":{"name":"Direcci\\u00f3n","type":"text","id":1441462578},"1441481218":{"name":"Fecha","type":"date","id":1441481218},"1441823207":{"name":"Fecha 2","type":"date","id":1441823207}}');
+	(1, '0B89z_nEGskBCVzlzT3JPWGxqX1E', '{"1441462568":{"name":"Nombre","type":"text","id":1441462568},"1441462578":{"name":"Direcci\\u00f3n","type":"text","id":1441462578},"1441481218":{"name":"Fecha","type":"date","id":1441481218},"1441823207":{"name":"Fecha 2","type":"date","id":1441823207},"1441922014":{"name":"Autor","type":"text","id":1441922014}}');
 /*!40000 ALTER TABLE `folder_metadata_form` ENABLE KEYS */;
 
 
 -- Volcando estructura para tabla metadocu_dbdocument.roles
+DROP TABLE IF EXISTS `roles`;
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,

@@ -1,11 +1,8 @@
 <?php
 //getSession()->set('name', array(1,2));
-
-
-
-$var = getSession()->get('name');
-print_r($var);
-
+/*print_r('<pre>');
+print_r($_SESSION);
+print_r('</pre>');-*/
 //getSession()->set('name', '');
 // getSession()->end('home');
 

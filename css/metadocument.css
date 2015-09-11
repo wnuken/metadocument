@@ -73,8 +73,9 @@ input[type="text"].inputborder:focus, input[type="password"].inputborder:focus {
 }
 
 .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
-	background-color: transparent;
-	color: #E70101;
+	background-image: linear-gradient(to bottom, #E70101 0px, #C12F2B 100%);
+	background-repeat: repeat-x;
+	box-shadow: 0 3px 9px rgba(0, 0, 0, 0.25) inset;
 }
 
 .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {

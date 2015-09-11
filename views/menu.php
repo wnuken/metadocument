@@ -1,28 +1,20 @@
 <div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
+    <div class="container-fluid">
         <div class="navbar-header">
-            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+            <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="#" class="navbar-brand hidden-sm" style="position: relative; top: -17px; "><img src="./img/lg-md.png" style="width: 80%;"></a>
+            <a href="./" class="navbar-brand hidden-sm" style="position: relative; top: -17px; "><img src="./img/lg-md.png" style="width: 80%;"></a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav" id="menunav">
-                <li class="active"><a href="./"><i class="glyphicon glyphicon-th"></i> Inicio</a></li>
-                <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="./variables">
-                        <i class="glyphicon glyphicon-indent-left"></i> Opciones <span class="caret"></span>
-                    </a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="javascript:void(0);" data-toggle="modal" data-target="#modalAddFolder"><i class="glyphicon glyphicon-folder-open"></i> Nueva carpeta</a></li>
-                        <li><a href="javascript:void(0);" data-toggle="modal" data-target="#createFormModal"><i class="glyphicon glyphicon-indent-left"></i> Crear Metadatos</a></li>
-                        <li><a href="javascript:void(0);" onclick="AvanceSearhgetForm()" data-toggle="modal" data-target="#modalAvanceSearh"><i class="glyphicon glyphicon-random" ></i> Busqueda Avanzada</a></li>
-                        <li><a href="javascript:void(0);" data-toggle="modal" data-target="#modalUploadFiles"><i class="glyphicon glyphicon-floppy-open"></i> Subir archivos</a></li>
-                    </ul>
-                </li>
+                <li><a href="javascript:void(0);" data-toggle="modal" data-target="#modalAddFolder"><i class="glyphicon glyphicon-folder-open"></i> Nueva carpeta</a></li>
+                <li><a href="javascript:void(0);" data-toggle="modal" data-target="#createFormModal"><i class="glyphicon glyphicon-indent-left"></i> Crear Metadatos</a></li>
+                <li><a href="javascript:void(0);" onclick="AvanceSearhgetForm()" data-toggle="modal" data-target="#modalAvanceSearh"><i class="glyphicon glyphicon-random" ></i> Busqueda Avanzada</a></li>
+                <li><a href="javascript:void(0);" data-toggle="modal" data-target="#modalUploadFiles"><i class="glyphicon glyphicon-floppy-open"></i> Subir archivos</a></li>
                 <li class="dropdown" style="float:rigth;">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="glyphicon glyphicon-user"></i> <?php print $user; ?> <span class="caret"></span></a>
                     <ul role="menu" class="dropdown-menu">

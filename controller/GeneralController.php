@@ -443,12 +443,18 @@ public function setFileFullTextSET($params) {
 
 
 	
-	public function getFilesArray($params, $linkToken){
+	public function getFilesArray($params, $paramsExtra){
 		$filterDate = '';
 		if(isset($params['filterDate'])){
 			$filterDate = $params['filterDate'];
-			unset($params['filterDate']);
 		}
+		unset($params['filterDate']);
+
+		$path = '';
+		if(isset($params['path'])){
+			$path = $params['path'];
+		}
+		unset($params['path']);
 
 		$getFilesList = $this->getFilesList($params);
 
@@ -457,13 +463,14 @@ public function setFileFullTextSET($params) {
 		}
 
 		foreach ($getFilesList['items'] as $key => $file) {
-			if($_SESSION['folders'][0] == 'root' && empty($filterDate)){
-				$filesList[$key] = $this->createFilesList($file);
-			}else if(in_array($file['modelData']['parents'][0]['id'], $_SESSION['folders']) && empty($filterDate)){
-				$filesList[$key] = $this->createFilesList($file);
-			}else if(in_array($file->getId(), $filterDate)){
-				// if(in_array($file->getId(), $filterDate))
-					$filesList[$key] = $this->createFilesList($file);
+			if($paramsExtra['path'] == 'root'){
+				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
+			}else if(!isset($paramsExtra['filterDate']) && in_array($file['modelData']['parents'][0]['id'], $_SESSION['folders'])){
+				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
+			}else if(isset($paramsExtra['filterDate']) && in_array($file->getId(), $filterDate)){
+				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
+			}else{
+				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
 			}
 		}
 		$filesList['pageToken'] = $getFilesList['pageToken'];
@@ -472,7 +479,7 @@ public function setFileFullTextSET($params) {
 		return $filesList;
 	}
 
-	private function createFilesList(&$file){
+	private function createFilesList(&$file, $linkToken){
 
 		if($file->mimeType == 'application/vnd.google-apps.document'){
 					$image = $file->thumbnailLink . $linkToken;
