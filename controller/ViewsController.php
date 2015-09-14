@@ -299,11 +299,11 @@ class Views {
 
 		$filesList = $General->getFilesArray($params, $paramsExtra);
 
-
 		include './views/home/general-searh-page-var.php';
 
 		$resultArray['html'] = $htmlData;
 		$resultArray['pageToken'] = $filesList['pageToken'];
+		$resultArray['filterDate'] =	$paramsExtra['filterDate'];
 		$resultJson = json_encode($resultArray);
 		print $resultJson;
 	}
@@ -524,11 +524,14 @@ class Views {
 		}else{
 			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
 
+			$selectMeta = "<div class='form-group'><div class='row'><div class='col-xs-4'><select class='form-control'>";
+			$metaD = "<option value='all'>Todo</option>";	
+
 			foreach ($folderMetadataContentArray as $key => $metadata) {
 
 					if($metadata['type'] == 'date'){
 						
-						$totalMetada .= "<div class='form-group'>
+						$totalMetada0 .= "<div class='form-group'>
 						<label for='title'>".$metadata['name']."</label>
 						<div class='row'>
 							<div class='col-xs-6'>
@@ -556,9 +559,13 @@ class Views {
 						</div>
 					</div>";
 
+				}else{
+					$metaD .= "<option value='".$metadata['name']."'>".$metadata['name']."</option>";
 				}
 				}
-				 $totalMetada .= "<input type='hidden' class='form-control' id='parent' name='parent' value='". $params['id'] ."'>";
+				$selectMeta .= $metaD . "</select></div><div class='col-xs-8'><input type='text' class='form-control'></div></div></div>";
+				$totalMetada .= $selectMeta . $totalMetada0;
+				$totalMetada .= "<input type='hidden' class='form-control' id='parent' name='parent' value='". $params['id'] ."'>";
 		}
 
 		$resultArray = array(

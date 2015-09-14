@@ -465,13 +465,13 @@ public function setFileFullTextSET($params) {
 		foreach ($getFilesList['items'] as $key => $file) {
 			if($paramsExtra['path'] == 'root'){
 				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
-			}else if(!isset($paramsExtra['filterDate']) && in_array($file['modelData']['parents'][0]['id'], $_SESSION['folders'])){
+			}else if(isset($paramsExtra['filterDate']) && in_array($file->getId(), $paramsExtra['filterDate'])){
 				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
-			}else if(isset($paramsExtra['filterDate']) && in_array($file->getId(), $filterDate)){
+			}else if(!isset($paramsExtra['filterDate']) || in_array($file['modelData']['parents'][0]['id'], $_SESSION['folders'])){
 				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
-			}else{
+			}/*else if(!isset($paramsExtra['filterDate'])){
 				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
-			}
+			}*/
 		}
 		$filesList['pageToken'] = $getFilesList['pageToken'];
 		

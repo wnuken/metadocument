@@ -684,7 +684,9 @@ function AvanceSearhgetForm() {
 };
 
 $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
-	$('#progress').css({'display':'block'});
+	//$('#progress').css({'display':'block'});
+	$that = $(this);
+	$that.button('loading');
 	var params = {
 		url: "advanced-search",
 		data: $AvanceSearhForm.serialize()
@@ -697,7 +699,9 @@ $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 		data: params.data,
 		async: true,
 		success: function(response) {
-			$('#progress').css({'display':'none'});
+			//$('#progress').css({'display':'none'});
+			$modalAvanceSearh.modal('hide');
+			$that.button('reset');
 			$('div#addFolder').attr('data-token', response.pageToken);
 			$('div#generalsearhresult').fadeOut("slow", function(){
 				var $thet = $(this);

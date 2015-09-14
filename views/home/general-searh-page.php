@@ -1,9 +1,144 @@
+<style type="text/css">
+	div.metadocument-element {
+    background: #FFF none repeat scroll 0% 0%;
+    box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.22);
+    border-radius: 6px;
+    /*width: 236px;*/
+    margin-bottom: 10px;
+}
+
+div.metadocument-image {
+	padding-top: 5px;
+	height: 230px;
+}
+
+div.metadocument-image img {
+	max-width: 100%;
+	max-height: 95%;
+}
+
+div.metadocument-divider {
+	border-bottom: 1px solid #EEE;
+	width: 100%
+}
+
+div.matadocument-title {
+	overflow: hidden;
+}
+
+div.metadocument-metadata-one {
+	height: 143px;
+	overflow: hidden;
+}
+
+div.metadocument-metadata-two {
+	height: 90px;
+	overflow: hidden;
+}
+
+div.metadocument-metadata-one ul, div.metadocument-metadata-two ul {
+       list-style:none;
+       padding: 0px 5px;
+       }
+
+div.metadocument-metadata-one ul li, div.metadocument-metadata-two ul li {
+
+    font-size: 12px;
+ }
+
+</style>
+
 <?php 
 if(is_array($filesList)){
 	foreach($filesList as $key => $file){
 		if(is_numeric($key)){
 			?>
-			<div class='col-xs-12 col-sm-4 col-md-3 col-lg-2 hidden-xs' style='height: 162px; margin-bottom: 5px;'>
+			<div class='col-xs-12 col-sm-4 col-md-3 col-lg-2'>
+				<div class="metadocument-element">
+				<div class='' style='    position: relative;
+    
+    top: 10px;
+    left: 5px;'>
+								<button type='button' 
+								style=''
+								class='btn btn-danger btn-xs buttonProperies' 
+								data-toggle='modal' data-target='#metaDataModal' 
+								onclick="loadDocumentId('<?php print $file['id']; ?>')">
+								<i class='glyphicon glyphicon-list-alt'></i> Metadatos
+								</button>
+							</div>
+					<div class="row text-center metadocument-image">
+
+						<img
+								src='<?php print $file['image']; ?>' 
+								data-mime='<?php print $file['mimeType']; ?>' 
+								alt='<?php print $file['title']; ?>' 
+								title='<?php print $file['title']; ?>'
+								class='img-thumbnail'>
+					</div>
+					<div class='metadocument-divider'></div>
+					<div class="row">
+						<div class='col-xs-12 matadocument-title'>
+						
+							<a href='<?php print $file['url']; ?>' target='_blank' class='text-center'>
+								<img src='./img/icon/<?php print $file['icon']; ?>' 
+								style='width: 32px;'
+								alt='<?php print $file['mimeType']; ?>' 
+								title='<?php print $file['title']; ?>'>
+								<span><?php print substr($file['title'], 0, 20); ?></span>
+							</a>
+						</div>
+					</div>
+					<div class='metadocument-divider'></div>
+					
+								<?php 
+								$classData = 'metadocument-metadata-one';
+								if(isset($file['exportLinks'])){ 
+									$classData = 'metadocument-metadata-two';
+									?>
+								<div class="row">
+						<div class='col-xs-12 text-center'>
+							<small>Descargas</small>
+							<div class="">
+								<?php
+									foreach($file['exportLinks'] as $keyb => $exportlink){ 
+										print '<div style="float: left;"><a href="' . $exportlink . '"><img width="32" src="./img/icon/' . $keyb . '"></a> </div>';
+									} ?>
+									</div>
+							
+						</div>
+						</div>
+						<div class='metadocument-divider'></div>
+							
+
+
+									<?php
+								}
+								?>
+							<div class="row">
+								<div class='col-xs-12 <?php print $classData; ?>'>
+								<div class="text-center"><small>Información</small></div>
+								<?php if(!isset($file['description'])){ ?>
+								<ul>
+									<li><strong>Creación: </strong><?php print date('Y-m-d',strtotime($file['createdDate'])); ?></li>
+								<li><strong>Actualización: </strong><?php print date('Y-m-d',strtotime($file['modifiedDate'])); ?></li>
+								</ul>
+								<?php }else {
+								 print $file['description']; 
+								 } ?>
+								</div>
+
+
+
+							</div>
+					
+					
+				</div>
+				
+			</div>
+
+
+			<!--div class='col-xs-12 col-sm-4 col-md-3 col-lg-2 hidden-xs' style='height: 162px; margin-bottom: 5px;'>
 				<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 img-thumbnail' style='height: 162px;'>
 					<div class='row'>
 						<div class='col-xs-6 text-center' style='height: 123px;'>
@@ -99,7 +234,7 @@ if(is_array($filesList)){
 				</button>
 			</div>
 		</div>
-	</div>
+	</div-->
 	<?php 
 }
 }
