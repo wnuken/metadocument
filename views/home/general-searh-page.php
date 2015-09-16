@@ -10,7 +10,7 @@ if(is_array($filesList)){
 						style=''
 						class='btn btn-danger btn-xs buttonProperies' 
 						data-toggle='modal' data-target='#metaDataModal' 
-						onclick="loadDocumentId('<?php print $file['id']; ?>')">
+						onclick="loadDocumentId('<?php print $file['id']; ?>'); loadFormDataModal();">
 						<i class='glyphicon glyphicon-list-alt'></i> Metadatos
 					</button>
 				</div>

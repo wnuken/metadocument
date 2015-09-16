@@ -562,7 +562,7 @@ function loadDocumentId(id){
 	idDocument = id;
 };
 
-$metaDataModal.on('show.bs.modal', function () {
+/*$metaDataModal.on('show.bs.modal', function () {
 	var params = {
 			url: "get-metadata-form",
 			data: {
@@ -583,12 +583,37 @@ $metaDataModal.on('show.bs.modal', function () {
             
         }
     });
-});
+});*/
 
-$metaDataModal.on('hide.bs.modal', function () {
+
+function loadFormDataModal(){
+	var params = {
+			url: "get-metadata-form",
+			data: {
+				id : $('div#addFolder').attr('data-parent'),
+				elementId : idDocument
+			}
+		};
+	$.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'json',
+        data: params.data,
+        async: true,
+        success: function(response) {
+            //$(response.message).appendTo($metaDataForm);
+            $metaDataForm.html(response.message);
+        },
+        error: function() {
+            
+        }
+    });
+}
+
+/*$metaDataModal.on('hide.bs.modal', function () {
 	$metaDataForm.html('');
 	$('div#metaDataMessages', $metaDataBody).html('');
-});
+});*/
 
 $('button#savedata', $metaDataModal).on('click', function(){
 	$that = $(this);

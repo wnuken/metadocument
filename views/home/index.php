@@ -150,7 +150,7 @@ print_r('</pre>');-*/
 		<?php require_once('./views/home/modal-upload-files.php'); ?>		
 	</div>
 	<div class="row">
-		<?php require_once('./views/home/modal-detail-file.php'); ?>		
+		<?php // require_once('./views/home/modal-detail-file.php');  ?>		
 	</div>
 
 
