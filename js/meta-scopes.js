@@ -1,4 +1,4 @@
-
+/*
 var MetaDocument = angular.module('MetaDocument', []);
 
 MetaDocument.controller('HomeController', function($scope, $http) {
@@ -15,4 +15,4 @@ MetaDocument.controller('HomeController', function($scope, $http) {
         imagesString = JSON.stringify($scope.nombres);
         // $scope.localStorage.setItem('gifWallet', imagesString);
     } */
-});
+// });

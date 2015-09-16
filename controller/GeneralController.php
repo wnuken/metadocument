@@ -489,6 +489,12 @@ public function setFileFullTextSET($params) {
 					$image = './img/icon/blank.png';
 				}
 
+				if($file->downloadUrl !== NULL){
+					$embedLink = $file->downloadUrl;
+				}else{
+					$embedLink = $file->embedLink;
+				}
+
 				$icon = $this->setNameIcon($file->mimeType);
 				$filesList = array(
 					'id' => $file->getId(),
@@ -496,6 +502,7 @@ public function setFileFullTextSET($params) {
 					'icon' => $icon,
 					'title' => $file->getTitle(),
 					'url' => $file->alternateLink,
+					'embedLink' => $embedLink . $linkToken,
 					'image' => $image,
 					'mimeType' => $file->mimeType,
 					'createdDate' => $file->createdDate,

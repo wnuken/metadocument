@@ -630,19 +630,6 @@ function fieldMetadata(element){
 	//console.log($parentInput);
 };
 
-function loadDownloadDocument(element){
-	var $that = $(element);
-	var $parentElement = $that.parent().parent().parent();
-	$('div.info-download-gd', $parentElement).css('display', 'block');
-};
-
-
-function hideAlert(element){
-	var $that = $(element);
-	var $parentElement = $that.parent();
-	$parentElement.css('display', 'none');
-};
-
 var $modalDetailFile = $("div#modalDetailFile");
 function loadinfoDocument(element){
 	var $that = $(element);
@@ -675,6 +662,9 @@ function AvanceSearhgetForm() {
 		async: true,
 		success: function(response) {
 			$('div#AvanceSearhDates',$AvanceSearhForm).html(response.message);
+			if(response.ismetadata == true){
+				$('input#content', $AvanceSearhForm).css('display','none');
+			}
 			//$(response.message).appendTo($('div#AvanceSearhDates',$AvanceSearhForm));
 		},
 		error: function() {

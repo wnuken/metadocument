@@ -204,7 +204,10 @@ class Views {
 		$General = new General();
 		$filesList = $General->getFilesArray($params, $paramsExtra);
 		
-		include './views/home/general-searh-page-var.php';
+		ob_start(); # open buffer
+		include( './views/home/general-searh-page.php' );
+		$htmlData = ob_get_contents();
+		ob_end_clean(); # close buffer
 
 		$resultArray['html'] = $htmlData;
 		$resultArray['pageToken'] = $filesList['pageToken'];
@@ -222,6 +225,14 @@ class Views {
 		if(isset($_POST['content']))
 			$queryContent = explode(' ', trim($_POST['content']));
 
+		if(isset($_POST['filter']) && $_POST['filter'] == 'all' && !empty($_POST['filter-value'])){
+			$queryContent = array();
+			$queryContent = explode(' ', trim($_POST['filter-value']));
+		}else if($_POST['filter'] != 'all'){
+			$queryContent = array();
+			$queryContent[0] = '"' . $_POST['filter'] . ' ' . $_POST['filter-value'] . '"';
+		}
+
 		/*if(isset($_POST['content']))
 			$queryContentSp = explode('"', trim($_POST['content']));
 
@@ -234,11 +245,11 @@ class Views {
 				$stringQuery .= " and title contains '" . $_POST['title'] . "'";
 		}
 
-		if(is_array($queryContent) && !empty($_POST['content'])){
-			if(!empty($_POST['title'])){
-				$stringQuery .= ' or (';
-			}else{
+		if(is_array($queryContent) && (!empty($_POST['content']) || !empty($_POST['filter-value']))){
+			if(empty($_POST['title'])){
 				$stringQuery .= ' and (';
+			}else{
+				$stringQuery .= ' or (';
 			}
 			
 			foreach ($queryContent as $key => $value) {
@@ -281,7 +292,7 @@ class Views {
 		}
 
 
-		if(empty($_POST['title']) && empty($_POST['content'])){
+		if(empty($_POST['title']) && empty($_POST['content']) && empty($_POST['filter-value'])){
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '".$_POST['parent']."' in parents";
 		}else{
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' " . $stringQuery . " and '".$_POST['parent']."' in parents";
@@ -299,11 +310,14 @@ class Views {
 
 		$filesList = $General->getFilesArray($params, $paramsExtra);
 
-		include './views/home/general-searh-page-var.php';
+		ob_start(); # open buffer
+		include( './views/home/general-searh-page.php' );
+		$htmlData = ob_get_contents();
+		ob_end_clean(); # close buffer
 
 		$resultArray['html'] = $htmlData;
 		$resultArray['pageToken'] = $filesList['pageToken'];
-		$resultArray['filterDate'] =	$paramsExtra['filterDate'];
+		$resultArray['filterDate'] =	$params['q'];
 		$resultJson = json_encode($resultArray);
 		print $resultJson;
 	}
@@ -452,6 +466,7 @@ class Views {
 		$folderMetadataContentArray = array();
 		//$folderMetadataJson = './files/folderMetadata.json';
 		$totalMetada = '';
+		$isMetadata = true;
 
 		$FolderMetadataForm = $Querys->FolderMetadataFormbyFolderId($params);
 		if(is_array($FolderMetadataForm) && $FolderMetadataForm['status'] == false){
@@ -465,6 +480,7 @@ class Views {
 			<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
 				<span aria-hidden='true'>&times;</span></button><strong>No existen criterios de busqueda adicionales </strong></div>";*/
 			}
+			$isMetadata = false;
 		}else if($params['elementId']){
 			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
 			$paramsDocument['id'] = $params['elementId'];
@@ -524,8 +540,8 @@ class Views {
 		}else{
 			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
 
-			$selectMeta = "<div class='form-group'><div class='row'><div class='col-xs-4'><select class='form-control'>";
-			$metaD = "<option value='all'>Todo</option>";	
+			$selectMeta = "<div class='form-group'><div class='row'><div class='col-xs-4'><select class='form-control' name='filter' id='filter'>";
+			$metaD = "<option value='all'>General</option>";
 
 			foreach ($folderMetadataContentArray as $key => $metadata) {
 
@@ -543,7 +559,7 @@ class Views {
 								class='form-control' 
 								id='".$metadata['id']."' 
 								name='".$metadata['id']."' 
-								placeholder=''>
+								placeholder='desde'>
 							</div>
 							<div class='col-xs-6'>
 								<input 
@@ -554,7 +570,7 @@ class Views {
 								class='form-control' 
 								id='".$metadata['id']."-fin'
 								name='".$metadata['id']."-fin' 
-								placeholder=''>
+								placeholder='hasta'>
 							</div>
 						</div>
 					</div>";
@@ -563,14 +579,15 @@ class Views {
 					$metaD .= "<option value='".$metadata['name']."'>".$metadata['name']."</option>";
 				}
 				}
-				$selectMeta .= $metaD . "</select></div><div class='col-xs-8'><input type='text' class='form-control'></div></div></div>";
+				$selectMeta .= $metaD . "</select></div><div class='col-xs-8'><input type='text' class='form-control' name='filter-value'></div></div></div>";
 				$totalMetada .= $selectMeta . $totalMetada0;
 				$totalMetada .= "<input type='hidden' class='form-control' id='parent' name='parent' value='". $params['id'] ."'>";
 		}
 
 		$resultArray = array(
 			"status" => true,
-			"message" => $totalMetada
+			"message" => $totalMetada,
+			"ismetadata" => $isMetadata
 			);
 
 		$result = json_encode($resultArray);
