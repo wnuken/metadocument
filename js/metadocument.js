@@ -687,8 +687,8 @@ function AvanceSearhgetForm() {
 		async: true,
 		success: function(response) {
 			$('div#AvanceSearhDates',$AvanceSearhForm).html(response.message);
-			if(response.ismetadata == true){
-				$('input#content', $AvanceSearhForm).css('display','none');
+			if(response.ismetadata !== true){
+				 $('div#text_button', $AvanceSearhForm).css('display','none');
 			}
 			//$(response.message).appendTo($('div#AvanceSearhDates',$AvanceSearhForm));
 		},
@@ -698,8 +698,123 @@ function AvanceSearhgetForm() {
 	});
 };
 
+//$formVariables = $('form#formVariables');
+//$AvanceSearhForm = $('form#AvanceSearhForm');
+
+function loadinput(idElement){
+	$('div.input-group').css('display', 'none');
+	$('div#' + idElement + '-group').css('display', '-moz-box');
+	if(idElement == 'all'){
+   		$('input#uses', $AvanceSearhForm).attr('value', '0');
+	}else{
+		$('input#uses', $AvanceSearhForm).attr('value', '1');
+   	}
+};
+
+function getvalues(element){
+
+	var $that = $(element).parent().parent();
+	var inputDate = '';
+	var attrId = '';
+	var nameDate = '';
+	$('input', $that).each(function(index){
+
+		$thet = $(this);
+
+		attrId = $thet.attr('id');
+		var attrType = $thet.attr('type');
+		var attrPlaceholder = $thet.attr('placeholder');
+		var inputVal = $thet.val();
+
+		if(index == 0 && attrType != 'date' && inputVal != ''){
+
+		var divAppend = '<div class="alert alert-info alert-dismissible fade in meta-text" role="alert" data-meta-filter="' + attrPlaceholder + ' ' + inputVal + '">' +
+              '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>' +
+              '<strong>' + attrPlaceholder + ': </strong>' + inputVal +
+              '</div>';
+              $('div#text_button', $AvanceSearhForm).append(divAppend);
+          }
+
+          if(index == 0 && attrType == 'date' && inputVal != ''){
+          	inputDate = inputVal;
+          	nameDate = $thet.attr('name');
+          	console.log(attrId);
+
+          }
+
+          if(index == 1 && attrType == 'date' && inputVal != '' && inputDate != ''){
+          	inputDate = inputDate + '/' + inputVal;
+          	console.log(attrId);
+          }
+
+
+
+
+		});
+
+		if(inputDate != ''){
+          	var divAppend = '<div class="alert alert-info alert-dismissible fade in meta-text" role="alert" data-meta-id="'+attrId+'" data-meta-date="' + inputDate + '">' +
+              '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>' +
+              '<strong>'+ nameDate +': </strong>' + inputDate +
+              '</div>';
+              $('div#text_button', $AvanceSearhForm).append(divAppend);
+
+          }
+
+
+
+		$('input', $that).val('');
+		$that.css('display', 'none');
+
+		/*if(index == 0 && attrType != 'date'){
+			if(attrId == 'all-value' && inputVal != ''){
+				var SearhCurrentValue = $('input#all', $formMetaData).attr('value');
+				if(typeof SearhCurrentValue != 'undefined' && SearhCurrentValue != ''){
+					$('input#all', $formMetaData).attr('value', SearhCurrentValue + '-' + inputVal);
+				}else{
+					$('input#all', $formMetaData).attr('value', inputVal);
+				}
+				var inputall = $('input#all', $formMetaData).attr('value');
+				$('input#searh', $formMetaData).attr('value', inputall);
+				$('input#searh', $formMetaData).val(inputall);
+			}else{
+				var SearhCurrentValue = $('input#filter', $formMetaData).attr('value');
+				inputVal = attrPlaceholder + ' ' + inputVal;
+				var divEle = '<div class="alert alert-warning alert-dismissible fade in meta-text" role="alert">' +
+              '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>' +
+              '<strong>' + attrPlaceholder + '</strong> ' + inputVal + '</div>';
+				if(typeof SearhCurrentValue != 'undefined' && SearhCurrentValue != ''){
+					$('input#filter', $formMetaData).attr('value', SearhCurrentValue + '-' + inputVal);
+				}else{
+					$('input#filter', $formMetaData).attr('value', inputVal);
+				}
+				var inputall = $('input#filter', $formMetaData).attr('value');
+				$('input#searh', $formMetaData).attr('value', inputall);
+				$('input#searh', $formMetaData).val(inputall);
+				// (inputVal).appendTo()
+			}
+		}
+
+		if(index == 0 && attrType == 'date'){
+			console.log('date1: ' + attrId + ' '  + inputVal);
+		}
+
+		if(index == 1 && attrType == 'date'){
+			console.log('date2: ' + attrId + ' '  + inputVal);
+		}
+
+		
+		console.log(index);
+	});
+	$('input', $that).val('');
+	$that.css('display', 'none');*/
+
+};
+
 $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 	//$('#progress').css({'display':'block'});
+	var valueSearh = [];
+	var valueSearhDate = [];
 	$that = $(this);
 	$that.button('loading');
 	var params = {
@@ -707,7 +822,28 @@ $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 		data: $AvanceSearhForm.serialize()
 	};
 
-	$.ajax({
+	$('div#text_button div.meta-text' , $AvanceSearhForm).each(function(index){
+		var $that = $(this);
+		var metaFilter = $that.attr('data-meta-filter');
+		var metaFilterDate = $that.attr('data-meta-date');
+		var metaFilterDateId = $that.attr('data-meta-id');
+		if(typeof metaFilter != 'undefined'){
+			valueSearh[index] = metaFilter; 	
+		}
+
+		if(typeof metaFilterDate != 'undefined'){
+			valueSearhDate[metaFilterDateId] = metaFilterDate; 	
+		}
+		
+		
+	});
+
+	params.metafilter = valueSearh;
+	params.metafilterDate = valueSearhDate;
+	$that.button('reset');
+
+	console.log(params);
+	/*$.ajax({
 		type: "POST",
 		url: params.url,
 		dataType: 'json',
@@ -727,8 +863,10 @@ $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 		error: function() {
 			$('#progress').css({'display':'none'});
 		}
-	});
+	});*/
 });
+
+
 
 /*$('input#fecha-ini', $modalAvanceSearh).on('change', function(){
 	$('div.input-metadaterange input').each(function (){

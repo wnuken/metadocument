@@ -8,21 +8,27 @@
       <div class="modal-body">
         <div id="AvanceSearhMessages"></div>
         <form id="AvanceSearhForm">
-          <div class="form-group">
-            <label for="title">Nombre</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Nombre del archivo">
-          </div>
-          <div class="form-group">
-            <label for="title">Contenido</label>
-            <input type="text" class="form-control" id="content" name="content" placeholder="Contenido y Metadatatos">
-          </div>
+          
+          
           <div id="AvanceSearhDates">
             
           </div>
           <!--button type="submit" class="btn btn-default" id="save">Guardar</button-->
+          <div class="form-group">
+            <div id="text_button" data-toggle="popover"></div>
+          </div>
+          <div class="page-header">Otros criterios de busqueda</div>
+          <div class="form-group">
+            <label for="title">Nombre </label>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Nombre del archivo"> 
+          </div>
+          <div class="form-group">
+            <label for="title">Otros datos</label>
+            <input type="text" class="form-control" id="content" name="content" placeholder="Otros datos">
+          </div>
         </form>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" style="clear: both;">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary" id="AvanceSearhButton"><i class="glyphicon glyphicon-search"></i> Buscar</button>
       </div>

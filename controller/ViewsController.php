@@ -551,48 +551,75 @@ class Views {
 		}else{
 			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
 
-			$selectMeta = "<div class='form-group'><div class='row'><div class='col-xs-4'><select class='form-control' name='filter' id='filter'>";
-			$metaD = "<option value='all'>General</option>";
+			$totalMetada = '<form id="formVariables"><div class="visible-lg-block visible-md-block visible-sm-block"><div id="chagelogin" class="btn-group" data-toggle="buttons">';
 
-			foreach ($folderMetadataContentArray as $key => $metadata) {
+			foreach ($folderMetadataContentArray as $key => $value) { 
+             $totalMetada .= '<label onclick="loadinput(' . $value['id'] . ');" class="btn btn-danger">
+                  <input name="' . $value['id'] . '" id="' . $value['id'] . '" autocomplete="off" value="" class="product_change" type="radio">' . $value['name'] . '</label>';
+            }
+
+            $totalMetada .= '</div></div>';
+
+			foreach ($folderMetadataContentArray as $key => $value) { 
+                $datepiker = '';
+                if($value['type'] == 'date'){
+                  $datepiker = " data-provide='datepicker' 
+                  data-date-format='yyyy-mm-dd' 
+                  data-date-language='es' ";
+                }
+
+                $totalMetada .= '<div class="input-group" id="' . $value['id'] . '-group" style="display:none;">';
+                  if(empty($datepiker)){ 
+                $totalMetada .= '<input type="text" class="form-control" placeholder="' . $value['name'] . '" id="' . $value['id'] . '-value" name="' . $value['id'] . '-value">';
+                  }else{ 
+                   $totalMetada .= '<input type="date" ' . $datepiker . ' class="form-control" placeholder="Desde" id="' . $value['id'] . '" name="' . $value['name'] . '">
+                   		<input type="date" ' . $datepiker . ' class="form-control" placeholder="Hasta" id="' . $value['id'] . '" name="' . $value['name'] . '">';
+                  }
+                  $totalMetada .=  '<span class="input-group-btn">
+                    <button class="btn btn-success" type="button" onclick="getvalues(this);"><i class="glyphicon glyphicon-plus"></i></button>
+                  </span>
+                </div>';
+            }
+
+            $totalMetada .= '</form>';
+
+			/*$selectMeta = "<div class='form-group'><div class='row'><div class='col-xs-4'><select class='form-control' name='filter' id='filter'>";
+			$metaD = "<option value='all'>General</option>";*/
+
+			/*foreach ($folderMetadataContentArray as $key => $metadata) {
 
 					if($metadata['type'] == 'date'){
 						
 						$totalMetada0 .= "<div class='form-group'>
-						<label for='title'>".$metadata['name']."</label>
 						<div class='row'>
 							<div class='col-xs-6'>
 								<input 
 								type='text'  
-								data-provide='datepicker' 
-								data-date-format='yyyy-mm-dd' 
-								data-date-language='es' 
 								class='form-control' 
-								id='".$metadata['id']."' 
-								name='".$metadata['id']."' 
-								placeholder='desde'>
+								id='".$metadata['id']."-ini' 
+								name='".$metadata['id']."-ini' 
+								placeholder='".$metadata['name']."'>
 							</div>
 							<div class='col-xs-6'>
 								<input 
 								type='text'  
-								data-provide='datepicker' 
-								data-date-format='yyyy-mm-dd' 
-								data-date-language='es' 
 								class='form-control' 
-								id='".$metadata['id']."-fin'
-								name='".$metadata['id']."-fin' 
-								placeholder='hasta'>
+								id='".$metadata['id']."-end'
+								name='".$metadata['id']."-end' 
+								placeholder='".$metadata['name']."'>
 							</div>
 						</div>
 					</div>";
 
-				}else{
+				}/*else{
 					$metaD .= "<option value='".$metadata['name']."'>".$metadata['name']."</option>";
-				}
-				}
-				$selectMeta .= $metaD . "</select></div><div class='col-xs-8'><input type='text' class='form-control' name='filter-value'></div></div></div>";
-				$totalMetada .= $selectMeta . $totalMetada0;
+				}*/
+				/*}
+				// $selectMeta .= $metaD . "</select></div><div class='col-xs-8'><input type='text' class='form-control' name='filter-value'></div></div></div>";
+				$totalMetada .= $selectMeta . $totalMetada0;*/
 				$totalMetada .= "<input type='hidden' class='form-control' id='parent' name='parent' value='". $params['id'] ."'>";
+
+
 		}
 
 		$resultArray = array(

@@ -28,7 +28,7 @@ define('GOOGLE_URL_USER_INFO', 'https://www.googleapis.com/oauth2/v1/userinfo?al
 /* ---- SERVER DATA ---- */
 define('SERVER_KEY', 'LLAVE_DEL_SERVIDOR');
 
-define('CACHE_TIME_APP', '-30 seconds');
+define('CACHE_TIME_APP', '-3000 seconds');
 define('MAX_FILES_PAGE', '50');
 
 
