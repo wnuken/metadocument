@@ -3,7 +3,7 @@ if(is_array($filesList)){
 	foreach($filesList as $key => $file){
 		if(is_numeric($key)){
 			?>
-			<div class='col-xs-12 col-sm-4 col-md-3 col-lg-2'>
+			<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>
 				<div class="metadocument-element">
 					<div class='position-button'>
 						<button type='button' 
@@ -51,7 +51,7 @@ if(is_array($filesList)){
 					$classData = 'metadocument-metadata-two';
 					?>
 					<div class="row">
-						<div class='col-xs-12 text-center'>
+						<div class='col-xs-12 text-center metadata-down'>
 							<small>Descargas</small>
 							<div class="">
 								<?php

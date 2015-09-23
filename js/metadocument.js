@@ -703,13 +703,17 @@ function AvanceSearhgetForm() {
 
 function loadinput(idElement){
 	$('div.input-group').css('display', 'none');
-	$('div#' + idElement + '-group').css('display', '-moz-box');
+	$('div#' + idElement + '-group').css('display', '');
 	if(idElement == 'all'){
    		$('input#uses', $AvanceSearhForm).attr('value', '0');
 	}else{
 		$('input#uses', $AvanceSearhForm).attr('value', '1');
    	}
 };
+
+function loadinputkey(idElement){
+
+}
 
 function getvalues(element){
 
@@ -817,10 +821,7 @@ $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 	var valueSearhDate = [];
 	$that = $(this);
 	$that.button('loading');
-	var params = {
-		url: "advanced-search",
-		data: $AvanceSearhForm.serialize()
-	};
+	
 
 	$('div#text_button div.meta-text' , $AvanceSearhForm).each(function(index){
 		var $that = $(this);
@@ -828,26 +829,33 @@ $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 		var metaFilterDate = $that.attr('data-meta-date');
 		var metaFilterDateId = $that.attr('data-meta-id');
 		if(typeof metaFilter != 'undefined'){
-			valueSearh[index] = metaFilter; 	
+			valueSearh.push(metaFilter);	
 		}
 
 		if(typeof metaFilterDate != 'undefined'){
-			valueSearhDate[metaFilterDateId] = metaFilterDate; 	
+			valueSearhDate.push({'id':metaFilterDateId,'date':metaFilterDate});
 		}
 		
 		
 	});
 
-	params.metafilter = valueSearh;
-	params.metafilterDate = valueSearhDate;
-	$that.button('reset');
+	var params = {
+		url: "advanced-search",
+		parent: $('input#parent', $AvanceSearhForm).val(),
+		title: $('input#title', $AvanceSearhForm).val(),
+		content: $('input#content', $AvanceSearhForm).val(),
+		metaData: valueSearh,
+		metaDataDate: valueSearhDate 
+	};
+
+	//$that.button('reset');
 
 	console.log(params);
-	/*$.ajax({
+	$.ajax({
 		type: "POST",
 		url: params.url,
 		dataType: 'json',
-		data: params.data,
+		data: params,
 		async: true,
 		success: function(response) {
 			//$('#progress').css({'display':'none'});
@@ -863,7 +871,7 @@ $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 		error: function() {
 			$('#progress').css({'display':'none'});
 		}
-	});*/
+	});
 });
 
 

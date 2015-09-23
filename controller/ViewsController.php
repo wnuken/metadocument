@@ -222,30 +222,22 @@ class Views {
 
 		$stringQuery = '';
 
-		if(isset($_POST['content']))
+		if(isset($_POST['content']) && !empty($_POST['content']))
 			$queryContent = explode(' ', trim($_POST['content']));
 
-		if(isset($_POST['filter']) && $_POST['filter'] == 'all' && !empty($_POST['filter-value'])){
-			$queryContent = array();
-			$queryContent = explode(' ', trim($_POST['filter-value']));
-		}else if($_POST['filter'] != 'all'){
-			$queryContent = array();
-			$queryContent[0] = '"' . $_POST['filter'] . ' ' . $_POST['filter-value'] . '"';
+		if(is_array($_POST['metaData'])){
+			foreach ($_POST['metaData'] as $key => $value) {
+				$queryContent[] = '"' . $value . '"';
+			}
 		}
 
-		/*if(isset($_POST['content']))
-			$queryContentSp = explode('"', trim($_POST['content']));
-
-		if(isset($queryContent[1]) && isset($queryContentSp[1])){
-			$queryContent[1] = '"' . $queryContentSp[1] . '"';
-			unset($queryContent[2]);
-		}*/
+		
 
 		if(!empty($_POST['title'])){
 				$stringQuery .= " and title contains '" . $_POST['title'] . "'";
 		}
 
-		if(is_array($queryContent) && (!empty($_POST['content']) || !empty($_POST['filter-value']))){
+		if(is_array($queryContent) && (!empty($queryContent[0]))){
 			if(empty($_POST['title'])){
 				$stringQuery .= ' and (';
 			}else{
@@ -256,33 +248,44 @@ class Views {
 				if($key == 0){
 					$stringQuery .= " fullText contains '" . $value . "'";
 				}else{
-					$stringQuery .= " and fullText contains '" . $value . "'";
+					$stringQuery .= " or fullText contains '" . $value . "'";
 				}
 				
 			}
 			$stringQuery .= ')';
 		}
 
-		foreach ($_POST as $key => $value) {
-			if(is_numeric($key)){
 
-				$searchDateIni = $_POST[$key];
-				$searchDateend = $_POST[$key . '-fin'];
 
-				if(!empty($searchDateIni)){
-					if(empty($searchDateend))
-						$searchDateend = $searchDateIni;
-					$DocumentDate = DocumentDateQuery::create()
-					->filterByMetadataDate(array("min" => $searchDateIni." 00:00:00", "max" => $searchDateend." 23:59:59"))
-					->findByMetadataId($key);
+		if(is_array($_POST['metaDataDate'])){
+			$paramsExtra['filterDate'] = array();
 
-					foreach ($DocumentDate as $keyb => $valueb) {
-						$idvar = $valueb->getDocumentId();
-						$paramsExtra['filterDate'][$idvar] = $idvar;
+			foreach ($_POST['metaDataDate'] as $key => $value) {
+
+					$searhDate = explode('/', $value['date']);
+
+
+					//$searchDateIni = $_POST[$key];
+					//$searchDateend = $_POST[$key . '-fin'];
+
+					if(!empty($searhDate[0])){
+						if(!isset($searhDate[1]))
+							$searhDate[1] = $searhDate[0];
+						$DocumentDate = DocumentDateQuery::create()
+						->filterByMetadataDate(array("min" => $searhDate[0]." 00:00:00", "max" => $searhDate[1]." 23:59:59"))
+						->findByMetadataId($value['id']);
+
+						foreach ($DocumentDate as $keyb => $valueb) {
+							$idvar = $valueb->getDocumentId();
+							$paramsExtra['filterDate'][$idvar] = $idvar;
+						}
 					}
-				}
+
 			}
+
 		}
+
+		
 
 		if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])) {
 			$paramsExtra['linkToken'] = '';
@@ -292,7 +295,7 @@ class Views {
 		}
 
 
-		if(empty($_POST['title']) && empty($_POST['content']) && empty($_POST['filter-value'])){
+		if(empty($_POST['title']) && !isset($queryContent)){
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '".$_POST['parent']."' in parents";
 		}else{
 			$params['q'] = "mimeType!='application/vnd.google-apps.folder' " . $stringQuery . " and '".$_POST['parent']."' in parents";
@@ -317,7 +320,7 @@ class Views {
 
 		$resultArray['html'] = $htmlData;
 		$resultArray['pageToken'] = $filesList['pageToken'];
-		$resultArray['filterDate'] =	$params['q'];
+		$resultArray['filterDate'] = $paramsExtra;
 		$resultJson = json_encode($resultArray);
 		print $resultJson;
 	}
@@ -551,10 +554,10 @@ class Views {
 		}else{
 			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
 
-			$totalMetada = '<form id="formVariables"><div class="visible-lg-block visible-md-block visible-sm-block"><div id="chagelogin" class="btn-group" data-toggle="buttons">';
+			$totalMetada = '<form id="formVariables"><div class=""><div id="chagelogin" class="btn-group" data-toggle="buttons">';
 
 			foreach ($folderMetadataContentArray as $key => $value) { 
-             $totalMetada .= '<label onclick="loadinput(' . $value['id'] . ');" class="btn btn-danger">
+             $totalMetada .= '<label onclick="loadinput(' . $value['id'] . ');" class="btn btn-danger btn-xs">
                   <input name="' . $value['id'] . '" id="' . $value['id'] . '" autocomplete="off" value="" class="product_change" type="radio">' . $value['name'] . '</label>';
             }
 
@@ -572,8 +575,8 @@ class Views {
                   if(empty($datepiker)){ 
                 $totalMetada .= '<input type="text" class="form-control" placeholder="' . $value['name'] . '" id="' . $value['id'] . '-value" name="' . $value['id'] . '-value">';
                   }else{ 
-                   $totalMetada .= '<input type="date" ' . $datepiker . ' class="form-control" placeholder="Desde" id="' . $value['id'] . '" name="' . $value['name'] . '">
-                   		<input type="date" ' . $datepiker . ' class="form-control" placeholder="Hasta" id="' . $value['id'] . '" name="' . $value['name'] . '">';
+                   $totalMetada .= '<input type="date" ' . $datepiker . ' class="form-control date-meta-doble" placeholder="Desde" id="' . $value['id'] . '" name="' . $value['name'] . '">
+                   		<input type="date" ' . $datepiker . ' class="form-control date-meta-doble" placeholder="Hasta" id="' . $value['id'] . '" name="' . $value['name'] . '">';
                   }
                   $totalMetada .=  '<span class="input-group-btn">
                     <button class="btn btn-success" type="button" onclick="getvalues(this);"><i class="glyphicon glyphicon-plus"></i></button>

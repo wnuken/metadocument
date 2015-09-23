@@ -8,22 +8,19 @@
       <div class="modal-body">
         <div id="AvanceSearhMessages"></div>
         <form id="AvanceSearhForm">
-          
-          
           <div id="AvanceSearhDates">
-            
           </div>
           <!--button type="submit" class="btn btn-default" id="save">Guardar</button-->
           <div class="form-group">
             <div id="text_button" data-toggle="popover"></div>
           </div>
-          <div class="page-header">Otros criterios de busqueda</div>
+          <div class="page-header">Criterios generales de busqueda</div>
           <div class="form-group">
-            <label for="title">Nombre </label>
+            <label for="title">Nombre del archivo</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="Nombre del archivo"> 
           </div>
           <div class="form-group">
-            <label for="title">Otros datos</label>
+            <label for="content">Otros datos</label>
             <input type="text" class="form-control" id="content" name="content" placeholder="Otros datos">
           </div>
         </form>

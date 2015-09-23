@@ -182,6 +182,11 @@ div.metadocument-image img {
 	max-height: 95%;
 }
 
+div.metadata-down{
+	height: 52px;
+	overflow: hidden;
+}
+
 div.metadocument-divider {
 	border-bottom: 1px solid #EEE;
 	width: 100%
@@ -237,4 +242,9 @@ margin: 2px 5px;
 
 .alert-dismissable .close, .alert-dismissible .close {
     right: -1px;
+}
+
+.date-meta-doble{
+	float: left !important;
+	width: 50% !important;
 }
