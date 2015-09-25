@@ -365,8 +365,13 @@ class Views {
 
 		$message .= "<div class='form-group'>
 					<div class='input-group'>
-					<input type='text' class='form-control' id='". $idMeta . "' name='". $idMeta ."' value='". $params['name'] . " - " . $params['type'] . "' readonly>
-					<span class='input-group-btn'><button class='btn btn-danger' type='button' onclick='removeMataDataField(this)'><i class='glyphicon glyphicon-trash'></i></button></span></div>
+					<span class='input-group-btn'>
+					<button class='btn btn-success' type='button' onclick='editMataDataField(this)'><i class='glyphicon glyphicon-edit'></i></button>
+					</span>
+					<input type='text' class='form-control' id='". $idMeta . "' name='". $idMeta ."' value='". $params['name'] . "' >
+					<span class='input-group-btn'>
+					<button class='btn btn-danger' type='button' onclick='removeMataDataField(this)'><i class='glyphicon glyphicon-trash'></i></button>
+					</span></div>
 					</div>";
 
 					/*
@@ -408,8 +413,13 @@ class Views {
 
 				$totalMetada .= "<div class='form-group'>
 					<div class='input-group'>
-					<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $metadada['name'] . " - " . $metadada['type'] . "' readonly>
-					<span class='input-group-btn'><button class='btn btn-danger' type='button' onclick='removeMataDataField(this)'><i class='glyphicon glyphicon-trash'></i></button></span></div>
+					<span class='input-group-btn'>
+					<button class='btn btn-success' type='button' onclick='editMataDataField(this)'><i class='glyphicon glyphicon-edit'></i></button>
+					</span>
+					<input type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $metadada['name'] . "' >
+					<span class='input-group-btn'>
+					<button class='btn btn-danger' type='button' onclick='removeMataDataField(this)'><i class='glyphicon glyphicon-trash'></i></button>
+					</span></div>
 					</div>";
 
 			}
@@ -461,6 +471,54 @@ class Views {
 			$result = json_encode($resultArray);
 			print_r($result);
 		
+	}
+
+	static public function editMetadataField(){
+		$params = $_POST;
+		$metaData = "";
+		$folderMetadataContentArray = array();
+		$Querys = new Querys();
+
+		$FolderMetadataForm = $Querys->FolderMetadataFormbyFolderId($params);
+		if(is_array($FolderMetadataForm) && $FolderMetadataForm['status'] == false){
+			$metaData = "<div>No se encuentra el registro </div>";
+		}else{
+			$folderMetadataContentArray = json_decode($FolderMetadataForm->getFolderParams(), true);
+
+			if(isset($folderMetadataContentArray[$params['metaid']])){
+				$nameData = $folderMetadataContentArray[$params['metaid']]['name'];
+				$folderMetadataContentArray[$params['metaid']]['name'] = $params['name'];
+				
+				if($nameData != $params['name']){
+					$content = json_encode($folderMetadataContentArray);
+					$FolderMetadataForm->setFolderParams($content);
+					$FolderMetadataForm->save();
+				}
+				
+			}
+
+			if($nameData != $params['name']){
+				$metaData =  "<div class='alert alert-success alert-dismissible' role='alert'>
+				<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+					<span aria-hidden='true'>&times;</span></button>El MetaDato <strong>" . $nameData . "</strong> ahora se llama: <strong>" . $params['name'] . "<strong></div>";
+				}else{
+					$metaData =  "<div class='alert alert-info alert-dismissible' role='alert'>
+				<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+					<span aria-hidden='true'>&times;</span></button>Es posible editar el MetaDato <strong>" . $params['name'] . "</strong>  escribiendo un nuevo valor</div>";
+				}
+
+			
+		}
+
+
+		$resultArray = array(
+				"status" => true,
+				"message" => $metaData
+					);
+
+		
+			$result = json_encode($resultArray);
+			print_r($result);
 	}
 
 	static public function getMetadataForm(){
@@ -575,8 +633,8 @@ class Views {
                   if(empty($datepiker)){ 
                 $totalMetada .= '<input type="text" class="form-control" placeholder="' . $value['name'] . '" id="' . $value['id'] . '-value" name="' . $value['id'] . '-value">';
                   }else{ 
-                   $totalMetada .= '<input type="date" ' . $datepiker . ' class="form-control date-meta-doble" placeholder="Desde" id="' . $value['id'] . '" name="' . $value['name'] . '">
-                   		<input type="date" ' . $datepiker . ' class="form-control date-meta-doble" placeholder="Hasta" id="' . $value['id'] . '" name="' . $value['name'] . '">';
+                   $totalMetada .= '<input type="date" ' . $datepiker . ' class="form-control date-meta-doble" placeholder="Igual o Desde" id="' . $value['id'] . '" name="' . $value['name'] . '">
+                   		<input type="date" ' . $datepiker . ' class="form-control date-meta-doble" placeholder="Igual o Hasta" id="' . $value['id'] . '-end" name="' . $value['name'] . '-end">';
                   }
                   $totalMetada .=  '<span class="input-group-btn">
                     <button class="btn btn-success" type="button" onclick="getvalues(this);"><i class="glyphicon glyphicon-plus"></i></button>

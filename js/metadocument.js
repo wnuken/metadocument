@@ -56,7 +56,7 @@ $.fn.GSearh = function(params){
 				$thet.html('');
 				$thet.html(response).fadeIn();
 			});
-            // window.location=response.url;
+            $seahfrom.addClass('hidden-xs');
         },
         error: function() {
         	var message = "Rayos parece que no puedo validar los datos";
@@ -558,6 +558,40 @@ function removeMataDataField(element){
 
 };
 
+function editMataDataField(element){
+	var $that = $(element);
+
+	var $parentInput = $that.parent().parent().parent();
+	var $parentElement = $that.parent().parent();
+	// $parentInput.remove();
+
+	var params = {
+			url: "edit-metadata-field",
+			data: {
+				metaid : $('input', $parentElement).attr('id'),
+				id : $('div#addFolder').attr('data-parent'),
+				name : $('input', $parentElement).val()
+			}
+		};
+
+		console.log(params);
+
+	$.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'json',
+        data: params.data,
+        async: true,
+        success: function(response) {
+          	$(response.message).appendTo($('div#createFormMessages', $createFormBody));
+        },
+        error: function() {
+            
+        }
+    });
+
+};
+
 function loadDocumentId(id){
 	idDocument = id;
 };
@@ -725,7 +759,9 @@ function getvalues(element){
 
 		$thet = $(this);
 
-		attrId = $thet.attr('id');
+		if(index == 0){
+			attrId = $thet.attr('id');
+		}
 		var attrType = $thet.attr('type');
 		var attrPlaceholder = $thet.attr('placeholder');
 		var inputVal = $thet.val();
@@ -873,6 +909,11 @@ $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 		}
 	});
 });
+
+function searchFormVisible(){
+	$seahfrom.removeClass('hidden-xs');
+};
+
 
 
 

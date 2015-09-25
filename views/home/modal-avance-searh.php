@@ -20,8 +20,8 @@
             <input type="text" class="form-control" id="title" name="title" placeholder="Nombre del archivo"> 
           </div>
           <div class="form-group">
-            <label for="content">Otros datos</label>
-            <input type="text" class="form-control" id="content" name="content" placeholder="Otros datos">
+            <label for="content">MetaDatos</label>
+            <input type="text" class="form-control" id="content" name="content" placeholder="MetaDatos">
           </div>
         </form>
       </div>

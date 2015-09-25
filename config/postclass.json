@@ -9,6 +9,7 @@
         "create-form",
         "get-metadata-fields",
         "remove-metadata-field",
+        "edit-metadata-field",
         "get-metadata-form",
         "save-metada",
         "setpropeties",

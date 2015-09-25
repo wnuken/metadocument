@@ -53,10 +53,10 @@ if(is_array($filesList)){
 					<div class="row">
 						<div class='col-xs-12 text-center metadata-down'>
 							<small>Descargas</small>
-							<div class="">
+							<div class="element-center">
 								<?php
 								foreach($file['exportLinks'] as $keyb => $exportlink){ 
-									print '<div style="float: left;"><a href="' . $exportlink . '"><img width="32" src="./img/icon/' . $keyb . '"></a> </div>';
+									print '<div style="float: left;"><a href="' . $exportlink . '"><img title="'.$keyb.'" width="32" src="./img/icon/' . $keyb . '"></a> </div>';
 								} ?>
 							</div>
 							
