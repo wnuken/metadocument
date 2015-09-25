@@ -259,30 +259,51 @@ class Views {
 
 		if(is_array($_POST['metaDataDate'])){
 			$paramsExtra['filterDate'] = array();
-
 			foreach ($_POST['metaDataDate'] as $key => $value) {
+				$searhDate = explode('/', $value['date']);
+				if(!empty($searhDate[0])){
+					if(!isset($searhDate[1]))
+						$searhDate[1] = $searhDate[0];
+					$DocumentDate = DocumentDateQuery::create()
+					->filterByMetadataDate(array("min" => $searhDate[0]." 00:00:00", "max" => $searhDate[1]." 23:59:59"))
+					->findByMetadataId($value['id']);
 
-					$searhDate = explode('/', $value['date']);
-
-
-					//$searchDateIni = $_POST[$key];
-					//$searchDateend = $_POST[$key . '-fin'];
-
-					if(!empty($searhDate[0])){
-						if(!isset($searhDate[1]))
-							$searhDate[1] = $searhDate[0];
-						$DocumentDate = DocumentDateQuery::create()
-						->filterByMetadataDate(array("min" => $searhDate[0]." 00:00:00", "max" => $searhDate[1]." 23:59:59"))
-						->findByMetadataId($value['id']);
-
-						foreach ($DocumentDate as $keyb => $valueb) {
-							$idvar = $valueb->getDocumentId();
-							$paramsExtra['filterDate'][$idvar] = $idvar;
-						}
+					foreach ($DocumentDate as $keyb => $valueb) {
+						$idvar = $valueb->getDocumentId();
+						$paramsExtra['filterDate'][$idvar] = $idvar;
 					}
-
+				}
 			}
+		}
 
+		if(is_array($_POST['metaDataNumber'])){
+			$paramsExtra['filterNumber'] = array();
+			foreach ($_POST['metaDataNumber'] as $key => $value) {
+				$searhNumber = explode('/', $value['number']);
+				if(!empty($searhNumber[0])){
+					if(!isset($searhNumber[1]))
+						$searhNumber[1] = $searhNumber[0];
+					$DocumentNumber = DocumentNumberQuery::create()
+					->filterByMetadataNumber(array("min" => $searhNumber[0], "max" => $searhNumber[1]))
+					->findByMetadataId($value['id']);
+
+					foreach ($DocumentNumber as $keyb => $valueb) {
+						$idvar = $valueb->getDocumentId();
+						$paramsExtra['filterNumber'][$idvar] = $idvar;
+					}
+				}
+			}
+		}
+
+		if(isset($paramsExtra['filterDate']) && isset($paramsExtra['filterNumber'])){
+			$paramNewSearch = array();
+			foreach ($paramsExtra['filterDate'] as $key => $value) {
+				if(in_array($value, $paramsExtra['filterNumber']))
+				$paramNewSearch[$key] = $value;
+			}
+			$paramsExtra['filterDate'] = $paramNewSearch;
+		}else if(isset($paramsExtra['filterNumber'])){
+			$paramsExtra['filterDate'] = $paramsExtra['filterNumber'];
 		}
 
 		
@@ -615,8 +636,17 @@ class Views {
 			$totalMetada = '<form id="formVariables"><div class=""><div id="chagelogin" class="btn-group" data-toggle="buttons">';
 
 			foreach ($folderMetadataContentArray as $key => $value) { 
+				$glyphicon = 'glyphicon glyphicon-align-justify';
+
+				if($value['type'] == 'number'){
+					$glyphicon = 'glyphicon glyphicon-tags';
+				}else if($value['type'] == 'date'){
+					$glyphicon = 'glyphicon glyphicon-calendar';
+				}
+
+
              $totalMetada .= '<label onclick="loadinput(' . $value['id'] . ');" class="btn btn-danger btn-xs">
-                  <input name="' . $value['id'] . '" id="' . $value['id'] . '" autocomplete="off" value="" class="product_change" type="radio">' . $value['name'] . '</label>';
+                  <input name="' . $value['id'] . '" id="' . $value['id'] . '" autocomplete="off" value="" class="product_change" type="radio"><i class="'.$glyphicon.'"></i> ' . $value['name'] . '</label>';
             }
 
             $totalMetada .= '</div></div>';
@@ -630,11 +660,14 @@ class Views {
                 }
 
                 $totalMetada .= '<div class="input-group" id="' . $value['id'] . '-group" style="display:none;">';
-                  if(empty($datepiker)){ 
+                  if($value['type'] == 'text'){ 
                 $totalMetada .= '<input type="text" class="form-control" placeholder="' . $value['name'] . '" id="' . $value['id'] . '-value" name="' . $value['id'] . '-value">';
-                  }else{ 
+                  }else if($value['type'] == 'date'){ 
                    $totalMetada .= '<input type="date" ' . $datepiker . ' class="form-control date-meta-doble" placeholder="Igual o Desde" id="' . $value['id'] . '" name="' . $value['name'] . '">
                    		<input type="date" ' . $datepiker . ' class="form-control date-meta-doble" placeholder="Igual o Hasta" id="' . $value['id'] . '-end" name="' . $value['name'] . '-end">';
+                  }else if($value['type'] == 'number'){	
+                  	 $totalMetada .= '<input type="number" class="form-control date-meta-doble" placeholder="Igual o Desde" id="' . $value['id'] . '" name="' . $value['name'] . '">
+                   		<input type="number" class="form-control date-meta-doble" placeholder="Igual o Hasta" id="' . $value['id'] . '-end" name="' . $value['name'] . '-end">';
                   }
                   $totalMetada .=  '<span class="input-group-btn">
                     <button class="btn btn-success" type="button" onclick="getvalues(this);"><i class="glyphicon glyphicon-plus"></i></button>
@@ -713,12 +746,6 @@ class Views {
 			// $fileMetadataContentArray = json_decode($DocumentMetadata->getDocumentParams(), true);
 		}
 
-
-		/*if(file_exists($fileMetadataJson)){
-			$fileMetadataContent = file_get_contents($fileMetadataJson, FILE_USE_INCLUDE_PATH);
-			$fileMetadataContentArray = json_decode($fileMetadataContent, true);
-		}*/
-
 		foreach ($params as $key => $value) {
 			if(is_numeric($key)){
 				$fileMetadataContentArray[$key] = array(
@@ -729,13 +756,23 @@ class Views {
 
 				$dateCompare = DateTime::createFromFormat($format, $params[$key]);
 				if($dateCompare && $dateCompare->format($format) == $params[$key]){
-					$DocumentDate = new DocumentDate();
+					$DocumentDate = DocumentDateQuery::create()->filterByDocumentId($params['element'])->findOneByMetaDataId($key);
+					if(empty($DocumentDate))
+						$DocumentDate = new DocumentDate();
 					$DocumentDate->setDocumentId($params['element']);
 					$DocumentDate->setMetadataId($key);
 					$DocumentDate->setMetadataDate($params[$key]);
 					$resultArray['savemeta'][] = $DocumentDate->save();
+				}else if(is_numeric($params[$key])){
+					$DocumentNumber = DocumentNumberQuery::create()->filterByDocumentId($params['element'])->findOneByMetaDataId($key);
+					if(empty($DocumentNumber))
+						$DocumentNumber = new DocumentNumber();
+					$DocumentNumber->setDocumentId($params['element']);
+					$DocumentNumber->setMetadataId($key);
+					$DocumentNumber->setMetadataNumber($params[$key]);
+					$resultArray['savemeta'][] = $DocumentNumber->save();
 				}else{
-					 $resultArray['savemeta'][] = 'nada';
+					 $resultArray['savemeta'][] = 2;
 				}
 			}
 		}

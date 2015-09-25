@@ -119,5 +119,6 @@ class Querys {
         }
         return $result;
     }
+
 }
 

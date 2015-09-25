@@ -84,5 +84,22 @@ CREATE TABLE `document_date`
     INDEX `metadata_id` (`metadata_id`)
 ) ENGINE=InnoDB;
 
+-- ---------------------------------------------------------------------
+-- document_number
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `document_number`;
+
+CREATE TABLE `document_number`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `document_id` VARCHAR(255),
+    `metadata_id` VARCHAR(30),
+    `metadata_number` DOUBLE,
+    PRIMARY KEY (`id`),
+    INDEX `document_id` (`document_id`),
+    INDEX `metadata_id` (`metadata_id`)
+) ENGINE=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

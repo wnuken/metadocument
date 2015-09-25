@@ -45,4 +45,17 @@
     </index>
   </table>
 
+  <table name="document_number" idMethod="native" phpName="DocumentNumber">
+    <column name="id" phpName="Id" type="INTEGER" primaryKey="true" required="true" autoIncrement="true"/>
+    <column name="document_id" phpName="DocumentId" type="VARCHAR" size="255"/>
+    <column name="metadata_id" phpName="MetadataId" type="VARCHAR" size="30"/>
+    <column name="metadata_number" phpName="MetadataNumber" type="DOUBLE" />
+    <index name="document_id">
+        <index-column name="document_id"/>
+    </index>
+    <index name="metadata_id">
+      <index-column name="metadata_id"/>
+    </index>
+  </table>
+
 </database>
