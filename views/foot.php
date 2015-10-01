@@ -5,6 +5,9 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/bootstrap-datepicker.min.js"></script>
 <script src="js/bootstrap-datepicker.es.min.js"></script>
+<script src="js/fileinput.js"></script>
+
+
 <!-- AngularJS -->
 <!--script src="js/angularjs-min-1.2.js"></script-->
 

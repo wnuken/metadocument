@@ -231,8 +231,6 @@ class Views {
 			}
 		}
 
-		
-
 		if(!empty($_POST['title'])){
 				$stringQuery .= " and title contains '" . $_POST['title'] . "'";
 		}
@@ -250,7 +248,6 @@ class Views {
 				}else{
 					$stringQuery .= " or fullText contains '" . $value . "'";
 				}
-				
 			}
 			$stringQuery .= ')';
 		}
@@ -351,8 +348,6 @@ class Views {
 		$register = $General->registerUser($_POST);
 		// include './views/register/finish.php';
 	}
-
-
 
 	static public function destroy(){
 		include './views/destroy.php';
@@ -857,14 +852,46 @@ class Views {
 	}
 
 	static public function UploadFile(){
-				/*$General = new General();
-				$result = $General->insertFile($_POST);*/
-				$result = json_encode($_FILES);
+		$General = new General();
 
-				print_r($result);
+		$paramsNewFile = $_FILES['filename'];
+		$paramsNewFile['parentId'] = $_POST['parentId'];
 
+
+		/*	$resultArray['filterDate'] = $paramsNewFile;
+			$resultJson = json_encode($resultArray);*/
+		if($paramsNewFile['error'] == 0){
+			$result = $General->insertFile($paramsNewFile);
+
+			$path = $_POST['parentId'];
+
+			if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])){
+				$arrayAccessToken = json_decode($_SESSION['access_token'], true);
+				$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
+				$paramsExtra['linkToken'] = '';
+			}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])){
+				$arrayServiceToken = json_decode($_SESSION['service_token'], true);
+				$paramsExtra['linkToken'] = '&access_token=' . $arrayServiceToken['access_token'];
+				$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
 			}
 
-			
+			$filesList = $General->getFilesArray($params, $paramsExtra);
 
-		}	
+			ob_start(); # open buffer
+			include( './views/home/general-searh-page.php' );
+			$htmlData = ob_get_contents();
+			ob_end_clean(); # close buffer
+
+			$resultArray['html'] = $htmlData;
+			$resultArray['pageToken'] = $filesList['pageToken'];
+			$resultArray['filterDate'] = $result;
+			$resultJson = json_encode($resultArray);
+		}else{
+			$resultJson = json_encode($paramsNewFile);
+		}
+		print $resultJson;
+	}
+
+
+	}	
+

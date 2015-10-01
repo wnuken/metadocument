@@ -12,9 +12,10 @@
     
     <!-- styles -->
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/fileinput.css" />
     
     <!-- Internal -->
     <link rel="stylesheet" href="css/metadocument.css">

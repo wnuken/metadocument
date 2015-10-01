@@ -60,6 +60,9 @@ print_r('</pre>');-*/
 								<button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-open"></i> </button>
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFormModal">
 								<i class="glyphicon glyphicon-indent-left"></i> </button-->
+								 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalUploadFiles">
+                    <i class="glyphicon glyphicon-cloud-upload"></i><small class="hidden-xs hidden-sm"> Subir archivos</small>
+                </button>
 							</div>
 
 
@@ -101,6 +104,9 @@ print_r('</pre>');-*/
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFormModal">
 								<i class="glyphicon glyphicon-indent-left"></i> Metadata
 								</button-->
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalUploadFiles">
+                    <i class="glyphicon glyphicon-cloud-upload"></i><small class="hidden-xs hidden-sm"> Subir archivos</small>
+                </button>
 							</div>
 
 
@@ -149,9 +155,4 @@ print_r('</pre>');-*/
 	<div class="row">
 		<?php require_once('./views/home/modal-upload-files.php'); ?>		
 	</div>
-	<div class="row">
-		<?php // require_once('./views/home/modal-detail-file.php');  ?>		
-	</div>
-
-
 </div>

@@ -181,26 +181,33 @@
 			return $result;
 		}
 
-		public function insertFile($title, $description, $parentId, $mimeType, $filename) {
+		public function insertFile($params) {
+			
+			
 			$file = new Google_Service_Drive_DriveFile();
-			$file->setTitle($title);
-			$file->setDescription($description);
-			$file->setMimeType($mimeType);
+			$file->setTitle($params['name']);
+			// $file->setDescription($description);
+			$file->setMimeType($params['type']);
 
   // Set the parent folder.
-			if ($parentId != null) {
+			if (isset($params['parentId'])) {
 				$parent = new Google_Service_Drive_ParentReference();
-				$parent->setId($parentId);
+				$parent->setId($params['parentId']);
 				$file->setParents(array($parent));
 			}
 
 			try {
-				$data = file_get_contents($filename);
+				$createdFile = "";
+				if(file_exists($params['tmp_name'])){
+					$data = file_get_contents($params['tmp_name'], FILE_USE_INCLUDE_PATH);
 
 				$createdFile = $this->service->files->insert($file, array(
 					'data' => $data,
-					'mimeType' => $mimeType,
+					'mimeType' => $params['type'],
+					'uploadType' => 'multipart'
 					));
+				}
+				
 
     // Uncomment the following line to print the File ID
     // print 'File ID: %s' % $createdFile->getId();

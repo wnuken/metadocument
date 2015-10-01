@@ -6,18 +6,20 @@
         <h4 class="modal-title" id="myModalLabel">Subir archivos</h4>
       </div>
       <div class="modal-body">
-      <div id="UploadFilesMessages"></div>
-      <form id="avanceSearhForm">
+        <div id="UploadFilesMessages"></div>
+        <form id="uploadFileForm" enctype="multipart/form-data">
           <div class="form-group">
-            <label for="title">Subir</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Nombre de carpeta">
+            <label for="filename">Archivo</label> <!-- multiple="true" -->
+           
+              <!--input type="file"  class="file" id="filename" name="filename" placeholder="Archivo"-->
+            <input id="filename" name="filename" type="file" class="file" data-show-upload="false" data-show-caption="true">
           </div>
-          <!--button type="submit" class="btn btn-default" id="save">Guardar</button-->
+          <input type="hidden"  id="parentId" name="parentId" value="<?php print $filesList['parents']; ?>">
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" id="UploadFilesButton">Crear</button>
+        <button type="button" data-loading-text="Subiendo..." class="btn btn-primary" id="UploadFilesButton">Subir</button>
       </div>
     </div>
   </div>

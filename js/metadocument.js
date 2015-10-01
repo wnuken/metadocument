@@ -6,7 +6,6 @@ var $seahfrom = $('form#drivesearh');
 var $generalFolder = $('div#generalfolder')
 var $metaDAtaForm = $('form#metaDAtaForm');
 var $multielemt = $('div.multielemt');
-var $uploadFileForm = $('form#uploadFileForm');
 var $registerform = $('form#register');
 var documentId = '';
 var descriptionText = '';
@@ -105,31 +104,6 @@ $.fn.setPropeties = function(params){
 		}
 	});
 };
-
-
-$.fn.uploadFile = function(params){
-	var $that = $(this);
-
-	var data = new FormData($that[0]);
-
-	$.ajax({
-		type: "POST",
-		url: params.url,
-		dataType: 'json',
-		data: data,
-		cache: false,
-		contentType: false,
-		processData: false,
-		success: function(response) {
-			console.log(response);
-		},
-		error: function() {
-			var message = "Rayos parece que no puedo validar los datos";
-			console.log(message);
-		}
-	});
-};
-
 
 $('input.product_change', $chagelogin).on('change', function(){
 	var $that = $(this);
@@ -330,16 +304,6 @@ $('div.toelement', $multielemt).on('click', function(){
 		$thatSib = $that.siblings('div');
 		$thatSib.fadeIn('slow');
 	});
-});
-
-
-$('button#save', $uploadFileForm).on('click', function(e){
-	e.preventDefault();
-	var params = {
-		"url" : "uploadfile"
-	}
-	console.log(params);
-	$uploadFileForm.uploadFile(params);
 });
 
 $('.btn-file').on('change', function() {
@@ -886,83 +850,56 @@ function searchFormVisible(){
 	$seahfrom.removeClass('hidden-xs');
 };
 
+var $modalUploadFiles = $('div#modalUploadFiles');
+var $uploadFileForm = $('form#uploadFileForm');
+var $UploadFilesButton = $('button#UploadFilesButton', $modalUploadFiles);
+var $UploadFilesMessages = $('div#UploadFilesMessages', $modalUploadFiles);
 
 
-
-/*$('input#fecha-ini', $modalAvanceSearh).on('change', function(){
-	$('div.input-metadaterange input').each(function (){
-        $(this).datepicker("clearDates");
-    });
-});*/
-
-    
-
-
-/*var $metaDataModal = $('div#metaDataModal');
-var $metaDataBody = $'div#metaDataBody', $metaDataModal);
-var $metaDataForm = $('form#metaDataForm', $metaDataBody);*/
-
-
-
-/* Fin aprobado */
-
-
-
-
-/*
-
-
-$('button#save', $metaDataModal).on('click',function(){
-	var dataform = $metaDataForm.serialize();
-	//var CKedit = CKEDITOR.instances.editor1.getData();
-	console.log(CKedit);
-
-	var data = {
-		'description': $('input#description', $metaDataForm).val(),
-		'text': 'CKedit',
-		'fileId': $('input#fileId', $metaDataForm).val()
-	};
-
-	console.log(data);
-
-	var params = {
-		url : 'metadata-save'
-	};
-	$('#progress').css({'display':'block'});
+$.fn.uploadFile = function(params){
+	var $that = $(this);
+	var data = new FormData($that[0]);
 
 	$.ajax({
 		type: "POST",
 		url: params.url,
 		dataType: 'json',
 		data: data,
-		async: true,
+		cache: false,
+		contentType: false,
+		processData: false,
 		success: function(response) {
-			$('#progress').css({'display':'none'});
-			var AddFoldermessageSuccess = '<div class="alert alert-success alert-dismissible" role="alert">' +
-			'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-			'<span aria-hidden="true">&times;</span></button><strong>Se guardaron los metadatos correctamente</strong></div>';
-			$(AddFoldermessageSuccess).appendTo($('div#MetaDataError'));
+			if(response.filterDate == ''){
+				var divAppend = '<div class="alert alert-info alert-dismissible fade in meta-text" role="alert">' +
+					'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>' +
+					'<strong>Ocurrio un error al subir el archivo, intenta nuevamente</strong></div>';
+				$UploadFilesMessages.append(divAppend);
+				$UploadFilesButton.button('reset');
+			}else{
+				$UploadFilesButton.button('reset');
+				$modalUploadFiles.modal('hide');
+				$('div#addFolder').attr('data-token', response.pageToken);
+				$('div#generalsearhresult').fadeOut("slow", function(){
+					var $thet = $(this);
+					$thet.html('');
+					$thet.html(response.html).fadeIn();
+				});
+			}
 		},
 		error: function() {
-			var AddFoldermessageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
-			'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
-			'<span aria-hidden="true">&times;</span></button><strong>Alerta!</strong> '+ errorMessages.meta_data_error + ' </div>';
-			$(AddFoldermessageError).appendTo($('div#MetaDataError'));
+			var message = "Rayos parece que no puedo validar los datos";
+			console.log(message);
 		}
 	});
+};
 
-});*/
-
-
-
-
-
-
-/*$('button#save', $metaDAtaForm).on('click', function(e){
+$UploadFilesButton.on('click', function(e){
+	$that = $(this);
 	e.preventDefault();
+	$that.button('loading');
 	var params = {
-		"url" : "setpropeties"
+		"url" : "uploadfile"
 	}
 	console.log(params);
-	$metaDAtaForm.setPropeties(params);
-});*/
+	$uploadFileForm.uploadFile(params);
+});
