@@ -29,7 +29,7 @@
 						</select>
 					</div>
 					
-					<button type="button" class="btn btn-primary" id="add">Agregar Campo</button>
+					<button type="button" class="btn btn-primary" id="add"><i class="glyphicon glyphicon-import"></i> Agregar Campo</button>
 				</form>
 
 				<h3>Metadatos</h3>
@@ -40,7 +40,7 @@
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i> Cerrar</button>
 				<!--button type="button" class="btn btn-primary" id="savedata">Guardar cambios</button-->
 			</div>
 		</div>

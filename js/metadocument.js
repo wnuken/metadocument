@@ -55,7 +55,7 @@ $.fn.GSearh = function(params){
 				$thet.html('');
 				$thet.html(response).fadeIn();
 			});
-            $seahfrom.addClass('hidden-xs');
+            
         },
         error: function() {
         	var message = "Rayos parece que no puedo validar los datos";
@@ -159,6 +159,7 @@ $seahfrom.submit(function(e){
 	var params = {
 		url : 'searh'
 	};
+	$seahfrom.addClass('hidden-xs');
 	if(valueSearh != ''){
 		$('#progress').css({'display':'block'});
 		$that.GSearh(params);	
@@ -700,7 +701,7 @@ function AvanceSearhgetForm() {
 //$AvanceSearhForm = $('form#AvanceSearhForm');
 
 function loadinput(idElement){
-	$('div.input-group').css('display', 'none');
+	$('div.input-group', $AvanceSearhForm).css('display', 'none');
 	$('div#' + idElement + '-group').css('display', '');
 	if(idElement == 'all'){
    		$('input#uses', $AvanceSearhForm).attr('value', '0');

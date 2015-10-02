@@ -18,8 +18,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" data-loading-text="Subiendo..." class="btn btn-primary" id="UploadFilesButton">Subir</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i> Cerrar</button>
+        <button type="button" data-loading-text="Subiendo..." class="btn btn-primary" id="UploadFilesButton"><i class="glyphicon glyphicon-cloud-upload"></i> Subir</button>
       </div>
     </div>
   </div>

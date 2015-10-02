@@ -575,7 +575,7 @@ class Views {
 					$totalMetada .= "<div class='form-group'>
 					<label for='id'>". $metadada['name'] ."</label>
 					<div class='input-group'>
-					<input " . $datepicker . " type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value=''>
+					<input " . $datepicker . " type='". $metadada['type'] . "' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value=''>
 					<span class='input-group-btn'><button class='btn btn-warning' type='button' onclick='fieldMetadata(this)'><i class='glyphicon glyphicon-remove'></i></button></span></div>
 					<input type='hidden' class='form-control' id='". $metadada['id'] . "-name' name='". $metadada['id'] ."-name' value='". $metadada['name'] ."'>
 					</div>";
@@ -596,7 +596,7 @@ class Views {
 					$totalMetada .= "<div class='form-group'>
 					<label for='id'>". $metadada['name'] ."</label>
 					<div class='input-group'>
-					<input " . $datepicker . " type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $fileMetadataContentArray[$metadada['id']]['value'] . "'>
+					<input " . $datepicker . " type='". $metadada['type'] . "' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $fileMetadataContentArray[$metadada['id']]['value'] . "'>
 					<span class='input-group-btn'><button class='btn btn-warning' type='button' onclick='fieldMetadata(this)'><i class='glyphicon glyphicon-remove'></i></button></span></div>
 					<input type='hidden' class='form-control' id='". $metadada['id'] . "-name' name='". $metadada['id'] ."-name' value='". $metadada['name'] ."'>
 					</div>";
@@ -616,7 +616,7 @@ class Views {
 						$totalMetada .= "<div class='form-group'>
 						<label for='id'>". $metadada['name'] ."</label>
 						<div class='input-group'>
-						<input " . $datepicker . " type='text' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $metadada['value'] . "'>
+						<input " . $datepicker . " type='". $metadada['type'] . "' class='form-control' id='". $metadada['id'] . "' name='". $metadada['id'] ."' value='". $metadada['value'] . "'>
 						<span class='input-group-btn'><button class='btn btn-danger' type='button' onclick='fieldMetadata(this)'><i class='glyphicon glyphicon-trash'></i></button></span></div>
 						<input type='hidden' class='form-control' id='". $metadada['id'] . "-name' name='". $metadada['id'] ."-name' value='". $metadada['name'] ."'>
 						</div>";

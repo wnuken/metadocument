@@ -8,7 +8,7 @@
       <div class="modal-body" id="DetailFileBody">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i> Cerrar</button>
         <!--button type="button" class="btn btn-primary" id="DetailFileButton">Crear</button-->
       </div>
     </div>

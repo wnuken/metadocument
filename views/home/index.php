@@ -21,9 +21,9 @@ print_r('</pre>');-*/
 				<div class="panel-heading">
 					<div id="addFolder" data-parent="<?php print $filesList['parents']; ?>"	data-token="<?php print $filesList['pageToken']; ?>"></div>
 					
-					<div class="btn-group btn-group-xs visible-xs" style="height: 18px;" role="group" aria-label="...">
+					<div class="btn-group btn-group-sm visible-xs" style="height: 25px;" role="group" aria-label="...">
 
-						<div class="btn-group btn-group-xs" role="group">
+						<div class="btn-group btn-group-sm" role="group">
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Explorar
 								<span class="caret"></span>

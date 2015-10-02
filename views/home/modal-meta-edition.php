@@ -12,8 +12,8 @@
 				</form>	
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-				<button type="button" data-loading-text="Guardando..." class="btn btn-primary" id="savedata">Guardar</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i> Cancelar</button>
+				<button type="button" data-loading-text="Guardando..." class="btn btn-primary" id="savedata"><i class="glyphicon glyphicon-floppy-disk"></i> Guardar</button>
 			</div>
 		</div>
 	</div>

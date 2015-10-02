@@ -26,7 +26,7 @@
         </form>
       </div>
       <div class="modal-footer" style="clear: both;">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i> Cerrar</button>
         <button type="button" class="btn btn-primary" id="AvanceSearhButton"><i class="glyphicon glyphicon-search"></i> Buscar</button>
       </div>
     </div>
