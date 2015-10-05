@@ -12,6 +12,6 @@
     <button type="button" class="btn btn-default" data-meta-close="left"><i class="glyphicon glyphicon-remove-circle"></i> Cerrar</button>
     <button type="button" class="btn btn-primary" id="leftNewFolderButton"><i class="glyphicon glyphicon-floppy-disk"></i> Crear</button>
   </div>
-  <div id="leftNewFolderMessages"></div>
+  <div class="metadocument-messages" id="leftNewFolderMessages"></div>
   <div class="left-menu-back"></div>
 </div>

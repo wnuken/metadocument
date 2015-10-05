@@ -379,7 +379,7 @@ class Views {
 		$FolderMetadataForm->setFolderParams($content);
 		$FolderMetadataForm->save();
 
-		$message .= "<div class='form-group'>
+		$message .= "<div class='form-group-meta'>
 					<div class='input-group'>
 					<span class='input-group-btn'>
 					<button class='btn btn-success' type='button' onclick='editMataDataField(this)'><i class='glyphicon glyphicon-edit'></i></button>
@@ -427,7 +427,7 @@ class Views {
 				<span aria-hidden='true'>&times;</span></button><strong> Nombre: </strong>". $metadada['name'] . "<strong> Tipo:</strong>". $metadada['type'] . "</div>";
 */
 
-				$totalMetada .= "<div class='form-group'>
+				$totalMetada .= "<div class='form-group-meta'>
 					<div class='input-group'>
 					<span class='input-group-btn'>
 					<button class='btn btn-success' type='button' onclick='editMataDataField(this)'><i class='glyphicon glyphicon-edit'></i></button>

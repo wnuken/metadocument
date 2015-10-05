@@ -1,7 +1,7 @@
 
 <div  style="background: #eee;
 width: 100%;
-border-bottom: 2px solid #428bca; position:fixed;z-index:10; left: 0px;
+border-bottom: 2px solid #428bca; position:fixed;z-index:20; left: 0px;
 top: 0px; height: 53px;">
 <div class="btn-group btn-group" style="top: 2px;
 left: 3px;" role="group" aria-label="...">
@@ -18,7 +18,7 @@ left: 3px;" role="group" aria-label="...">
         <i class="glyphicon glyphicon-folder-open"></i> + <small class="hidden-xs hidden-sm"> Nueva </small>
     </button-->
 
-    <button type="button" class="btn btn-danger" data-meta-toggle="left" data-target="leftCreateForm">
+    <button type="button" class="btn btn-danger" data-meta-toggle="left" data-target="leftCreateMeta">
         <i class="glyphicon glyphicon-indent-left"></i><small class="hidden-xs hidden-sm"> Metadatos</small>
     </button>
 

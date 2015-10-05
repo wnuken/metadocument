@@ -427,7 +427,7 @@ $(window).scroll(function(){
 	}
 });*/
 
-$createFormModal.on('show.bs.modal', function () {
+/*$createFormModal.on('show.bs.modal', function () {
 
 	var idFolder = $('div#addFolder').attr('data-parent');
 	$('input#id', $createForm).val(idFolder);
@@ -456,7 +456,7 @@ $createFormModal.on('show.bs.modal', function () {
 
 $createFormModal.on('hidden.bs.modal', function () {
 	$('div#createFormMessages', $createFormBody).html('');
-});
+});*/
 
 
 $('button#add', $createForm).on('click', function(){
@@ -935,10 +935,45 @@ var $leftNewFolderForm = $('form#leftNewFolderForm', $leftNewFolderBody);
 var $leftNewFolderMessages = $('div#leftNewFolderMessages', $leftNewFolder);
 var $leftNewFolderButton = $('button#leftNewFolderButton', $leftNewFolder);
 
+var $leftCreateMeta = $('div#leftCreateMeta');
+var $leftCreateMetaBody = $('div#leftCreateMetaBody', $leftCreateMeta);
+var $leftCreateMetaForm = $('form#leftCreateMetaForm', $leftCreateMetaBody);
+var $leftCreateMetaMessages = $('div#leftCreateMetaMessages', $leftCreateMeta);
+var $leftCreateMetaButton = $('button#leftCreateMetaButton', $leftCreateMeta);
+
+
+$.fn.getMetaDataFields = function(){
+	var idFolder = $('div#addFolder').attr('data-parent');
+	var params = {
+			url: "get-metadata-fields",
+			data: {
+				id : idFolder
+			}
+		};
+	$.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'json',
+        data: params.data,
+        async: true,
+        success: function(response) {
+        		$leftCreateMetaMessages.html(response.message);
+        },
+        error: function() {
+            
+        }
+    });
+};
+
+
+
 $('button[data-meta-toggle=left]').on('click', function(){
 	var $that = $(this);
 	var targetId = $that.attr('data-target');
 	// $('div.left-menu').addClass('hidden-element');
+	if(targetId == 'leftCreateMeta'){
+		$().getMetaDataFields();
+	}
 
 	$('div.left-menu').animate({
 		left: '-250px'}, 
@@ -1013,5 +1048,47 @@ $leftNewFolderButton.on('click', function(){
 		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
 		'<span aria-hidden="true">&times;</span></button><strong>Error!</strong> La carpeta debe tener un nombre</div>';
 		$(messageError).appendTo($leftNewFolderMessages);
+	}
+});
+
+
+$leftCreateMetaButton.on('click', function(){
+	$that = $(this);
+	$that.button('loading');
+	var valuesForm = $leftCreateMetaForm.serialize();
+	var nameField = $('input#name', $leftCreateMetaForm).val();
+
+	var params = {
+		url: "create-form",
+		data: valuesForm
+	};
+
+	console.log(valuesForm);
+
+	if(nameField != ''){
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'json',
+		data: params.data,
+		async: true,
+		success: function(response) {
+			$that.button('reset');
+          	$(response.message).prependTo($leftCreateMetaMessages);
+      	},
+      	error: function() {
+      		$that.button('reset');
+      		var messageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
+      		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+      		'<span aria-hidden="true">&times;</span></button><strong>Alerta!</strong> '+ errorMessages.validate_error + ' </div>';
+      		$(messageError).prependTo($leftCreateMetaMessages);
+      	}
+  	});
+	}else{
+		$that.button('reset');
+		var messageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
+      		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+      		'<span aria-hidden="true">&times;</span></button><strong>Debes darle un nombre al MetaDato!</strong></div>';
+      		$(messageError).prependTo($leftCreateMetaMessages);
 	}
 });
