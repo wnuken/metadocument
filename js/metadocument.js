@@ -387,7 +387,7 @@ $(window).scroll(function(){
 });
 
 /* AddFolder */
-$('#addFolderBt', $modalAddFolder).on('click', function(){
+/*$('#addFolderBt', $modalAddFolder).on('click', function(){
 	var $thisForm = $('form#addfolderForm', $modalAddFolder);
 	
 	var params = {
@@ -425,10 +425,7 @@ $('#addFolderBt', $modalAddFolder).on('click', function(){
 		'<span aria-hidden="true">&times;</span></button><strong>Error!</strong> La carpeta debe tener un nombre</div>';
 		$(messageError).appendTo($('div#addFolderError'));
 	}
-
-
-
-});
+});*/
 
 $createFormModal.on('show.bs.modal', function () {
 
@@ -466,12 +463,14 @@ $('button#add', $createForm).on('click', function(){
 	$that = $(this);
 	$that.button('loading');
 	var valuesForm = $createForm.serialize();
+	var nameField = $('input#name', $createForm).val();
 
 	var params = {
 		url: "create-form",
 		data: valuesForm
 	};
 
+	if(nameField != ''){
 	$.ajax({
 		type: "POST",
 		url: params.url,
@@ -485,11 +484,18 @@ $('button#add', $createForm).on('click', function(){
       	error: function() {
       		$that.button('reset');
       		var messageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
-      		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+      		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
       		'<span aria-hidden="true">&times;</span></button><strong>Alerta!</strong> '+ errorMessages.validate_error + ' </div>';
       		$(messageError).appendTo($('div#createFormMessages', $createFormBody));
       	}
   	});
+	}else{
+		$that.button('reset');
+		var messageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
+      		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+      		'<span aria-hidden="true">&times;</span></button><strong>Debes darle un nombre al MetaDato!</strong></div>';
+      		$(messageError).appendTo($('div#createFormMessages', $createFormBody));
+	}
 });
 
 function removeMataDataField(element){
@@ -903,4 +909,109 @@ $UploadFilesButton.on('click', function(e){
 	}
 	console.log(params);
 	$uploadFileForm.uploadFile(params);
+});
+
+$(document).ready(function(){
+ 
+	$('.ir-arriba').click(function(){
+		$('body, html').animate({
+			scrollTop: '0px'
+		}, 300);
+	});
+ 
+	$(window).scroll(function(){
+		if( $(this).scrollTop() > 0 ){
+			$('.ir-arriba').slideDown(300);
+		} else {
+			$('.ir-arriba').slideUp(300);
+		}
+	});
+ 
+});
+
+var $leftNewFolder = $('div#leftNewFolder');
+var $leftNewFolderBody = $('div#leftNewFolderBody', $leftNewFolder);
+var $leftNewFolderForm = $('form#leftNewFolderForm', $leftNewFolderBody);
+var $leftNewFolderMessages = $('div#leftNewFolderMessages', $leftNewFolder);
+var $leftNewFolderButton = $('button#leftNewFolderButton', $leftNewFolder);
+
+$('button[data-meta-toggle=left]').on('click', function(){
+	var $that = $(this);
+	var targetId = $that.attr('data-target');
+	// $('div.left-menu').addClass('hidden-element');
+
+	$('div.left-menu').animate({
+		left: '-250px'}, 
+		300, 
+		function(){
+			$('div.left-menu').addClass('hidden-element');
+			$('div#' + targetId).removeClass('hidden-element');
+	$('div#' + targetId).animate({left: '0px'});
+		});
+
+	
+});
+
+$('button[data-meta-close=left]').on('click', function(){
+	var $that = $(this);
+	var $parentLeft = $that.parent().parent();
+	$parentLeft.animate({
+		left: '-250px'}, 
+		600, 
+		function(){
+			$parentLeft.addClass('hidden-element');
+		});
+});
+
+$('div.left-menu-back').on('click', function(){
+	var $that = $(this);
+	var $parentLeft = $that.parent();
+	$parentLeft.animate({
+		left: '-250px'}, 
+		600, 
+		function(){
+			$parentLeft.addClass('hidden-element');
+		});
+});
+
+$leftNewFolderButton.on('click', function(){
+	$leftNewFolderButton.button('loading');
+	var params = {
+		'url': 'new-folder'
+	};
+
+	var data = {
+		'title': $('input#title', $leftNewFolderForm).val(),
+		'parentId': $("div#addFolder").attr("data-parent")
+	}
+
+	if(data.title != ''){
+		$.ajax({
+			type: "POST",
+			url: params.url,
+			dataType: 'json',
+			data: data,
+			async: true,
+			success: function(response) {
+				$leftNewFolderButton.button('reset');
+				var AddFoldermessageSuccess = '<div class="alert alert-success alert-dismissible" role="alert">' +
+				'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+				'<span aria-hidden="true">&times;</span></button><strong>Se creó la carpeta:</strong> '+ response.title + '</div>';
+				$(AddFoldermessageSuccess).appendTo($leftNewFolderMessages);
+			},
+			error: function() {
+				$leftNewFolderButton.button('reset');
+				var messageError = '<div class="alert alert-warning alert-dismissible" role="alert">' +
+				'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+				'<span aria-hidden="true">&times;</span></button><strong>Alerta!</strong> '+ errorMessages.save_folder_error + ' </div>';
+				$(messageError).appendTo($leftNewFolderMessages);
+			}
+		});
+	}else{
+		$leftNewFolderButton.button('reset');
+		var messageError = '<div class="alert alert-danger alert-dismissible" role="alert">' +
+		'<button type="button" class="close" data-dismiss="alert" aria-label="Close">'+
+		'<span aria-hidden="true">&times;</span></button><strong>Error!</strong> La carpeta debe tener un nombre</div>';
+		$(messageError).appendTo($leftNewFolderMessages);
+	}
 });

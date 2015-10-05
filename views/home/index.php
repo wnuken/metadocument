@@ -8,8 +8,7 @@ print_r('</pre>');-*/
 
 
 ?>
-
-<div class="">
+<div style="float:left;">
 	<div id="progress" class="col-md-12" style="display:none;">
 		<div class="loading-ms text-center">
 			<img src="./img/loading-ms.gif">
@@ -61,7 +60,7 @@ print_r('</pre>');-*/
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFormModal">
 								<i class="glyphicon glyphicon-indent-left"></i> </button-->
 								 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalUploadFiles">
-                    <i class="glyphicon glyphicon-cloud-upload"></i><small class="hidden-xs hidden-sm"> Subir archivos</small>
+                    <i class="glyphicon glyphicon-cloud-upload"></i>
                 </button>
 							</div>
 
@@ -105,7 +104,7 @@ print_r('</pre>');-*/
 								<i class="glyphicon glyphicon-indent-left"></i> Metadata
 								</button-->
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalUploadFiles">
-                    <i class="glyphicon glyphicon-cloud-upload"></i><small class="hidden-xs hidden-sm"> Subir archivos</small>
+                    <i class="glyphicon glyphicon-cloud-upload"></i><span class="hidden-sm"> Subir archivos</span>
                 </button>
 							</div>
 
@@ -140,6 +139,7 @@ print_r('</pre>');-*/
 			</div>
 		</div>
 	</div>
+	<span class="ir-arriba img-rounded"><i class="glyphicon glyphicon-chevron-up"></i></span>
 	<div class="row">
 		<?php require_once('./views/home/modal-meta-edition.php'); ?>		
 	</div>
@@ -155,4 +155,14 @@ print_r('</pre>');-*/
 	<div class="row">
 		<?php require_once('./views/home/modal-upload-files.php'); ?>		
 	</div>
+
+	<div class="row">
+		<?php require_once('./views/home/left-add-folder.php'); ?>		
+	</div>
+	<div class="row">
+		<?php require_once('./views/home/left-edit-metaform.php'); ?>		
+	</div>
+
+
+
 </div>

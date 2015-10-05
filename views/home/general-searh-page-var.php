@@ -35,7 +35,7 @@ if(is_array($filesList)){
 							<div class='row' style='margin-bottom:3px; margin-right: -11px;'>
 								<button type='button' 
 								style='float: right;'
-								class='btn btn-danger btn-xs buttonProperies' 
+								class='btn btn-danger btn-lg buttonProperies' 
 								data-toggle='modal' data-target='#metaDataModal' 
 								onclick=\"loadDocumentId('" . $file['id']. "')\">
 								<i class='glyphicon glyphicon-list-alt'></i> Metadatos

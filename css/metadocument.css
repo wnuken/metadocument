@@ -43,7 +43,7 @@ body {
 }
 
 div.borderContent {
-	outline: 5px solid #0E2969;
+	outline: 5px solid #428bca;
 }
 
 input[type="text"].inputborder, input[type="password"].inputborder {
@@ -252,4 +252,43 @@ div.position-button {
 .element-center{
 	display: table;
 	margin: auto;
+}
+
+.ir-arriba {
+	display: none;
+	padding:20px;
+	background:#428BCA;
+	font-size:20px;
+	color:#fff;
+	cursor:pointer;
+	position: fixed;
+	bottom:20px;
+	right:20px;
+}
+
+.left-menu-back {
+	z-index: 9;
+width: 100%;
+height: 100%;
+background: none;
+position: fixed;
+left: 250px;
+top: 53px;
+}
+
+.left-menu {
+	position: fixed;
+z-index: 10;
+background: #fff none repeat scroll 0% 0%;
+background-clip: padding-box;
+border-radius: 0px 6px;
+left: -250px;
+top: 53px;
+height: 100%;
+width: 250px;
+box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.hidden-element{
+	display: none;
 }

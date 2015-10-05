@@ -17,8 +17,8 @@
 						<input type="hidden" class="form-control" id="posid" name="posid" value="1">
 					</div>
 					<div class="form-group">
-						<label for="name">Nombre Campo</label>
-						<input type="text" class="form-control" id="name" name="name" placeholder="Nombre Campo">
+						<label for="name">Nombre MetaDato</label>
+						<input type="text" class="form-control" id="name" name="name" placeholder="Nombre MetaDato">
 					</div>
 					<div class="form-group">
 						<label for="type">Tipo de dato</label>

@@ -8,10 +8,10 @@ if(is_array($filesList)){
 					<div class='position-button'>
 						<button type='button' 
 						style=''
-						class='btn btn-danger btn-xs buttonProperies' 
+						class='btn btn-danger btn buttonProperies' 
 						data-toggle='modal' data-target='#metaDataModal' 
 						onclick="loadDocumentId('<?php print $file['id']; ?>'); loadFormDataModal();">
-						<i class='glyphicon glyphicon-list-alt'></i> Metadatos
+						<i class='glyphicon glyphicon-th-list'></i><small class="hidden-xs"> MetaDatos</small>
 					</button>
 				</div>
 				<div class="text-center metadocument-image">

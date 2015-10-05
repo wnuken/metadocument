@@ -1,29 +1,44 @@
-<div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <div class="btn-group btn-group" style="height: 18px; position:fixed;z-index:10; top: 2px;
-            left: 2px;" role="group" aria-label="...">
-            <a href="./" class="navbar-brand hidden-xs" style="position: relative; top: -19px; "><img src="./img/lg-md.png" style="width: 80%;"></a>
-            <div class="btn-group btn-group" role="group" style="top: 8px;">
 
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalAddFolder">
-                    <i class="glyphicon glyphicon-folder-open"></i> + <small class="hidden-xs hidden-sm"> Nueva </small>
-                </button> 
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#createFormModal">
-                    <i class="glyphicon glyphicon-indent-left"></i><small class="hidden-xs hidden-sm"> Metadatos</small>
-                </button>
-                <button type="button" class="btn btn-danger" onclick="AvanceSearhgetForm()" data-toggle="modal" data-target="#modalAvanceSearh">
-                   <i class="glyphicon glyphicon-zoom-in"></i><small class="hidden-xs hidden-sm"> Busqueda Avanzada</small>
-               </button>
-               <button type="button" class="btn btn-danger visible-xs" onclick="searchFormVisible();" >
-                   <i class="glyphicon glyphicon-search"></i>
-               </button>
-               <div class="btn-group btn-group" role="group">
-                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="glyphicon glyphicon-user"></i> <?php print $user; ?>
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
+<div  style="background: #eee;
+width: 100%;
+border-bottom: 2px solid #428bca; position:fixed;z-index:10; left: 0px;
+top: 0px; height: 53px;">
+<div class="btn-group btn-group" style="top: 2px;
+left: 3px;" role="group" aria-label="...">
+<div class="btn-group btn-group" role="group" style="top: 8px;">
+    <button type="button" class="btn btn-default" onclick="location.reload();">
+        <img src="./img/logo-vt.png" style="height: 18px;">
+    </button>
+
+    <button type="button" class="btn btn-danger" data-meta-toggle="left" data-target="leftNewFolder">
+        <i class="glyphicon glyphicon-folder-open"></i> + <small class="hidden-xs hidden-sm"> Nueva </small>
+    </button> 
+
+    <!--button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalAddFolder">
+        <i class="glyphicon glyphicon-folder-open"></i> + <small class="hidden-xs hidden-sm"> Nueva </small>
+    </button-->
+
+    <button type="button" class="btn btn-danger" data-meta-toggle="left" data-target="leftCreateForm">
+        <i class="glyphicon glyphicon-indent-left"></i><small class="hidden-xs hidden-sm"> Metadatos</small>
+    </button>
+
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#createFormModal">
+        <i class="glyphicon glyphicon-indent-left"></i><small class="hidden-xs hidden-sm"> Metadatos</small>
+    </button>
+
+
+    <button type="button" class="btn btn-danger" onclick="AvanceSearhgetForm()" data-toggle="modal" data-target="#modalAvanceSearh">
+       <i class="glyphicon glyphicon-zoom-in"></i><small class="hidden-xs hidden-sm"> Busqueda Avanzada</small>
+   </button>
+   <button type="button" class="btn btn-danger visible-xs" onclick="searchFormVisible();" >
+       <i class="glyphicon glyphicon-search"></i>
+   </button>
+   <div class="btn-group btn-group" role="group">
+    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="glyphicon glyphicon-user"></i> <?php print $user; ?>
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
                     <!--li><a href="#">Perfil</a></li>
                             <li><a href="#">Acciones</a></li>
                             <li><a href="./configuracion">Configuración</a></li>
@@ -42,6 +57,3 @@
                     </form>
                 </div>
             </div>
-
-        </div>
-    </div>
