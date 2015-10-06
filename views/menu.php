@@ -10,7 +10,7 @@ left: 3px;" role="group" aria-label="...">
         <img src="./img/logo-vt.png" style="height: 18px;">
     </button>
 
-    <button type="button" class="btn btn-danger" data-meta-toggle="left" data-target="leftNewFolder">
+    <button type="button" class="btn btn-danger" data-meta-toggle="left" data-target="#leftNewFolder">
         <i class="glyphicon glyphicon-folder-open"></i> + <small class="hidden-xs hidden-sm"> Nueva </small>
     </button> 
 
@@ -18,18 +18,24 @@ left: 3px;" role="group" aria-label="...">
         <i class="glyphicon glyphicon-folder-open"></i> + <small class="hidden-xs hidden-sm"> Nueva </small>
     </button-->
 
-    <button type="button" class="btn btn-danger" data-meta-toggle="left" data-target="leftCreateMeta">
+    <button type="button" class="btn btn-danger" data-meta-toggle="left" data-target="#leftCreateMeta">
         <i class="glyphicon glyphicon-indent-left"></i><small class="hidden-xs hidden-sm"> Metadatos</small>
     </button>
 
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#createFormModal">
+    <!--button type="button" class="btn btn-danger" data-toggle="modal" data-target="#createFormModal">
         <i class="glyphicon glyphicon-indent-left"></i><small class="hidden-xs hidden-sm"> Metadatos</small>
-    </button>
+    </button-->
 
-
-    <button type="button" class="btn btn-danger" onclick="AvanceSearhgetForm()" data-toggle="modal" data-target="#modalAvanceSearh">
+     <button type="button" class="btn btn-danger" onclick="AvanceSearhgetForm()" data-meta-toggle="left" data-target="#leftAvanceSearh">
        <i class="glyphicon glyphicon-zoom-in"></i><small class="hidden-xs hidden-sm"> Busqueda Avanzada</small>
    </button>
+
+
+    <!--button type="button" class="btn btn-danger" onclick="AvanceSearhgetForm()" data-toggle="modal" data-target="#modalAvanceSearh">
+       <i class="glyphicon glyphicon-zoom-in"></i><small class="hidden-xs hidden-sm"> Busqueda Avanzada</small>
+   </button-->
+
+
    <button type="button" class="btn btn-danger visible-xs" onclick="searchFormVisible();" >
        <i class="glyphicon glyphicon-search"></i>
    </button>

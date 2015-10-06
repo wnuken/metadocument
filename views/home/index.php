@@ -8,7 +8,7 @@ print_r('</pre>');-*/
 
 
 ?>
-<div style="float:left;">
+<div>
 	<div id="progress" class="col-md-12" style="display:none;">
 		<div class="loading-ms text-center">
 			<img src="./img/loading-ms.gif">
@@ -161,6 +161,9 @@ print_r('</pre>');-*/
 	</div>
 	<div class="row">
 		<?php require_once('./views/home/left-edit-metaform.php'); ?>		
+	</div>
+	<div class="row">
+		<?php require_once('./views/home/left-avance-searh.php'); ?>		
 	</div>
 
 

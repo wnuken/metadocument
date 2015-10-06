@@ -459,7 +459,7 @@ $createFormModal.on('hidden.bs.modal', function () {
 });*/
 
 
-$('button#add', $createForm).on('click', function(){
+/*$('button#add', $createForm).on('click', function(){
 	$that = $(this);
 	$that.button('loading');
 	var valuesForm = $createForm.serialize();
@@ -496,72 +496,8 @@ $('button#add', $createForm).on('click', function(){
       		'<span aria-hidden="true">&times;</span></button><strong>Debes darle un nombre al MetaDato!</strong></div>';
       		$(messageError).appendTo($('div#createFormMessages', $createFormBody));
 	}
-});
+});*/
 
-function removeMataDataField(element){
-	var $that = $(element);
-
-	var $parentInput = $that.parent().parent().parent();
-	var $parentElement = $that.parent().parent();
-	$parentInput.remove();
-
-	var params = {
-			url: "remove-metadata-field",
-			data: {
-				metaid : $('input', $parentElement).attr('id'),
-				id : $('div#addFolder').attr('data-parent'),
-			}
-		};
-
-	$.ajax({
-        type: "POST",
-        url: params.url,
-        dataType: 'json',
-        data: params.data,
-        async: true,
-        success: function(response) {
-          	$(response.message).appendTo($('div#createFormMessages', $createFormBody));
-        },
-        error: function() {
-            
-        }
-    });
-
-};
-
-function editMataDataField(element){
-	var $that = $(element);
-
-	var $parentInput = $that.parent().parent().parent();
-	var $parentElement = $that.parent().parent();
-	// $parentInput.remove();
-
-	var params = {
-			url: "edit-metadata-field",
-			data: {
-				metaid : $('input', $parentElement).attr('id'),
-				id : $('div#addFolder').attr('data-parent'),
-				name : $('input', $parentElement).val()
-			}
-		};
-
-		console.log(params);
-
-	$.ajax({
-        type: "POST",
-        url: params.url,
-        dataType: 'json',
-        data: params.data,
-        async: true,
-        success: function(response) {
-          	$(response.message).appendTo($('div#createFormMessages', $createFormBody));
-        },
-        error: function() {
-            
-        }
-    });
-
-};
 
 function loadDocumentId(id){
 	idDocument = id;
@@ -677,7 +613,7 @@ $modalAvanceSearh = $('div#modalAvanceSearh');
 $AvanceSearhMessages = $('div#AvanceSearhMessages', $modalAvanceSearh);
 $AvanceSearhForm = $('form#AvanceSearhForm', $modalAvanceSearh);
 
-function AvanceSearhgetForm() {
+/*function AvanceSearhgetForm() {
 	var params = {
 		url: "get-metadata-form",
 		data: {
@@ -701,12 +637,12 @@ function AvanceSearhgetForm() {
 
 		}
 	});
-};
+};*/
 
 //$formVariables = $('form#formVariables');
 //$AvanceSearhForm = $('form#AvanceSearhForm');
 
-function loadinput(idElement){
+/*function loadinput(idElement){
 	$('div.input-group', $AvanceSearhForm).css('display', 'none');
 	$('div#' + idElement + '-group').css('display', '');
 	if(idElement == 'all'){
@@ -786,9 +722,9 @@ function getvalues(element){
 	$('input', $that).val('');
 	$that.css('display', 'none');
 
-};
+};*/
 
-$('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
+/*$('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 	//$('#progress').css({'display':'block'});
 	var valueSearh = [];
 	var valueSearhDate = [];
@@ -851,7 +787,7 @@ $('#AvanceSearhButton', $modalAvanceSearh).on('click', function(){
 			$('#progress').css({'display':'none'});
 		}
 	});
-});
+});*/
 
 function searchFormVisible(){
 	$seahfrom.removeClass('hidden-xs');
@@ -941,6 +877,13 @@ var $leftCreateMetaForm = $('form#leftCreateMetaForm', $leftCreateMetaBody);
 var $leftCreateMetaMessages = $('div#leftCreateMetaMessages', $leftCreateMeta);
 var $leftCreateMetaButton = $('button#leftCreateMetaButton', $leftCreateMeta);
 
+var $leftAvanceSearh = $('div#leftAvanceSearh');
+var $leftAvanceSearhBody = $('div#leftAvanceSearhBody', $leftAvanceSearh);
+var $leftAvanceSearhForm = $('form#leftAvanceSearhForm', $leftAvanceSearhBody);
+var $leftAvanceSearhMessages = $('div#leftAvanceSearhMessages', $leftAvanceSearh);
+var $leftAvanceSearhButton = $('button#leftAvanceSearhButton', $leftAvanceSearh);
+
+
 
 $.fn.getMetaDataFields = function(){
 	var idFolder = $('div#addFolder').attr('data-parent');
@@ -965,13 +908,11 @@ $.fn.getMetaDataFields = function(){
     });
 };
 
-
-
 $('button[data-meta-toggle=left]').on('click', function(){
 	var $that = $(this);
 	var targetId = $that.attr('data-target');
 	// $('div.left-menu').addClass('hidden-element');
-	if(targetId == 'leftCreateMeta'){
+	if(targetId == '#leftCreateMeta'){
 		$().getMetaDataFields();
 	}
 
@@ -980,8 +921,8 @@ $('button[data-meta-toggle=left]').on('click', function(){
 		300, 
 		function(){
 			$('div.left-menu').addClass('hidden-element');
-			$('div#' + targetId).removeClass('hidden-element');
-	$('div#' + targetId).animate({left: '0px'});
+			$('div' + targetId).removeClass('hidden-element');
+	$('div' + targetId).animate({left: '0px'});
 		});
 
 	
@@ -1091,4 +1032,238 @@ $leftCreateMetaButton.on('click', function(){
       		'<span aria-hidden="true">&times;</span></button><strong>Debes darle un nombre al MetaDato!</strong></div>';
       		$(messageError).prependTo($leftCreateMetaMessages);
 	}
+});
+
+function editMataDataField(element){
+	var $that = $(element);
+	var $parentInput = $that.parent().parent().parent();
+	var $parentElement = $that.parent().parent();
+
+	var params = {
+			url: "edit-metadata-field",
+			data: {
+				metaid : $('input', $parentElement).attr('id'),
+				id : $('div#addFolder').attr('data-parent'),
+				name : $('input', $parentElement).val()
+			}
+		};
+
+	$.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'json',
+        data: params.data,
+        async: true,
+        success: function(response) {
+          	$(response.message).appendTo($leftCreateMetaMessages);
+        },
+        error: function() {
+            
+        }
+    });
+};
+
+function removeMataDataField(element){
+	var $that = $(element);
+	var $parentInput = $that.parent().parent().parent();
+	var $parentElement = $that.parent().parent();
+	$parentInput.remove();
+
+	var params = {
+			url: "remove-metadata-field",
+			data: {
+				metaid : $('input', $parentElement).attr('id'),
+				id : $('div#addFolder').attr('data-parent'),
+			}
+		};
+
+	$.ajax({
+        type: "POST",
+        url: params.url,
+        dataType: 'json',
+        data: params.data,
+        async: true,
+        success: function(response) {
+          	$(response.message).appendTo($leftCreateMetaMessages);
+        },
+        error: function() {
+            
+        }
+    });
+
+};
+
+function AvanceSearhgetForm() {
+	var params = {
+		url: "get-metadata-form",
+		data: {
+			id : $('div#addFolder').attr('data-parent'),
+		}
+	};
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'json',
+		data: params.data,
+		async: true,
+		success: function(response) {
+			$('div#AvanceSearhDates',$leftAvanceSearhForm).html(response.message);
+			if(response.ismetadata !== true){
+				 $('div#text_button', $leftAvanceSearhForm).css('display','none');
+			}
+			//$(response.message).appendTo($('div#AvanceSearhDates',$AvanceSearhForm));
+		},
+		error: function() {
+
+		}
+	});
+};
+
+function loadinput(idElement){
+	$('div.input-group', $leftAvanceSearhForm).css('display', 'none');
+	$('div#' + idElement + '-group').css('display', '');
+	if(idElement == 'all'){
+   		$('input#uses', $leftAvanceSearhForm).attr('value', '0');
+	}else{
+		$('input#uses', $leftAvanceSearhForm).attr('value', '1');
+   	}
+};
+
+function loadinputkey(idElement){
+
+}
+
+function getvalues(element){
+
+	var $that = $(element).parent().parent();
+	var inputDate = '';
+	var attrId = '';
+	var nameDate = '';
+	var nameNumber = '';
+	var inputNumber = '';
+	var divAppend = '';
+	$('input', $that).each(function(index){
+
+		$thet = $(this);
+
+		if(index == 0){
+			attrId = $thet.attr('id');
+		}
+		var attrType = $thet.attr('type');
+		var attrPlaceholder = $thet.attr('placeholder');
+		var inputVal = $thet.val();
+
+		if(index == 0 && attrType == 'text' && inputVal != ''){
+			divAppend = '<div class="alert alert-info alert-dismissible fade in meta-text" role="alert" data-meta-filter="' + attrPlaceholder + ' ' + inputVal + '">' +
+			'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>' +
+			'<strong>' + attrPlaceholder + ': </strong>' + inputVal +
+			'</div>';
+	    }
+
+	    if(index == 0 && attrType == 'date' && inputVal != ''){
+		  	inputDate = inputVal;
+		  	nameDate = $thet.attr('name');
+	  	}
+
+		if(index == 1 && attrType == 'date' && inputVal != '' && inputDate != ''){
+			inputDate = inputDate + '/' + inputVal;
+		}
+
+		if(index == 0 && attrType == 'number' && inputVal != ''){
+		  	inputNumber = inputVal;
+		  	nameNumber = $thet.attr('name');
+	  	}
+
+		if(index == 1 && attrType == 'number' && inputVal != '' && inputNumber != ''){
+			inputNumber = inputNumber + '/' + inputVal;
+		}
+
+
+	});
+
+	if(inputDate != ''){
+		divAppend = '<div class="alert alert-info alert-dismissible fade in meta-text" role="alert" data-meta-id="'+attrId+'" data-meta-date="' + inputDate + '">' +
+		'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>' +
+		'<strong>'+ nameDate +': </strong>' + inputDate +
+		'</div>';
+	}
+
+	if(inputNumber != ''){
+		divAppend = '<div class="alert alert-info alert-dismissible fade in meta-text" role="alert" data-meta-id="'+attrId+'" data-meta-number="' + inputNumber + '">' +
+		'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>' +
+		'<strong>'+ nameNumber +': </strong>' + inputNumber +
+		'</div>';
+	}
+	
+	$('div#text_button', $leftAvanceSearhForm).append(divAppend);
+	$('input', $that).val('');
+	$that.css('display', 'none');
+
+};
+
+
+$leftAvanceSearhButton.on('click', function(){
+	var valueSearh = [];
+	var valueSearhDate = [];
+	var valueSearhNumber = [];
+	$that = $(this);
+	$that.button('loading');
+
+	$('div#text_button div.meta-text' , $leftAvanceSearhForm).each(function(index){
+		var $that = $(this);
+		var metaFilter = $that.attr('data-meta-filter');
+		var metaFilterDate = $that.attr('data-meta-date');
+		var metaFilterNumber = $that.attr('data-meta-number');
+		var metaFilterId = $that.attr('data-meta-id');
+		if(typeof metaFilter != 'undefined'){
+			valueSearh.push(metaFilter);	
+		}
+
+		if(typeof metaFilterDate != 'undefined'){
+			valueSearhDate.push({'id':metaFilterId,'date':metaFilterDate});
+		}
+		
+		if(typeof metaFilterNumber != 'undefined'){
+			valueSearhNumber.push({'id':metaFilterId,'number':metaFilterNumber});
+		}
+		
+	});
+
+	var params = {
+		url: "advanced-search",
+		parent: $('input#parent', $leftAvanceSearhForm).val(),
+		title: $('input#title', $leftAvanceSearhForm).val(),
+		content: $('input#content', $leftAvanceSearhForm).val(),
+		metaData: valueSearh,
+		metaDataDate: valueSearhDate,
+		metaDataNumber: valueSearhNumber
+	};
+
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'json',
+		data: params,
+		async: true,
+		success: function(response) {
+			$that.button('reset');
+			$('div#addFolder').attr('data-token', response.pageToken);
+
+			$('div.left-menu').animate({
+				left: '-250px'}, 
+				300, 
+				function(){
+					$('div.left-menu').addClass('hidden-element');
+			});
+
+			$('div#generalsearhresult').fadeOut("slow", function(){
+				var $thet = $(this);
+				$thet.html('');
+				$thet.html(response.html).fadeIn();
+			});
+		},
+		error: function() {
+			$that.button('reset');
+		}
+	});
 });
