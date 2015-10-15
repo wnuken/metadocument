@@ -9,6 +9,7 @@ nbproject
 #Metadocument
 /.htaccess
 /files
+/report
 /config/propel.php
 /config/propelConect.php
 composer.*

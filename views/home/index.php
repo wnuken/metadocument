@@ -60,7 +60,7 @@ print_r('</pre>');-*/
 								 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalUploadFiles">
                     <i class="glyphicon glyphicon-cloud-upload"></i>
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" id="ReportDocument">
                     <i class="glyphicon glyphicon-list-alt"></i>
                 </button>
 							</div>

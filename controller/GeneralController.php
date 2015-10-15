@@ -536,7 +536,7 @@ public function setFileFullTextSET($params) {
 	public function getReport(){
 
 		$result = array();
-		$informPath = './files/' . $_SESSION['user_path'] . '-file.csv';
+		$informPath = './report/' . $_SESSION['user_path'] . '-file.csv';
 
 		$handle = fopen($informPath, 'w+');
 
@@ -571,7 +571,7 @@ public function setFileFullTextSET($params) {
 		if(file_exists($informPath)){
 			$result['file'] = file_get_contents($informPath, FILE_USE_INCLUDE_PATH);
 			$result['name'] = 'report.csv';
-			$result['url'] =  '/files/' . $_SESSION['user_path'] . '-file.csv';
+			$result['url'] =  '/report/' . $_SESSION['user_path'] . '-file.csv';
 		}
 
 		return $result;
