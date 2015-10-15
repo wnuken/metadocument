@@ -476,12 +476,11 @@ public function setFileFullTextSET($params) {
 				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
 			}else if(!isset($paramsExtra['filterDate']) || in_array($file['modelData']['parents'][0]['id'], $_SESSION['folders'])){
 				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
-			}/*else if(!isset($paramsExtra['filterDate'])){
-				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
-			}*/
+			}
 		}
 		$filesList['pageToken'] = $getFilesList['pageToken'];
-		
+
+		$this->getReport();
 
 		return $filesList;
 	}
@@ -532,6 +531,51 @@ public function setFileFullTextSET($params) {
 					$filesList['exportLinks'][$iconlink] = $file->downloadUrl . $linkToken;
 				}
 				return $filesList;
+	}
+
+	public function getReport(){
+
+		$result = array();
+		$informPath = './files/' . $_SESSION['user_path'] . '-file.csv';
+
+		$handle = fopen($informPath, 'w+');
+
+		//$titleData = array("Archivo","Campo","Valor");
+		//fputcsv($handle, $titleData);
+
+		foreach ($_SESSION['document_ids'] as $key => $file) {
+			//if(is_numeric($key)){
+				$fileMeta = DocumentMetadataQuery::create()->findOneByDocumentId($key);
+				if(!empty($fileMeta)){
+					$fileArrayDate = json_decode($fileMeta->getDocumentParams(), true);
+					$Infotitle[] = "Archivo";
+					$Infordata[] = $file;
+					foreach ($fileArrayDate as $key1 => $value) {
+						$Infotitle[] = $value['name'];
+						$Infordata[] = $value['value'];
+						
+					}
+					fputcsv($handle, $Infotitle);
+					fputcsv($handle, $Infordata);
+					unset($Infotitle);
+					unset($Infordata);
+				
+				}
+			//}
+		}
+
+		// unset($_SESSION['document_ids']);
+
+		fclose($handle);
+
+		if(file_exists($informPath)){
+			$result['file'] = file_get_contents($informPath, FILE_USE_INCLUDE_PATH);
+			$result['name'] = 'report.csv';
+			$result['url'] =  '/files/' . $_SESSION['user_path'] . '-file.csv';
+		}
+
+		return $result;
+
 	}
 
 	public function getFolderArray($params){

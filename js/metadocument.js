@@ -908,9 +908,17 @@ $.fn.getMetaDataFields = function(){
     });
 };
 
+
+var scrollTopElem = 53;
+$(window).scroll(function(){
+		scrollTopElem = $(this).scrollTop();
+		scrollTopElem = scrollTopElem + 53;
+});
+
 $('button[data-meta-toggle=left]').on('click', function(){
 	var $that = $(this);
 	var targetId = $that.attr('data-target');
+
 	// $('div.left-menu').addClass('hidden-element');
 	if(targetId == '#leftCreateMeta'){
 		$().getMetaDataFields();
@@ -922,10 +930,10 @@ $('button[data-meta-toggle=left]').on('click', function(){
 		function(){
 			$('div.left-menu').addClass('hidden-element');
 			$('div' + targetId).removeClass('hidden-element');
-	$('div' + targetId).animate({left: '0px'});
+			$('div' + targetId).css('top', scrollTopElem + 'px');
+			$('div' + targetId).animate({left: '0px'});
 		});
 
-	
 });
 
 $('button[data-meta-close=left]').on('click', function(){
@@ -1267,3 +1275,56 @@ $leftAvanceSearhButton.on('click', function(){
 		}
 	});
 });
+
+$ReportDocument = $('button#ReportDocument');
+
+$ReportDocument.on('click', function(){
+
+	var params = {
+		url: "report-document"
+	};
+
+	$.ajax({
+		type: "POST",
+		url: params.url,
+		dataType: 'json',
+		data: params,
+		async: true,
+		success: function(response) {
+			window.location = response.url;
+
+		},
+		error: function() {
+			
+		}
+	});
+
+});
+
+function descargarArchivo(contenidoEnBlob, nombreArchivo) {
+  //creamos un FileReader para leer el Blob
+  var reader = new FileReader();
+  //Definimos la función que manejará el archivo
+  //una vez haya terminado de leerlo
+  reader.onload = function (event) {
+    //Usaremos un link para iniciar la descarga 
+    var save = document.createElement('a');
+    save.href = event.target.result;
+    save.target = '_blank';
+    //Truco: así le damos el nombre al archivo 
+    save.download = nombreArchivo || 'archivo.dat';
+    var clicEvent = new MouseEvent('click', {
+      'view': window,
+      'bubbles': true,
+      'cancelable': true
+    });
+    //Simulamos un clic del usuario
+    //no es necesario agregar el link al DOM.
+    save.dispatchEvent(clicEvent);
+    //Y liberamos recursos...
+    (window.URL || window.webkitURL).revokeObjectURL(save.href);
+  };
+  //Leemos el blob y esperamos a que dispare el evento "load"
+  reader.readAsDataURL(contenidoEnBlob);
+  console.log('hola');
+};

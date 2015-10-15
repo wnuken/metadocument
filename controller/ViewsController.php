@@ -809,7 +809,6 @@ class Views {
 		
 	}
 
-
 	static public function uploaddoc(){
 		include './views/files/upload.php';
 	}
@@ -892,6 +891,18 @@ class Views {
 		print $resultJson;
 	}
 
+	static public function getReportDocument(){
 
-	}	
+		$General = new General();
+		$resultReport = $General->getReport();
+		
+		$resultJson = json_encode($resultReport);
+
+		print $resultJson;
+
+		
+	}
+
+
+}	
 

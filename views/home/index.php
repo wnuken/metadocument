@@ -5,8 +5,6 @@ print_r($_SESSION);
 print_r('</pre>');-*/
 //getSession()->set('name', '');
 // getSession()->end('home');
-
-
 ?>
 <div>
 	<div id="progress" class="col-md-12" style="display:none;">
@@ -62,6 +60,9 @@ print_r('</pre>');-*/
 								 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalUploadFiles">
                     <i class="glyphicon glyphicon-cloud-upload"></i>
                 </button>
+                <button type="button" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-list-alt"></i>
+                </button>
 							</div>
 
 
@@ -106,6 +107,9 @@ print_r('</pre>');-*/
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalUploadFiles">
                     <i class="glyphicon glyphicon-cloud-upload"></i><span class="hidden-sm"> Subir archivos</span>
                 </button>
+                <button type="button" class="btn btn-primary" id="ReportDocument">
+                    <i class="glyphicon glyphicon-list-alt"></i><span class="hidden-sm"> Informe</span>
+                </button>
 							</div>
 
 
@@ -127,7 +131,13 @@ print_r('</pre>');-*/
 								</ol>
 							</div-->
 							<div class="col-md-12" id="generalsearhresult">
-								<?php require_once('./views/home/general-searh.php'); ?>
+								<?php 
+								unset($_SESSION['document_ids']);
+								require_once('./views/home/general-searh.php');
+								print_r('<pre>');
+								print_r($_SESSION['document_ids']);
+								print_r('</pre>');
+								 ?>
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -155,7 +165,6 @@ print_r('</pre>');-*/
 	<div class="row">
 		<?php require_once('./views/home/modal-upload-files.php'); ?>		
 	</div>
-
 	<div class="row">
 		<?php require_once('./views/home/left-add-folder.php'); ?>		
 	</div>
@@ -165,7 +174,4 @@ print_r('</pre>');-*/
 	<div class="row">
 		<?php require_once('./views/home/left-avance-searh.php'); ?>		
 	</div>
-
-
-
 </div>

@@ -1,8 +1,5 @@
 
-<div  style="background: #eee;
-width: 100%;
-border-bottom: 2px solid #428bca; position:fixed;z-index:20; left: 0px;
-top: 0px; height: 53px;">
+<div  class="metadocument-menu">
 <div class="btn-group btn-group" style="top: 2px;
 left: 3px;" role="group" aria-label="...">
 <div class="btn-group btn-group" role="group" style="top: 8px;">

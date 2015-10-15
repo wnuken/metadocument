@@ -2,6 +2,7 @@
 if(is_array($filesList)){
 	foreach($filesList as $key => $file){
 		if(is_numeric($key)){
+			$_SESSION['document_ids'][$file['id']] = $file['title'];
 			?>
 			<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>
 				<div class="metadocument-element">
@@ -15,30 +16,29 @@ if(is_array($filesList)){
 					</button>
 				</div>
 				<div class="text-center metadocument-image">
-				<a href='<?php print $file['embedLink']; ?>' target='_blank'>
-					<img
-					src='<?php print $file['image']; ?>' 
-					data-mime='<?php print $file['mimeType']; ?>' 
-					alt='<?php print $file['title']; ?>' 
-					title='<?php print $file['title']; ?>'
-					class='img-thumbnail'>
+					<a href='<?php print $file['embedLink']; ?>' target='_blank'>
+						<img
+						src='<?php print $file['image']; ?>' 
+						data-mime='<?php print $file['mimeType']; ?>' 
+						alt='<?php print $file['title']; ?>' 
+						title='<?php print $file['title']; ?>'
+						class='img-thumbnail'>
 					</a>
 				</div>
 				<div class='metadocument-divider'></div>
 				<div class="row">
-					<div class='col-xs-12 matadocument-title'>
-						
+					<div class='col-xs-12 matadocument-title'>				
 						<a href='<?php print $file['url']; ?>' target='_blank' class='text-center' title='<?php print $file['title']; ?>'>
 							<img src='./img/icon/<?php print $file['icon']; ?>' 
 							style='width: 32px;'
 							alt='<?php print $file['mimeType']; ?>' 
 							>
 							<span>
-							<?php 
-							$charters = array("_", "-");
-							$title = str_replace($charters, " ", $file['title']);
-							print $title; 
-							?>
+								<?php 
+								$charters = array("_", "-");
+								$title = str_replace($charters, " ", $file['title']);
+								print $title; 
+								?>
 							</span>
 						</a>
 					</div>
@@ -63,9 +63,6 @@ if(is_array($filesList)){
 						</div>
 					</div>
 					<div class='metadocument-divider'></div>
-
-
-
 					<?php
 				}
 				?>
@@ -78,13 +75,11 @@ if(is_array($filesList)){
 							<li><strong>Actualización: </strong><?php print date('Y-m-d',strtotime($file['modifiedDate'])); ?></li>
 						</ul>
 						<?php }else {
-							print $file['description']; 
+							print $file['description']; 	
 						} ?>
 					</div>
 				</div>
-				
 			</div>
-
 		</div>
 		<?php 
 	}
