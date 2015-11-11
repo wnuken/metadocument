@@ -134,9 +134,9 @@ print_r('</pre>');-*/
 								<?php 
 								unset($_SESSION['document_ids']);
 								require_once('./views/home/general-searh.php');
-								print_r('<pre>');
+								/*print_r('<pre>');
 								print_r($_SESSION['document_ids']);
-								print_r('</pre>');
+								print_r('</pre>');*/
 								 ?>
 							</div>
 						</div>

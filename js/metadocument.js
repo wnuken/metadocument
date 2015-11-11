@@ -1291,7 +1291,12 @@ $ReportDocument.on('click', function(){
 		data: params,
 		async: true,
 		success: function(response) {
-			window.location = response.url;
+			// window.location = response.url;
+			$('div#generalsearhresult').fadeOut("slow", function(){
+				var $thet = $(this);
+				$thet.html('');
+				$thet.html(response.file).fadeIn();
+			});
 
 		},
 		error: function() {

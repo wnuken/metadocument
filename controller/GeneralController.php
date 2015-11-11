@@ -536,9 +536,13 @@ public function setFileFullTextSET($params) {
 	public function getReport(){
 
 		$result = array();
-		$informPath = './report/' . $_SESSION['user_path'] . '-file.csv';
+		//$informPath = './report/' . $_SESSION['user_path'] . '-file.csv';
 
-		$handle = fopen($informPath, 'w+');
+		//$handle = fopen($informPath, 'w+');
+
+		
+		$newTitles = array(0 => 'Archivo');
+		$newData = array();
 
 		//$titleData = array("Archivo","Campo","Valor");
 		//fputcsv($handle, $titleData);
@@ -546,11 +550,40 @@ public function setFileFullTextSET($params) {
 		foreach ($_SESSION['document_ids'] as $key => $file) {
 			//if(is_numeric($key)){
 				$fileMeta = DocumentMetadataQuery::create()->findOneByDocumentId($key);
+
+
+
+
 				if(!empty($fileMeta)){
+
+
+
 					$fileArrayDate = json_decode($fileMeta->getDocumentParams(), true);
 					$Infotitle[] = "Archivo";
 					$Infordata[] = $file;
-					foreach ($fileArrayDate as $key1 => $value) {
+					$newData[$key][0] = $file;
+
+					foreach ($fileArrayDate as $keyTitles => $value) {
+						if(!array_key_exists($keyTitles, $newTitles)){
+							$newTitles[$keyTitles] = $value['name'];
+						}
+					}
+
+					$keysTitles = array_keys($newTitles);
+
+					foreach ($keysTitles as $key2 => $value) {
+						if($fileArrayDate[$value]){
+							$newData[$key][$key2] = $fileArrayDate[$value]['value'];
+						}else if($key2 != 0){
+							$newData[$key][$key2] = '';
+						}
+					}
+
+
+						
+
+
+					/*foreach ($fileArrayDate as $key1 => $value) {
 						$Infotitle[] = $value['name'];
 						$Infordata[] = $value['value'];
 						
@@ -558,7 +591,7 @@ public function setFileFullTextSET($params) {
 					fputcsv($handle, $Infotitle);
 					fputcsv($handle, $Infordata);
 					unset($Infotitle);
-					unset($Infordata);
+					unset($Infordata);*/
 				
 				}
 			//}
@@ -566,13 +599,14 @@ public function setFileFullTextSET($params) {
 
 		// unset($_SESSION['document_ids']);
 
-		fclose($handle);
+		//fclose($handle);
 
-		if(file_exists($informPath)){
-			$result['file'] = file_get_contents($informPath, FILE_USE_INCLUDE_PATH);
-			$result['name'] = 'report.csv';
-			$result['url'] =  '/report/' . $_SESSION['user_path'] . '-file.csv';
-		}
+		//if(file_exists($informPath)){
+		
+			$result['file'] = json_encode($newData);
+			//$result['name'] = 'report.csv';
+			//$result['url'] =  '/report/' . $_SESSION['user_path'] . '-file.csv';
+		//}
 
 		return $result;
 
