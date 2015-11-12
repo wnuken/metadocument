@@ -1291,11 +1291,13 @@ $ReportDocument.on('click', function(){
 		data: params,
 		async: true,
 		success: function(response) {
+			$('span', $ReportDocument).html('Archivos');
 			// window.location = response.url;
 			$('div#generalsearhresult').fadeOut("slow", function(){
 				var $thet = $(this);
 				$thet.html('');
-				$thet.html(response.file).fadeIn();
+				$thet.html('<a class="btn btn-danger" href="' + response.url + '" role="button">Descargar</a>');
+				$thet.append(response.html).fadeIn();
 			});
 
 		},

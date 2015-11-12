@@ -1,5 +1,7 @@
 <?php if($_SESSION['userinfo']):
-	$userData = json_decode($_SESSION['userinfo'], true);
+	// $userData = json_decode($_SESSION['userinfo'], true);
+	$userData = $_SESSION['userinfo'];
+	// print_r($_SESSION);
 
 	?>
 	<div class="col-md-3">
@@ -13,7 +15,7 @@
 			<div id="collapseNews" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 				<div class="panel-body">
 					<h3>Te damos la bienvenida: <?php print $userData['name']; ?></h3>
-					<img width="50px" src="<?php print $userData['picture']; ?>">
+					<img class="img-circle" width="100px" src="<?php print $userData['picture']; ?>">
 					<h4>Desde ahora podras gestionar tus archivos con Metadocument</h4>
 					<form id="register">
 						<input name="folder" id="folder" type="hidden" autofocus="" value="root" >

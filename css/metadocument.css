@@ -178,20 +178,22 @@ div.metadocument-menu{
 }
 
 div.metadocument-element {
-	background: #FFF none repeat scroll 0% 0%;
+	background: #EDEDED none repeat scroll 0% 0%;
+	color: #444;
 	box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.22);
 	border-radius: 6px;
 	margin-bottom: 10px;
 }
 
 div.metadocument-image {
+	background: #fff;
 	padding-top: 5px;
-	height: 230px;
+	height: 133px;
+	overflow: hidden;
 }
 
 div.metadocument-image img {
-	max-width: 100%;
-	max-height: 95%;
+	width: 95%;
 }
 
 div.metadata-down{
@@ -200,13 +202,18 @@ div.metadata-down{
 }
 
 div.metadocument-divider {
-	border-bottom: 1px solid #EEE;
+	border-bottom: 1px solid #ccc;
 	width: 100%
 }
 
 div.matadocument-title {
 	overflow: hidden;
 	max-height: 32px;
+}
+
+div.matadocument-title a {
+	color: rgb(40, 76, 121);
+	text-decoration: none;
 }
 
 div.metadocument-metadata-one {
@@ -230,9 +237,8 @@ div.metadocument-metadata-one ul li, div.metadocument-metadata-two ul li {
 }
 
 div.position-button {
-	position: relative;
-	top: 10px;
-	left: 5px;
+	background: #EDEDED;
+	color: #000;
 }
 
 #text_button{

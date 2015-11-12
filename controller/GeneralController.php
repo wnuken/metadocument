@@ -492,7 +492,7 @@ public function setFileFullTextSET($params) {
 				}else if($file->thumbnailLink){
 					$image = $file->thumbnailLink;
 				}else{
-					$image = './img/icon/blank.png';
+					$image = './img/file.jpg';
 				}
 
 				if($file->downloadUrl !== NULL){
@@ -593,6 +593,9 @@ public function setFileFullTextSET($params) {
 					unset($Infotitle);
 					unset($Infordata);*/
 				
+				}else{
+					$newData[$key][0] = $file;
+
 				}
 			//}
 		}
@@ -603,8 +606,8 @@ public function setFileFullTextSET($params) {
 
 		//if(file_exists($informPath)){
 		
-			$result['file'] = json_encode($newData);
-			//$result['name'] = 'report.csv';
+			$result['files'] = $newData;
+			$result['titles'] = $newTitles;
 			//$result['url'] =  '/report/' . $_SESSION['user_path'] . '-file.csv';
 		//}
 

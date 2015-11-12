@@ -6,23 +6,23 @@ if(is_array($filesList)){
 			?>
 			<div class='col-xs-6 col-sm-4 col-md-3 col-lg-2'>
 				<div class="metadocument-element">
-					<div class='position-button'>
+				<div class='position-button'>
 						<button type='button' 
 						style=''
-						class='btn btn-danger btn buttonProperies' 
+						class='btn buttonProperies' 
 						data-toggle='modal' data-target='#metaDataModal' 
 						onclick="loadDocumentId('<?php print $file['id']; ?>'); loadFormDataModal();">
 						<i class='glyphicon glyphicon-th-list'></i><small class="hidden-xs"> MetaDatos</small>
 					</button>
 				</div>
+				<div class='metadocument-divider'></div>				
 				<div class="text-center metadocument-image">
-					<a href='<?php print $file['embedLink']; ?>' target='_blank'>
+					<a href='<?php print $file['url']; ?>' target='_blank'>
 						<img
 						src='<?php print $file['image']; ?>' 
 						data-mime='<?php print $file['mimeType']; ?>' 
 						alt='<?php print $file['title']; ?>' 
-						title='<?php print $file['title']; ?>'
-						class='img-thumbnail'>
+						title='<?php print $file['title']; ?>'>
 					</a>
 				</div>
 				<div class='metadocument-divider'></div>

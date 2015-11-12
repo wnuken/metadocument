@@ -893,10 +893,27 @@ class Views {
 
 	static public function getReportDocument(){
 
+		$informPath = './report/' . $_SESSION['user_path'] . '-file.xls';
 		$General = new General();
 		$resultReport = $General->getReport();
 		
-		$resultJson = json_encode($resultReport);
+		ob_start(); # open buffer
+		include( './views/reports/general-report.php' );
+		$htmlData = ob_get_contents();
+		ob_end_clean(); # close buffer
+
+		$resultArray['html'] = $htmlData;
+		$resultArray['url'] = $informPath;
+		
+
+		$handle = fopen($informPath, 'w+');
+		fwrite($handle, $htmlData);
+		fclose($handle);
+
+
+
+
+		$resultJson = json_encode($resultArray);
 
 		print $resultJson;
 
