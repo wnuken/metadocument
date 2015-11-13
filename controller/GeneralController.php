@@ -596,6 +596,14 @@ public function setFileFullTextSET($params) {
 				}else{
 					$newData[$key][0] = $file;
 
+					$keysTitles = array_keys($newTitles);
+
+					foreach ($keysTitles as $key2 => $value) {
+						 if($key2 != 0){
+							$newData[$key][$key2] = '';
+						}
+					}
+
 				}
 			//}
 		}

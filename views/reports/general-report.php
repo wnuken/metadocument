@@ -1,9 +1,9 @@
 <div class="table-responsive">
-<table class="table table-hover table-bordered">
+<table class="table table-striped table-bordered">
 <tr>
 <?php 
 foreach ($resultReport['titles'] as $key => $value) {
- print '<th>' . $value . '</th>'; 
+ print '<th class="info">' . $value . '</th>'; 
 }
 
 ?>
