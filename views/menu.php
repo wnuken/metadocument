@@ -33,8 +33,8 @@ left: 3px;" role="group" aria-label="...">
    </button-->
 
 
-   <button type="button" class="btn btn-danger visible-xs" onclick="searchFormVisible();" >
-       <i class="glyphicon glyphicon-search"></i>
+   <button type="button" class="btn btn-danger" onclick="searchFormVisible();" >
+       <i class="glyphicon glyphicon-search"></i><small class="hidden-xs hidden-sm"> Buscar</small>
    </button>
    <div class="btn-group btn-group" role="group">
     <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,7 +50,13 @@ left: 3px;" role="group" aria-label="...">
                             </ul>
                         </div>
                     </div>
-                    <form class="navbar-form navbar-left hidden-xs" role="search" id="drivesearh">
+                    
+                </div>
+            </div>
+
+            <div class="">
+                    
+                    <form class="hidden formSearh" role="search" id="drivesearh">
                         <div class="form-group input-group">
                             <input type="text" class="form-control" name="query" id="query" placeholder="Buscar...">
                             <span class="input-group-btn">
@@ -58,5 +64,6 @@ left: 3px;" role="group" aria-label="...">
                             </span>
                         </div>
                     </form>
-                </div>
+
+
             </div>

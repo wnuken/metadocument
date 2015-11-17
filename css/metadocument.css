@@ -313,3 +313,15 @@ div.position-button {
 .form-group-meta{
 	margin: 3px 2px;
 }
+
+form.formSearh {
+	position: fixed;
+z-index: 40;
+top: -1px;
+left: 0px;
+width: 100%;
+background: #DDD none repeat scroll 0% 0%;
+padding: 8px;
+height: 52px;
+
+}

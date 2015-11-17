@@ -16,12 +16,6 @@ class Views {
 
 	static public function Home($RestParams = ''){
 
-		/*getSession()->set('paths', array(
-			'filePath' => './files/' . getSession()->get('user_path') .'-home-' . $RestParams . '.json',
-			'foldersPath' => './files/' . getSession()->get('user_path') . '-folders-' . $RestParams . '.json',
-			'foldersTotalPath' => './files/' . getSession()->get('user_path') . '-folders-total' . '.json'
-			));*/
-
 		$path = '';
 		$filePath = './files/' . $_SESSION['user_path'] .'-home-' . $RestParams . '.json';
 		$foldersPath = './files/' . $_SESSION['user_path'] . '-folders-' . $RestParams . '.json'; // <-- Revisar para que sea solo un archivo
@@ -65,35 +59,19 @@ class Views {
 
 				$params['maxResults'] = MAX_FILES_PAGE;
 				$params['pageToken'] = NULL;
-				//$params['nextPageToken'] = '';
 				if (isset($_SESSION['access_token']) && !empty($_SESSION['access_token'])){
 					$arrayAccessToken = json_decode($_SESSION['access_token'], true);
-					//$params['access_token'] = $arrayAccessToken['access_token'];
-					// $params['q'] = "mimeType!=" . rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
 					$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
-					//$paramsFolder['q'] = "mimeType=". rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
 					$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 					$paramsExtra['linkToken'] = '';
 				}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])){
 					$arrayServiceToken = json_decode($_SESSION['service_token'], true);
-					//$params['access_token'] = $arrayServiceToken['access_token'];
 					$paramsExtra['linkToken'] = '&access_token=' . $arrayServiceToken['access_token'];
-					// $params['q'] = "mimeType!=". rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
 					$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '$path' in parents";
-					//$paramsFolder['q'] = "mimeType=". rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
 					$paramsFolder['q'] = "mimeType='application/vnd.google-apps.folder' and '$path' in parents";
 				}
 
 				$General = new General();
-				/*$params1['access_token'] = $arrayAccessToken['access_token'];
-				$params1['q'] = "mimeType!=" . rawurlencode("'application/vnd.google-apps.folder' and '$path' in parents");
-				
-				$jsonList = $General->getFilesListJson($params1);
-				$arrayList = json_decode($jsonList, true);
-				print('<pre>'); print_r($$path); print('</pre>');*/
-
-				// print('<pre>'); print_r($path); print('</pre>');
-				// unset($_SESSION['folders']);
 				
 				if(!isset($_SESSION['folders']) && $path != 'root'){
 					$_SESSION['folders'][] = $path;
@@ -106,6 +84,9 @@ class Views {
 				
 				$filesList = $General->getFilesArray($params, $paramsExtra);
 				$filesList['parents'] = $path;
+				if($path == 'root'){
+					$filesList['parents'] = $path . '-' .  $_SESSION['user_path'];
+				}
 
 				$handle = fopen($filePath, 'w+');
 				$content = json_encode($filesList);
@@ -312,11 +293,19 @@ class Views {
 			$paramsExtra['linkToken'] = '&access_token=' . $arrayServiceToken['access_token'];
 		}
 
+		$findme = 'root-';
+		$pos = strpos($_POST['parent'], $findme);
+
+		if($pos !== false){
+			$pathfind = 'root';
+		}else{
+			$pathfind = $_POST['parent'];
+		}
 
 		if(empty($_POST['title']) && !isset($queryContent)){
-			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '".$_POST['parent']."' in parents";
+			$params['q'] = "mimeType!='application/vnd.google-apps.folder' and '".$pathfind."' in parents";
 		}else{
-			$params['q'] = "mimeType!='application/vnd.google-apps.folder' " . $stringQuery . " and '".$_POST['parent']."' in parents";
+			$params['q'] = "mimeType!='application/vnd.google-apps.folder' " . $stringQuery . " and '".$pathfind."' in parents";
 		}
 
 		 $paramsExtra['path'] = $_POST['parents'];

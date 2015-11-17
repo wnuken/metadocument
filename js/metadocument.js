@@ -159,7 +159,7 @@ $seahfrom.submit(function(e){
 	var params = {
 		url : 'searh'
 	};
-	$seahfrom.addClass('hidden-xs');
+	$seahfrom.addClass('hidden');
 	if(valueSearh != ''){
 		$('#progress').css({'display':'block'});
 		$that.GSearh(params);	
@@ -790,7 +790,7 @@ function getvalues(element){
 });*/
 
 function searchFormVisible(){
-	$seahfrom.removeClass('hidden-xs');
+	$seahfrom.removeClass('hidden');
 };
 
 var $modalUploadFiles = $('div#modalUploadFiles');
