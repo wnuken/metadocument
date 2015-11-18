@@ -13,3 +13,4 @@
 
 <script src="js/metadocument.js"></script>
 <script src="js/meta-scopes.js"></script>
+<script src="js/meta-register.js"></script>

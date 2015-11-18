@@ -47,8 +47,8 @@ class Views {
 
 			$Querys = new Querys();
 			$paramsUser['user'] = $_SESSION['user_path'];
-
 			$userValues = $Querys->AdminUserByUser($paramsUser);
+
 			if(!is_array($userValues)){
 				$path = $userValues->getFolderRoot();
 				$paramsExtra['path'] = $path;
@@ -336,6 +336,11 @@ class Views {
 		$General = new General();
 		$register = $General->registerUser($_POST);
 		// include './views/register/finish.php';
+	}
+
+	static public function registerUserInternal(){
+		$General = new General();
+		$register = $General->registerUserInternal($_POST);
 	}
 
 	static public function destroy(){
@@ -907,6 +912,10 @@ class Views {
 		print $resultJson;
 
 		
+	}
+
+	static public function Administracion(){
+		include './views/admin/index.php';
 	}
 
 

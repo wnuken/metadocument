@@ -15,6 +15,7 @@
         "setpropeties",
         "uploadfile",
         "register-user",
+        "register-user-internal",
         "new-folder",
         "report-document"
     ]

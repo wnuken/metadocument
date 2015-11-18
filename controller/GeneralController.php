@@ -546,7 +546,7 @@ public function setFileFullTextSET($params) {
 
 		//$titleData = array("Archivo","Campo","Valor");
 		//fputcsv($handle, $titleData);
-
+		if(isset($_SESSION['document_ids'])){
 		foreach ($_SESSION['document_ids'] as $key => $file) {
 			//if(is_numeric($key)){
 				$fileMeta = DocumentMetadataQuery::create()->findOneByDocumentId($key);
@@ -607,6 +607,7 @@ public function setFileFullTextSET($params) {
 				}
 			//}
 		}
+	}
 
 		// unset($_SESSION['document_ids']);
 
@@ -666,6 +667,26 @@ public function setFileFullTextSET($params) {
 		$AdminUser->setEmail($params['email']);
 		$AdminUser->setFolderRoot('root');
 		$AdminUser->setRolId(2);
+
+		$result = $AdminUser->save();
+
+		return $result;
+	}
+
+	public function registerUserInternal($params){
+		
+		$salt = md5($params['pass1']);
+		$passGen = hash('sha256',$salt. $params['pass1']);
+
+		$password = $passGen . ":" . $salt;
+
+		$AdminUser = new AdminUser();
+		$AdminUser->setUser($params['user']);
+		$AdminUser->setName($params['name']);
+		$AdminUser->setPassword($password);
+		$AdminUser->setEmail($params['email']);
+		$AdminUser->setFolderRoot($params['folder_id']);
+		$AdminUser->setRolId($params['rol']);
 
 		$result = $AdminUser->save();
 

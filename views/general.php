@@ -3,7 +3,27 @@
 <?php require_once('./views/head.php'); ?>
 <body>
     <div class="container">
-        <?php require_once('./views/menu.php'); ?>
+        <?php 
+        
+
+        $Querys = new Querys();
+		$paramsUser['user'] = $_SESSION['user_path'];
+		$userValues = $Querys->AdminUserByUser($paramsUser);
+
+		
+
+		if(!isset($_SESSION['userinfo']['name'])){
+			$username = $userValues->getName();
+			$userlink = './perfil';
+			$userRol = $userValues->getRolId();
+		}else{
+			$username = $_SESSION['userinfo']['name'];
+			$userlink =  $_SESSION['userinfo']['link'];
+			$userRol = 2;
+		}
+
+        require_once('./views/menu.php'); 
+        ?>
     </div>
     <div class="container-fluid" id="content" role="main">
         <?php getRoute()->run(); ?>

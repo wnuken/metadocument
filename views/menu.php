@@ -38,14 +38,16 @@ left: 3px;" role="group" aria-label="...">
    </button>
    <div class="btn-group btn-group" role="group">
     <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="glyphicon glyphicon-user"></i> <?php print $user; ?>
+        <i class="glyphicon glyphicon-user"></i> 
         <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
-                    <!--li><a href="#">Perfil</a></li>
-                            <li><a href="#">Acciones</a></li>
-                            <li><a href="./configuracion">Configuración</a></li>
-                            <li class="divider"></li-->
+                    <li><a href="<?php print $userlink; ?>" ><?php print $username; ?></a></li>
+                            <!--li><a href="#">Acciones</a></li-->
+                            <?php if($userRol == 1): ?>
+                            <li><a href="./administracion">Configuración</a></li>
+                        <?php endif; ?>
+                            <li class="divider"></li>
                                 <li><a href="./destroy"><i class="glyphicon glyphicon-share"></i> Salir</a></li>
                             </ul>
                         </div>
