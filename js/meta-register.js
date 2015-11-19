@@ -1,3 +1,38 @@
+
+
+
+
+var adminUserApp = angular.module('adminUserApp',[]);
+
+adminUserApp.controller('adminUserController', ['$scope', function($scope) {
+
+	$.ajax({
+		type: "POST",
+		url: 'lista-usuarios',
+		dataType: 'json',
+		data: '',
+		async: false,
+		success: function(response) {
+			// console.log(response);
+
+        	$scope.users = response;
+        },
+        error: function() {
+        	var message = "Rayos parece que no puedo validar los datos";
+        	console.log(message);
+        }
+    });
+
+   
+}]);
+
+
+
+
+
+
+
+
 var $createUser = $('div#createUser');
 var $createUserForm = $('form#createUserForm', $createUser);
 var $createUserFormButton = $('button#createUserFormButton', $createUser);

@@ -915,8 +915,37 @@ class Views {
 	}
 
 	static public function Administracion(){
+		
+		$Querys = new Querys();
+
+		$adminUsers = $Querys->AdminUserAll();
+
 		include './views/admin/index.php';
 	}
+
+	static public function getUsers(){
+		
+		$Querys = new Querys();
+
+		$adminUsers = $Querys->AdminUserAll();
+
+		foreach ($adminUsers as $key => $user) {
+			$users[$key] = array(
+				'id' => $user->getId(),
+				'user' => $user->getUser(),
+				'name' => $user->getName(),
+				'email' => $user->getEmail(),			
+				'folder' => $user->getFolderRoot()
+				);		
+		}
+
+		$resultJson = json_encode($users);
+
+		print($resultJson);
+		
+	}
+
+
 
 
 }	

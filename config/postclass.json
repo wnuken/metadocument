@@ -17,6 +17,7 @@
         "register-user",
         "register-user-internal",
         "new-folder",
-        "report-document"
+        "report-document",
+        "lista-usuarios"
     ]
 }
