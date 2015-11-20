@@ -916,9 +916,15 @@ class Views {
 
 	static public function Administracion(){
 		
+	/*	$filePath = './files/adminuser.json';
+		
 		$Querys = new Querys();
+		$adminUsers = $Querys->AdminUserAllJson();
 
-		$adminUsers = $Querys->AdminUserAll();
+		$handle = fopen($filePath, 'w+');
+		fwrite($handle, $adminUsers);
+		fclose($handle);*/
+
 
 		include './views/admin/index.php';
 	}
@@ -927,21 +933,10 @@ class Views {
 		
 		$Querys = new Querys();
 
-		$adminUsers = $Querys->AdminUserAll();
+		$adminUsers = $Querys->AdminUserAllJson();
 
-		foreach ($adminUsers as $key => $user) {
-			$users[$key] = array(
-				'id' => $user->getId(),
-				'user' => $user->getUser(),
-				'name' => $user->getName(),
-				'email' => $user->getEmail(),			
-				'folder' => $user->getFolderRoot()
-				);		
-		}
 
-		$resultJson = json_encode($users);
-
-		print($resultJson);
+		print($adminUsers);
 		
 	}
 

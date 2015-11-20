@@ -66,9 +66,9 @@ class Querys {
         return $result;
     }
     
-    public function AdminUserAll(){
+    public function AdminUserAllJson(){
         try{           
-            $result = AdminUserQuery::create()->find();
+            $result = AdminUserQuery::create()->find()->toJson();
             // var_dump($result);
             if(empty($result)){
                 $result = array(
