@@ -72,12 +72,12 @@
             <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Contraseña" ng-model="newUser.pass1" required>
             <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="!createUserForm.$pristine && createUserForm.pass1.$error.required"></span>
           </div>
-          <div class="form-group has-feedback" ng-class="{ metaerror: !createUserForm.$pristine && createUserForm.pass2.$error.required, metawarning: createUserForm.pass2 == createUserForm.pass1}">
+          <div class="form-group has-feedback" ng-class="{ metaerror: !createUserForm.$pristine && createUserForm.pass2.$error.required, metawarning: createUserForm.pass2.$error.compare-to}">
             <label for="pass2">Repetir Contraseña</label>
-            <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Contraseña" ng-model="newUser.pass2" required>
+            <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Contraseña" ng-model="newUser.pass2" required compare-to="newUser.pass1">
             <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" ng-show="!createUserForm.$pristine && createUserForm.pass2.$error.required"></span>
-            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true" ng-show="!createUserForm.$pristine && createUserForm.pass2 == createUserForm.pass1"></span>
-          </div>
+            <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true" ng-show="!createUserForm.$pristine && createUserForm.pass2.$error.compare-to"></span>
+          </di  v>
           <div class="form-group has-feedback" ng-class="{ metaerror: !createUserForm.$pristine && createUserForm.name.$error.required}">
             <label for="name">Nombre</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="Nombre" ng-model="newUser.name" ng-model="newUser.name" required>
