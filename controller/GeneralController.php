@@ -686,10 +686,17 @@ public function setFileFullTextSET($params) {
 		$AdminUser->setPassword($password);
 		$AdminUser->setEmail($params['email']);
 		$AdminUser->setFolderRoot($params['folder_id']);
-		$AdminUser->setRolId($params['rol']);
+		$AdminUser->setRolId($params['rol_id']);
 
-		$result = $AdminUser->save();
+		$AdminUser->save();
 
+		$getId =  $AdminUser->getId();
+
+		$arrayResponse = array(
+			'id' => $getId,
+			'status' => true);
+
+		$result = json_encode($arrayResponse);
 		return $result;
 	}
 

@@ -341,6 +341,7 @@ class Views {
 	static public function registerUserInternal(){
 		$General = new General();
 		$register = $General->registerUserInternal($_POST);
+		print_r($register);
 	}
 
 	static public function destroy(){

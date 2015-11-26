@@ -1,16 +1,48 @@
 
-
-var $tableUser = $('table#tableUser');
+var $createUser = $('div#createUser');
+var $createUserForm = $('form#createUserForm', $createUser);
+var $createUserMessages = $('div#createUserMessages', $createUser);
 
 var adminUserApp = angular.module('adminUserApp',[]);
 
-adminUserApp.controller('adminUserController', ['$scope', function($scope) {
+adminUserApp.directive("passwordVerify", function() {
+	return {
+		require: "ngModel",
+		scope: {
+			passwordVerify: '='
+		},
+		link: function(scope, element, attrs, ctrl) {
+			scope.$watch(function() {
+				var combined;
 
-$scope.formVisivility = false;
-$scope.newUser = {};
-var params = {
-	url: 'lista-usuarios',
-};
+				if (scope.passwordVerify || ctrl.$viewValue) {
+					combined = scope.passwordVerify + '_' + ctrl.$viewValue; 
+				}                    
+				return combined;
+			}, function(value) {
+				if (value) {
+					ctrl.$parsers.unshift(function(viewValue) {
+						var origin = scope.passwordVerify;
+						if (origin !== viewValue) {
+							ctrl.$setValidity("passwordVerify", false);
+							return undefined;
+						} else {
+							ctrl.$setValidity("passwordVerify", true);
+							return viewValue;
+						}
+					});
+				}
+			});
+		}
+	};
+});
+
+adminUserApp.controller('adminUserController', ['$scope', function($scope) {
+	$scope.formVisivility = false;
+	$scope.newUser = {};
+	var params = {
+		url: 'lista-usuarios',
+	};
 
 	$.ajax({
 		type: "POST",
@@ -21,153 +53,55 @@ var params = {
 		success: function(response) {
 			$scope.AdminUsers = response.AdminUsers;
 			$scope.formVisivility = true;
-        },
-        error: function(e) {
-        	var message = "Rayos parece que no puedo validar los datos";
-        	console.log(e);
-        }
-    });
+		},
+		error: function(e) {
+			var message = "Rayos parece que no puedo validar los datos";
+			console.log(e);
+		}
+	});
 
-    $scope.Save = function(){
+	$scope.Save = function(){
 
+		var $inputRol = $('input[name=rol]', $createUser);
+		$scope.newUser.rol_id = $inputRol.val();
+		var paramSave = {
+			url: 'register-user-internal'
+		};
 
-    	console.log($scope.newUser.name);
-    	/*var user = $scope.newUser.user;
-		var pass1 = $scope.newUser.name;
-		var pass2 = $('#pass2', $createUserForm).val();
-		var name = $('#name', $createUserForm).val();
-		var email = $('#email', $createUserForm).val();
-		var folder_id = $('#folder_id', $createUserForm).val();
+		$.ajax({
+			type: "POST",
+			url: paramSave.url,
+			dataType: 'json',
+			data: $scope.newUser,
+			async: false,
+			success: function(response) {
 
-    	if(user == '' || pass1 == '' || pass2 == '' || name == '' || email == '' || folder_id == ''){
-		console.log('no se valida');
-		$createUserMessages.html("<div class='alert alert-danger alert-dismissible' role='alert'>" +
-			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-				"<span aria-hidden='true'>&times;</span></button><strong>Por vafor llene los campos vacíos </strong></div>");
-		return false;
-		
-	};*/
+				$scope.AdminUsers.push({
+					Id: response.id,
+					Name:$scope.newUser.name, 
+					User: $scope.newUser.user,
+					Email: $scope.newUser.email,
+					FolderRoot: $scope.newUser.folder_id
+				});
 
-
-
-    	$scope.AdminUsers.push({
-		Name:$scope.newUser.name, User: $scope.newUser.user
+				$createUserMessages.html("<div class='alert alert-success alert-dismissible' role='alert'>" +
+					"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+					"<span aria-hidden='true'>&times;</span></button>Se guardo el usuario <strong>" + response.id + "</strong> correctamente </div>");
+				$createUserForm[0].reset();
+			},
+			error: function() {
+				var message = "Rayos parece que no puedo validar los datos";
+				console.log(message);
+			}
 		});
-    };
 
 
-   
+	};
+
+
+
 }]);
 
-
-
-
-
-var compareTo = function() {
-    return {
-        require: "ngModel",
-        scope: {
-            otherModelValue: "=compareTo"
-        },
-        link: function(scope, element, attributes, ngModel) {
-             
-            ngModel.$validators.compareTo = function(modelValue) {
-                return modelValue == scope.otherModelValue;
-            };
- 
-            scope.$watch("otherModelValue", function() {
-                ngModel.$validate();
-            });
-        }
-    };
-};
- 
-adminUserApp.directive("compareTo", compareTo);
-
-
-
-
-
-
-
-
-
-
-var $createUser = $('div#createUser');
-var $createUserForm = $('form#createUserForm', $createUser);
-var $createUserFormButton = $('button#createUserFormButton', $createUser);
-var $createUserMessages = $('div#createUserMessages', $createUser);
-
-$.fn.registerUser = function(params){
-	var $that = $(this);
-	var data = $that.serialize();
-	$.ajax({
-		type: "POST",
-		url: params.url,
-		dataType: 'html',
-		data: data,
-		async: true,
-		success: function(response) {
-        	$createUserMessages.html("<div class='alert alert-success alert-dismissible' role='alert'>" +
-			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-				"<span aria-hidden='true'>&times;</span></button><strong>Se guardo el usuario correctamente </strong></div>");
-        	$that[0].reset();
-        },
-        error: function() {
-        	var message = "Rayos parece que no puedo validar los datos";
-        	console.log(message);
-        }
-    });
-};
-
-$createUserFormButton.on('click', function(){
-	var params = {
-		url: 'register-user-internal'
-	};
-
-	var user = $('#user', $createUserForm).val();
-	var pass1 = $('#pass1', $createUserForm).val();
-	var pass2 = $('#pass2', $createUserForm).val();
-	var name = $('#name', $createUserForm).val();
-	var email = $('#email', $createUserForm).val();
-	var folder_id = $('#folder_id', $createUserForm).val();
-
-	console.log(pass1);
-	console.log(pass2);
-
-	if(user == '' || pass1 == '' || pass2 == '' || name == '' || email == '' || folder_id == ''){
-		console.log('no se valida');
-		$createUserMessages.html("<div class='alert alert-danger alert-dismissible' role='alert'>" +
-			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-				"<span aria-hidden='true'>&times;</span></button><strong>Por vafor llene los campos vacíos </strong></div>");
-		return false;
-		
-	};
-
-	if(pass1 != pass2){
-		$createUserMessages.html("<div class='alert alert-danger alert-dismissible' role='alert'>" +
-			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-				"<span aria-hidden='true'>&times;</span></button><strong>Las contraseñas no coinciden </strong></div>");
-		return false;
-
-	};
-
-	var regex = /[\w-\.]{2,}@([\w-]{2,}\.)*([\w-]{2,}\.)[\w-]{2,4}/;
- 
-    //Se utiliza la funcion test() nativa de JavaScript
-    if (!regex.test(email.trim())) {
-        $createUserMessages.html("<div class='alert alert-danger alert-dismissible' role='alert'>" +
-			"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
-				"<span aria-hidden='true'>&times;</span></button><strong>El correo no es valido </strong></div>");
-		return false;
-    }
-
-
-	// console.log('se valida');
-
-
-	$createUserForm.registerUser(params);
-
+$inputRol.on('click', function(){
+	console.log('hola');
 });
-
-
