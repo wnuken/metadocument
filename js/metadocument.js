@@ -1141,9 +1141,14 @@ function loadinputkey(idElement){
 
 }
 
-function getvalues(element){
+function getvalues(element, metod){
 
-	var $that = $(element).parent().parent();
+	if(metod == 1){
+		var $that = $(element).parent().parent();
+	}else{
+		var $that = $(element).parent();
+	}
+	
 	var inputDate = '';
 	var attrId = '';
 	var nameDate = '';
@@ -1205,8 +1210,16 @@ function getvalues(element){
 	
 	$('div#text_button', $leftAvanceSearhForm).append(divAppend);
 	$('input', $that).val('');
-	$that.css('display', 'none');
+	// $that.css('display', 'none');
 
+};
+
+function pressEnter(element, e){
+	// console.log(e);
+	if (e.keyCode == 13) {
+        getvalues(element, e);
+        return false;
+    }
 };
 
 

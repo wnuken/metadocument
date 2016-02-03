@@ -651,16 +651,16 @@ class Views {
 
                 $totalMetada .= '<div class="input-group" id="' . $value['id'] . '-group" style="display:none;">';
                   if($value['type'] == 'text'){ 
-                $totalMetada .= '<input type="text" class="form-control" placeholder="' . $value['name'] . '" id="' . $value['id'] . '-value" name="' . $value['id'] . '-value">';
+                $totalMetada .= '<input type="text" class="form-control" placeholder="' . $value['name'] . '" id="' . $value['id'] . '-value" name="' . $value['id'] . '-value" onkeypress="return pressEnter(this, event)">';
                   }else if($value['type'] == 'date'){ 
                    $totalMetada .= '<input type="date" ' . $datepiker . ' class="form-control date-meta-doble" placeholder="Igual o Desde" id="' . $value['id'] . '" name="' . $value['name'] . '">
                    		<input type="date" ' . $datepiker . ' class="form-control date-meta-doble" placeholder="Igual o Hasta" id="' . $value['id'] . '-end" name="' . $value['name'] . '-end">';
                   }else if($value['type'] == 'number'){	
-                  	 $totalMetada .= '<input type="number" class="form-control date-meta-doble" placeholder="Igual o Desde" id="' . $value['id'] . '" name="' . $value['name'] . '">
-                   		<input type="number" class="form-control date-meta-doble" placeholder="Igual o Hasta" id="' . $value['id'] . '-end" name="' . $value['name'] . '-end">';
+                  	 $totalMetada .= '<input type="number" class="form-control date-meta-doble" placeholder="Igual o Desde" id="' . $value['id'] . '" name="' . $value['name'] . '" onkeypress="return pressEnter(this, event)">
+                   		<input type="number" class="form-control date-meta-doble" placeholder="Igual o Hasta" id="' . $value['id'] . '-end" name="' . $value['name'] . '-end" onkeypress="return pressEnter(this, event)">';
                   }
                   $totalMetada .=  '<span class="input-group-btn">
-                    <button class="btn btn-success" type="button" onclick="getvalues(this);"><i class="glyphicon glyphicon-plus"></i></button>
+                    <button class="btn btn-success" type="button" onclick="getvalues(this, 1);"><i class="glyphicon glyphicon-plus"></i></button>
                   </span>
                 </div>';
             }

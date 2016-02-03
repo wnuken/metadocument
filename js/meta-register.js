@@ -102,6 +102,6 @@ adminUserApp.controller('adminUserController', ['$scope', function($scope) {
 
 }]);
 
-$inputRol.on('click', function(){
+/*$inputRol.on('click', function(){
 	console.log('hola');
-});
+});*/
