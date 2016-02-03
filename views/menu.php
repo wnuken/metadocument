@@ -60,6 +60,9 @@ left: 3px;" role="group" aria-label="...">
                     
                     <form class="hidden formSearh" role="search" id="drivesearh">
                         <div class="form-group input-group">
+                        <span class="input-group-btn">
+                                <button class="btn btn-warning" id="close" type="close"><i class="glyphicon glyphicon-remove"></i></button>
+                            </span>
                             <input type="text" class="form-control" name="query" id="query" placeholder="Buscar...">
                             <span class="input-group-btn">
                                 <button class="btn btn-danger" id="submit" type="submit"><i class="glyphicon glyphicon-search"></i></button>
