@@ -28,6 +28,7 @@
     <div class="container-fluid" id="content" role="main">
         <?php getRoute()->run(); ?>
     </div>
+    <div class="text-center powered-google"><img src="./img/powered_by_google_on_white_hdpi.png"></div>
 </body>
 <?php require_once('./views/foot.php'); ?>
 </html>
