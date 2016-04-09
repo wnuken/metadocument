@@ -469,12 +469,14 @@ public function setFileFullTextSET($params) {
 			return $getFilesList;
 		}
 
+		
+
 		foreach ($getFilesList['items'] as $key => $file) {
 			if($paramsExtra['path'] == 'root'){
 				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
 			}else if(isset($paramsExtra['filterDate']) && in_array($file->getId(), $paramsExtra['filterDate'])){
 				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
-			}else if(!isset($paramsExtra['filterDate']) || in_array($file['modelData']['parents'][0]['id'], $_SESSION['folders'])){
+			}else if(in_array($file['modelData']['parents'][0]['id'], $_SESSION['folders'])){
 				$filesList[$key] = $this->createFilesList($file, $paramsExtra['linkToken']);
 			}
 		}
@@ -670,33 +672,6 @@ public function setFileFullTextSET($params) {
 
 		$result = $AdminUser->save();
 
-		return $result;
-	}
-
-	public function registerUserInternal($params){
-		
-		$salt = md5($params['pass1']);
-		$passGen = hash('sha256',$salt. $params['pass1']);
-
-		$password = $passGen . ":" . $salt;
-
-		$AdminUser = new AdminUser();
-		$AdminUser->setUser($params['user']);
-		$AdminUser->setName($params['name']);
-		$AdminUser->setPassword($password);
-		$AdminUser->setEmail($params['email']);
-		$AdminUser->setFolderRoot($params['folder_id']);
-		$AdminUser->setRolId($params['rol_id']);
-
-		$AdminUser->save();
-
-		$getId =  $AdminUser->getId();
-
-		$arrayResponse = array(
-			'id' => $getId,
-			'status' => true);
-
-		$result = json_encode($arrayResponse);
 		return $result;
 	}
 

@@ -15,7 +15,6 @@ class Views {
 
 
 	static public function Home($RestParams = ''){
-
 		$path = '';
 		$filePath = './files/' . $_SESSION['user_path'] .'-home-' . $RestParams . '.json';
 		$foldersPath = './files/' . $_SESSION['user_path'] . '-folders-' . $RestParams . '.json'; // <-- Revisar para que sea solo un archivo
@@ -115,7 +114,10 @@ class Views {
 
 	static public function searh(){
 		$query = '';
-		$stringQuery = '';		
+		$stringQuery = '';
+
+		// $foldersTotalPath = './files/' . $_SESSION['user_path'] . '-folders-total' . '.json';
+
 		if(isset($_REQUEST['query']))
 			$query = explode(' ', trim($_REQUEST['query']));
 
@@ -142,6 +144,16 @@ class Views {
 		}else if (isset($_SESSION['service_token']) && !empty($_SESSION['service_token'])) {
 			$arrayServiceToken = json_decode($_SESSION['service_token'], true);
 			$paramsExtra['linkToken'] = '&access_token=' . $arrayServiceToken['access_token'];
+		}
+
+
+		$Querys = new Querys();
+		$paramsUser['user'] = $_SESSION['user_path'];
+		$userValues = $Querys->AdminUserByUser($paramsUser);
+
+		if(!is_array($userValues)){
+			$path = $userValues->getFolderRoot();
+			$paramsExtra['path'] = $path;
 		}
 
 		if(isset($_REQUEST['path'])){
@@ -338,10 +350,28 @@ class Views {
 		// include './views/register/finish.php';
 	}
 
-	static public function registerUserInternal(){
-		$General = new General();
-		$register = $General->registerUserInternal($_POST);
-		print_r($register);
+	static public function userInsert(){
+		$Users = new Users();
+		$result = $Users->Insert($_POST);
+		print_r($result);
+	}
+
+	static public function userUpdate(){
+		$Users = new Users();
+		$result = $Users->Update($_POST);
+		print_r($result);
+	}
+
+	static public function userDelete(){
+		$Users = new Users();
+		$result = $Users->Delete($_POST);
+		print_r($result);
+	}
+
+	static public function userList(){
+		$Querys = new Querys();
+		$result = $Querys->AdminUserAllJson();
+		print($result);
 	}
 
 	static public function destroy(){
@@ -905,9 +935,6 @@ class Views {
 		fwrite($handle, $htmlData);
 		fclose($handle);
 
-
-
-
 		$resultJson = json_encode($resultArray);
 
 		print $resultJson;
@@ -929,20 +956,6 @@ class Views {
 
 		include './views/admin/index.php';
 	}
-
-	static public function getUsers(){
-		
-		$Querys = new Querys();
-
-		$adminUsers = $Querys->AdminUserAllJson();
-
-
-		print($adminUsers);
-		
-	}
-
-
-
 
 }	
 

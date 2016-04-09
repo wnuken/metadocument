@@ -47,8 +47,8 @@
                                 <fieldset>
                                     <div id="changeform">
                                         <div class="form-group">
-                                            <label for="username">RUT </label>
-                                            <input name="username" id="username" type="text" autofocus="" placeholder="RUT" class="form-control inputborder" > 
+                                            <label for="username">Usuario </label>
+                                            <input name="username" id="username" type="text" autofocus="" placeholder="Usuario" class="form-control inputborder" > 
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password</label>

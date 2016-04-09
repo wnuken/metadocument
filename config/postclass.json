@@ -15,9 +15,11 @@
         "setpropeties",
         "uploadfile",
         "register-user",
-        "register-user-internal",
+        "user-insert",
+        "user-update",
+        "user-delete",
         "new-folder",
         "report-document",
-        "lista-usuarios"
+        "user-list"
     ]
 }

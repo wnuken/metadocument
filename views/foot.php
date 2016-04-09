@@ -9,7 +9,7 @@
 
 
 <!-- AngularJS -->
-<script src="js/angularjs-min-1.4.8.js"></script>
+<script src="js/angular-1.5.2/angular.min.js"></script>
 
 <script src="js/metadocument.js"></script>
 <script src="js/meta-scopes.js"></script>
